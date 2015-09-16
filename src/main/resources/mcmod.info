@@ -1,0 +1,16 @@
+[
+	{
+	  "modid": "YeOldeTanks",
+	  "name": "Ye Olde Tanks",
+	  "description": "Tanks!",
+	  "version": "${version}",
+	  "mcversion": "${mcversion}",
+	  "url": "http://github.com/shadowfacts/YeOldeTanks",
+	  "updateUrl": "",
+	  "authorList": ["Shadowfacts"],
+	  "credits": "Heph, for the original idea",
+	  "logoFile": "",
+	  "screenshots": [],
+	  "dependencies": []
+	}
+]
