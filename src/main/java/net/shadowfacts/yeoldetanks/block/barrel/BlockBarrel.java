@@ -27,20 +27,6 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 		setBlockName("yot.barrel");
 	}
 
-//	@Override
-//	public int getLightValue(IBlockAccess world, int x, int y, int z) {
-//		TileEntity te = world.getTileEntity(x, y ,z);
-//
-//		if (te != null && te instanceof TileEntityBarrel) {
-//			TileEntityBarrel barrel = (TileEntityBarrel)te;
-//			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
-//				return barrel.tank.getFluid().getFluid().getLuminosity();
-//			}
-//		}
-//
-//		return 0;
-//	}
-
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		return new ArrayList<>();

@@ -49,6 +49,7 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 
 			ResourceLocation fluidLocation = new ResourceLocation(domain, "textures/blocks/" + name + ".png");
 
+
 			GL11.glPushMatrix();
 
 			float fluidStored = -(float)barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
@@ -58,6 +59,7 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 			modelFluid.renderAll();
 
 			GL11.glPopMatrix();
+
 		}
 
 		GL11.glPopMatrix();

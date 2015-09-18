@@ -6,7 +6,11 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidStack;
+import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
+
+import java.util.List;
 
 /**
  * @author shadowfacts
@@ -32,5 +36,16 @@ public class ItemBlockBarrel extends ItemBlock {
 
 		}
 		return false;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public void addInformation(ItemStack stack, EntityPlayer player, List tooltip, boolean advanced) {
+		if (stack.stackTagCompound == null) return;
+		if (stack.stackTagCompound.hasKey("Empty")) return;
+
+		FluidStack fluid = FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
+		tooltip.add(fluid.getLocalizedName());
+		tooltip.add(fluid.amount + "mb / " + YOTConfig.barrelCapacity + "mb");
 	}
 }
