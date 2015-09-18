@@ -16,6 +16,7 @@ public class ItemDippingStick extends Item {
 	public ItemDippingStick() {
 		setUnlocalizedName("yot.dippingstick");
 		setTextureName("dippingstick");
+		setCreativeTab(YeOldeTanks.tab);
 	}
 
 	@Override

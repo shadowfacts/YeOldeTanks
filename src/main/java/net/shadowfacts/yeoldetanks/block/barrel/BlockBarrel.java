@@ -25,6 +25,7 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 		super(Material.rock);
 		setHarvestLevel("pickaxe", 2);
 		setBlockName("yot.barrel");
+		setCreativeTab(YeOldeTanks.tab);
 	}
 
 	@Override

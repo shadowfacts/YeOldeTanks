@@ -6,6 +6,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
 import net.shadowfacts.yeoldetanks.event.FMLEventHandler;
 import net.shadowfacts.yeoldetanks.item.ModItems;
@@ -35,6 +37,13 @@ public class YeOldeTanks {
 //	Content
 	public static ModBlocks blocks = new ModBlocks();
 	public static ModItems items = new ModItems();
+
+	public static CreativeTabs tab = new CreativeTabs("yot") {
+		@Override
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(blocks.barrel);
+		}
+	};
 
 
 	@Mod.EventHandler

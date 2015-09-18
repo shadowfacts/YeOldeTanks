@@ -6,3 +6,6 @@ item.yot.dippingstick.name=Dipping Stick
 
 # Config
 yot.config.ctgy.general=General
+
+# Creative Tabs
+itemGroup.yot=YeOldeTanks
