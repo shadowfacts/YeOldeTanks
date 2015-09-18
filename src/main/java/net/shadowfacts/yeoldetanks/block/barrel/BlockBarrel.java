@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -36,11 +37,17 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
 		ItemStack dropStack = new ItemStack(YeOldeTanks.blocks.barrel);
-		if (dropStack.stackTagCompound == null) dropStack.stackTagCompound = new NBTTagCompound();
 
 		TileEntity te = world.getTileEntity(x, y, z);
 		if (te instanceof TileEntityBarrel) {
-			((TileEntityBarrel)te).tank.writeToNBT(dropStack.stackTagCompound);
+			TileEntityBarrel barrel = (TileEntityBarrel)te;
+
+			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
+
+				if (dropStack.stackTagCompound == null) dropStack.stackTagCompound = new NBTTagCompound();
+
+				barrel.tank.writeToNBT(dropStack.stackTagCompound);
+			}
 		}
 
 		EntityItem item = new EntityItem(world, x, y, z, dropStack);
@@ -87,6 +94,22 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
+		ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
+
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null && te instanceof TileEntityBarrel) {
+			TileEntityBarrel barrel = (TileEntityBarrel)te;
+			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
+				if (stack.stackTagCompound == null) stack.stackTagCompound = new NBTTagCompound();
+				barrel.tank.writeToNBT(stack.stackTagCompound);
+			}
+		}
+
+		return stack;
 	}
 
 	@Override
