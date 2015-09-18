@@ -50,7 +50,7 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler {
 	}
 
 	public void readFromNBT(NBTTagCompound tag, boolean loadCoords) {
-		if (loadCoords) super.writeToNBT(tag);
+		if (loadCoords) super.readFromNBT(tag);
 		tank.readFromNBT(tag);
 		lid = tag.getBoolean("Lid");
 	}
