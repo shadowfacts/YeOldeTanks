@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 
 /**
@@ -15,8 +16,9 @@ public class ItemDippingStick extends Item {
 
 	public ItemDippingStick() {
 		setUnlocalizedName("yot.dippingstick");
-		setTextureName("dippingstick");
+		setTextureName("yeoldetanks:dippingstick");
 		setCreativeTab(YeOldeTanks.tab);
+		setMaxStackSize(1);
 	}
 
 	@Override

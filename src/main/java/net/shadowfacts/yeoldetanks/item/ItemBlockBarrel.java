@@ -2,6 +2,7 @@ package net.shadowfacts.yeoldetanks.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -47,5 +48,15 @@ public class ItemBlockBarrel extends ItemBlock {
 		FluidStack fluid = FluidStack.loadFluidStackFromNBT(stack.stackTagCompound);
 		tooltip.add(fluid.getLocalizedName());
 		tooltip.add(fluid.amount + "mb / " + YOTConfig.barrelCapacity + "mb");
+	}
+
+	@Override
+	public ItemStack getContainerItem(ItemStack itemStack) {
+		return itemStack;
+	}
+
+	@Override
+	public boolean hasContainerItem(ItemStack stack) {
+		return true;
 	}
 }
