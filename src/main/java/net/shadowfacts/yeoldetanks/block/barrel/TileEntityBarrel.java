@@ -100,12 +100,12 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler {
 
 	@Override
 	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.fillFromAnySide || from == ForgeDirection.UP;
+		return YOTConfig.fillFromAnySide || from == ForgeDirection.UP || from == ForgeDirection.UNKNOWN;
 	}
 
 	@Override
 	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.drainFromAnySide || from == ForgeDirection.DOWN || from == ForgeDirection.UP;
+		return YOTConfig.drainFromAnySide || from == ForgeDirection.DOWN || from == ForgeDirection.UP || from == ForgeDirection.UNKNOWN;
 	}
 
 	@Override

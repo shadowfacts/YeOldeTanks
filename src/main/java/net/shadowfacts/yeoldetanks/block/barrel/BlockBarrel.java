@@ -1,10 +1,15 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
+import cofh.lib.util.helpers.FluidHelper;
+import cofh.lib.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -12,6 +17,10 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidContainerItem;
+import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
 
@@ -63,6 +72,20 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 			if (te instanceof TileEntityBarrel) {
 				TileEntityBarrel barrel = (TileEntityBarrel)te;
 				barrel.lid = !barrel.lid;
+			}
+		} else {
+
+			TileEntity te = world.getTileEntity(x, y, z);
+
+			if (te != null && te instanceof TileEntityBarrel) {
+
+				TileEntityBarrel barrel = (TileEntityBarrel)te;
+
+				if (CoFHUtils.fillHandlerWithContainer(world, barrel, player)) {
+					return true;
+				} else if (CoFHUtils.fillContainerFromHandler(world, barrel, player, barrel.tank.getFluid())) {
+					return true;
+				}
 			}
 		}
 		return false;
