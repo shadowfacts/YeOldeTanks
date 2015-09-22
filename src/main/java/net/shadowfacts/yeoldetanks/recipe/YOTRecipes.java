@@ -12,6 +12,7 @@ public class YOTRecipes {
 
 	public static void register() {
 		GameRegistry.addShapelessRecipe(new ItemStack(YeOldeTanks.items.dippingStick), YeOldeTanks.blocks.barrel, Items.stick);
+		GameRegistry.addShapedRecipe(new ItemStack(YeOldeTanks.blocks.barrel), "I I", "I I", "ICI", 'I', Items.iron_ingot, 'C', Items.cauldron);
 	}
 
 }

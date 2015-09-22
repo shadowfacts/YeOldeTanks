@@ -136,6 +136,21 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 	}
 
 	@Override
+	public int getLightValue(IBlockAccess world, int x, int y, int z) {
+		TileEntity te = world.getTileEntity(x, y, z);
+
+		if (te instanceof TileEntityBarrel) {
+			TileEntityBarrel barrel = (TileEntityBarrel)te;
+
+			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
+				return barrel.tank.getFluid().getFluid().getLuminosity(barrel.tank.getFluid());
+			}
+		}
+
+		return 0;
+	}
+
+	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
 		return new TileEntityBarrel();
 	}
