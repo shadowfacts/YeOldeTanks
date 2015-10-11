@@ -1,15 +1,10 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import cofh.lib.util.helpers.FluidHelper;
-import cofh.lib.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -17,9 +12,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.FluidContainerRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidContainerItem;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
@@ -33,9 +25,9 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 
 	public BlockBarrel() {
 		super(Material.rock);
-		setHarvestLevel("pickaxe", 2);
 		setBlockName("yot.barrel");
 		setCreativeTab(YeOldeTanks.tab);
+		setHardness(.5f);
 	}
 
 	@Override

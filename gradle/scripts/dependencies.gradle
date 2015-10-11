@@ -1,6 +1,10 @@
 repositories {
 	mavenCentral()
 	maven {
+		name "forge"
+		url "http://files.minecraftforge.net/maven/"
+	}
+	maven {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
 	}

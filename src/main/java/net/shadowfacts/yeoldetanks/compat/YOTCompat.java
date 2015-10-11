@@ -51,7 +51,7 @@ public class YOTCompat {
 					try {
 						m.invoke(null, event);
 					} catch (ReflectiveOperationException e) {
-						Compat annotation = (Compat)clazz.getAnnotation(Compat.class);
+						Compat annotation = (Compat) clazz.getAnnotation(Compat.class);
 						YeOldeTanks.log.error("There was an exception trying to invoke the pre-initialization method of the compatibility module for " + annotation.value());
 						e.printStackTrace();
 					}
@@ -68,7 +68,7 @@ public class YOTCompat {
 					try {
 						m.invoke(null, event);
 					} catch (ReflectiveOperationException e) {
-						Compat annotation = (Compat)clazz.getAnnotation(Compat.class);
+						Compat annotation = (Compat) clazz.getAnnotation(Compat.class);
 						YeOldeTanks.log.error("There was an exception trying to invoke the initialization method of the compatibility module for " + annotation.value());
 						e.printStackTrace();
 					}
@@ -85,7 +85,7 @@ public class YOTCompat {
 					try {
 						m.invoke(null, event);
 					} catch (ReflectiveOperationException e) {
-						Compat annotation = (Compat)clazz.getAnnotation(Compat.class);
+						Compat annotation = (Compat) clazz.getAnnotation(Compat.class);
 						YeOldeTanks.log.error("There was an exception trying to invoke the initialization method of the compatibility module for " + annotation.value());
 						e.printStackTrace();
 					}
