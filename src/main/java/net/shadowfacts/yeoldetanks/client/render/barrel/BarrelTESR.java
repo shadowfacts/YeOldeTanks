@@ -34,14 +34,13 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 		bindTexture(texture);
 		model.renderAll(((TileEntityBarrel) te).lid);
 
-		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null) {
-			Block fluidBlock = barrel.tank.getFluid().getFluid().getBlock();
-			IIcon fluidTexture = fluidBlock.getBlockTextureFromSide(ForgeDirection.UP.ordinal());
+		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
+			IIcon fluidTexture = barrel.tank.getFluid().getFluid().getStillIcon();
 
 			String domain = "minecraft";
 			String name;
 			if (fluidTexture.getIconName().contains(":")) {
-				domain = fluidTexture.getIconName().split(":")[0];
+				domain = fluidTexture.getIconName().split(":")[0].toLowerCase();
 				name = fluidTexture.getIconName().split(":")[1];
 			} else {
 				name = fluidTexture.getIconName();
@@ -52,14 +51,13 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 
 			GL11.glPushMatrix();
 
-			float fluidStored = -(float)barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
+			float fluidStored = -(float) barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
 			GL11.glTranslatef(0, Math.min(Math.max(fluidStored, -.9f), -.1f), 0);
 
 			bindTexture(fluidLocation);
 			modelFluid.renderAll();
 
 			GL11.glPopMatrix();
-
 		}
 
 		GL11.glPopMatrix();
