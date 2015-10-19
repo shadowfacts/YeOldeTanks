@@ -23,7 +23,7 @@ artifacts {
 }
 
 curse {
-	projectId = ''
+	projectId = '236923'
 	apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
 	releaseType = 'release'
 	addGameVersion '1.7.10'

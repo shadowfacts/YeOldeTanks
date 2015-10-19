@@ -5,9 +5,11 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -28,6 +30,12 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 		setBlockName("yot.barrel");
 		setCreativeTab(YeOldeTanks.tab);
 		setHardness(.5f);
+
+	}
+
+	@Override
+	public IIcon getIcon(int side, int meta) {
+		return Blocks.iron_block.getIcon(side, meta);
 	}
 
 	@Override
