@@ -9,6 +9,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class ModItems {
 
 	public ItemDippingStick dippingStick;
+	public ItemInfiniteWaterBucket infiniteWaterBucket;
 
 	public void preInit(FMLPreInitializationEvent event) {
 		createItems();
@@ -17,10 +18,12 @@ public class ModItems {
 
 	private void createItems() {
 		dippingStick = new ItemDippingStick();
+		infiniteWaterBucket = new ItemInfiniteWaterBucket();
 	}
 
 	private void registerItems() {
 		GameRegistry.registerItem(dippingStick, "yot.dippingstick");
+		GameRegistry.registerItem(infiniteWaterBucket, "yot.infiniteWaterBucket");
 	}
 
 }

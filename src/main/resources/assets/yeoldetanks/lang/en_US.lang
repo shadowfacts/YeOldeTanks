@@ -3,6 +3,7 @@ tile.yot.barrel.name=Barrel
 
 # Items
 item.yot.dippingstick.name=Dipping Stick
+item.yot.infiniteWaterBucket.name=Infinite Water Bucket
 
 # Config
 yot.config.ctgy.general=General

@@ -1,9 +1,15 @@
 package net.shadowfacts.yeoldetanks.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.init.Items;
+
 import net.minecraft.item.ItemStack;
-import net.shadowfacts.yeoldetanks.YeOldeTanks;
+
+import static net.minecraft.init.Items.*;
+
+import static net.shadowfacts.yeoldetanks.YeOldeTanks.blocks;
+import static net.shadowfacts.yeoldetanks.YeOldeTanks.items;
+
+import static cpw.mods.fml.common.registry.GameRegistry.addShapedRecipe;
+import static cpw.mods.fml.common.registry.GameRegistry.addShapelessRecipe;
 
 /**
  * @author shadowfacts
@@ -11,8 +17,9 @@ import net.shadowfacts.yeoldetanks.YeOldeTanks;
 public class YOTRecipes {
 
 	public static void register() {
-		GameRegistry.addShapelessRecipe(new ItemStack(YeOldeTanks.items.dippingStick), YeOldeTanks.blocks.barrel, Items.stick);
-		GameRegistry.addShapedRecipe(new ItemStack(YeOldeTanks.blocks.barrel), "I I", "I I", "ICI", 'I', Items.iron_ingot, 'C', Items.cauldron);
+		addShapelessRecipe(new ItemStack(items.dippingStick), blocks.barrel, stick);
+		addShapedRecipe(new ItemStack(blocks.barrel), "I I", "I I", "ICI", 'I', iron_ingot, 'C', cauldron);
+		addShapedRecipe(new ItemStack(items.infiniteWaterBucket), "I I", "BIB", 'I', iron_ingot, 'B', water_bucket);
 	}
 
 }
