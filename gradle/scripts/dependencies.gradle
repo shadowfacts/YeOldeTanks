@@ -16,6 +16,10 @@ repositories {
 		name "ProfMobius"
 		url "http://mobiusstrip.eu/maven/"
 	}
+	maven {
+		name "OpenComputers"
+		url "http://maven.cil.li"
+	}
 
 	ivy {
 		name "CoFHLib"
@@ -58,5 +62,7 @@ dependencies {
 	compile group: 'cofh', name: 'ThermalFoundation', version: "[${config.mc_version}]${config.tf_version}", ext: 'jar'
 	compile group: 'cofh', name: 'ThermalExpansion', version: "[${config.mc_version}]${config.te_version}", ext: 'jar'
 	compile group: 'cofh', name: 'ThermalDynamics', version: "[${config.mc_version}]${config.td_version}", ext: 'jar'
+
+	compile group: "li.cil.oc", name: "OpenComputers", version: config.oc_version, classifier:  "dev"
 	
 }

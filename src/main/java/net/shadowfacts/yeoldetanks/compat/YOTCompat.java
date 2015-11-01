@@ -6,6 +6,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.compat.modules.CompatWaila;
+import net.shadowfacts.yeoldetanks.compat.modules.computercraft.CompatComputerCraft;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -20,7 +21,7 @@ public class YOTCompat {
 	private static List<Class> modules = new ArrayList<>();
 
 	public static void registerModules() {
-
+		register(CompatComputerCraft.class);
 	}
 
 	public static void registerClientModules() {
