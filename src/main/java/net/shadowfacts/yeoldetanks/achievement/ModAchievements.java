@@ -17,6 +17,8 @@ public class ModAchievements {
 	public static Achievement craftInfiniteWaterBucket;
 
 	public static void registerAchievements() {
+		YeOldeTanks.log.info("Registering achievements");
+
 		craftBarrel = new Achievement("yot.craftBarrel", "yot.craftBarrel", 0, 0, YeOldeTanks.blocks.barrel, null)
 				.initIndependentStat().registerStat();
 

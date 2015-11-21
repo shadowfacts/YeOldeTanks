@@ -9,7 +9,9 @@ import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
  */
 public class ModEntities {
 
-	public static void init() {
+	public static void preInit() {
+		YeOldeTanks.log.info("Registering entities");
+
 		int id = 0;
 
 		EntityRegistry.registerModEntity(EntityBarrelMinecart.class, "yot_barrel_minecart", id++, YeOldeTanks.instance, 80, 3, true);

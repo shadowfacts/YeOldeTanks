@@ -17,22 +17,16 @@ import net.shadowfacts.yeoldetanks.compat.YOTCompat;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
-		YeOldeTanks.log.info("Initializing blocks");
 		YeOldeTanks.blocks.preInit(event);
 
-		YeOldeTanks.log.info("Initializing items");
 		YeOldeTanks.items.preInit(event);
 
-		YeOldeTanks.log.info("Registering tile entities");
 		registerTileEntities();
 
-		YeOldeTanks.log.info("Registering recipes");
-		ModRecipes.register();
+		ModRecipes.preInit();
 
-		YeOldeTanks.log.info("Registering entities");
-		ModEntities.init();
+		ModEntities.preInit();
 
-		YeOldeTanks.log.info("Registering achievements");
 		ModAchievements.registerAchievements();
 
 		YOTCompat.registerModules();
@@ -48,9 +42,12 @@ public class CommonProxy {
 
 	public void postInit(FMLPostInitializationEvent event) {
 		YOTCompat.postInit(event);
+		ModRecipes.postInit();
 	}
 
 	private void registerTileEntities() {
+		YeOldeTanks.log.info("Registering tile entities");
+
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, YeOldeTanks.modId + ".tileentity.barrel");
 	}
 
