@@ -14,12 +14,13 @@ import static cpw.mods.fml.common.registry.GameRegistry.addShapelessRecipe;
 /**
  * @author shadowfacts
  */
-public class YOTRecipes {
+public class ModRecipes {
 
 	public static void register() {
 		addShapelessRecipe(new ItemStack(items.dippingStick), blocks.barrel, stick);
 		addShapedRecipe(new ItemStack(blocks.barrel), "I I", "I I", "ICI", 'I', iron_ingot, 'C', cauldron);
 		addShapedRecipe(new ItemStack(items.infiniteWaterBucket), "I I", "BIB", 'I', iron_ingot, 'B', water_bucket);
+		addShapelessRecipe(new ItemStack(items.barrelMinecart), minecart, blocks.barrel);
 	}
 
 }

@@ -10,6 +10,7 @@ public class ModItems {
 
 	public ItemDippingStick dippingStick;
 	public ItemInfiniteWaterBucket infiniteWaterBucket;
+	public ItemBarrelMinecart barrelMinecart;
 
 	public void preInit(FMLPreInitializationEvent event) {
 		createItems();
@@ -19,11 +20,13 @@ public class ModItems {
 	private void createItems() {
 		dippingStick = new ItemDippingStick();
 		infiniteWaterBucket = new ItemInfiniteWaterBucket();
+		barrelMinecart = new ItemBarrelMinecart();
 	}
 
 	private void registerItems() {
 		GameRegistry.registerItem(dippingStick, "yot.dippingstick");
 		GameRegistry.registerItem(infiniteWaterBucket, "yot.infiniteWaterBucket");
+		GameRegistry.registerItem(barrelMinecart, "yot.barrelminecart");
 	}
 
 }

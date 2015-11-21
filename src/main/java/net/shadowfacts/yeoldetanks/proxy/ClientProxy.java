@@ -5,7 +5,9 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelTESR;
+import net.shadowfacts.yeoldetanks.client.render.minecart.RenderBarrelMinecart;
 import net.shadowfacts.yeoldetanks.compat.YOTCompat;
+import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 /**
  * @author shadowfacts
@@ -21,6 +23,8 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		registerTESRs();
 		registerISBRHs();
+
+		RenderingRegistry.registerEntityRenderingHandler(EntityBarrelMinecart.class, new RenderBarrelMinecart());
 	}
 
 	private void registerTESRs() {

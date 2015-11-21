@@ -5,8 +5,21 @@ tile.yot.barrel.name=Barrel
 item.yot.dippingstick.name=Dipping Stick
 item.yot.infiniteWaterBucket.name=Infinite Water Bucket
 
+# Entities
+entity.YeOldeTanks.yot_barrel_minecart.name=Minecart with Barrel
+
 # Config
 yot.config.ctgy.general=General
 
 # Creative Tabs
 itemGroup.yot=YeOldeTanks
+
+# Achievements
+achievement.yot.craftBarrel=Better Than Drums™
+achievement.yot.craftBarrel.desc=Craft a Barrel
+achievement.yot.craftDippingStick=Dippity Dip, Dip, Dip
+achievement.yot.craftDippingStick.desc=Craft a Dipping Stick
+achievement.yot.craftBarrelCart=Fluid Transport
+achievement.yot.craftBarrelCart.desc=Craft a Barrel Minecart
+achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
+achievement.yot.craftInfiniteWaterBucket.desc=Craft an Infinite Water Bucket

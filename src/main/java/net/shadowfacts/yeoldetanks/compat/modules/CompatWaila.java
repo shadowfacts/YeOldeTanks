@@ -6,6 +6,8 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import net.shadowfacts.yeoldetanks.block.barrel.BarrelDataProvider;
 import net.shadowfacts.yeoldetanks.block.barrel.BlockBarrel;
 import net.shadowfacts.yeoldetanks.compat.Compat;
+import net.shadowfacts.yeoldetanks.entity.barrelminecart.BarrelMinecartEntityProvider;
+import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 /**
  * @author shadowfacts
@@ -20,6 +22,7 @@ public class CompatWaila {
 
 	public static void callback(IWailaRegistrar registrar) {
 		registrar.registerBodyProvider(new BarrelDataProvider(), BlockBarrel.class);
+		registrar.registerBodyProvider(new BarrelMinecartEntityProvider(), EntityBarrelMinecart.class);
 	}
 
 }

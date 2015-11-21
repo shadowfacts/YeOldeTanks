@@ -4,7 +4,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.shadowfacts.yeoldetanks.recipe.YOTRecipes;
+import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
+import net.shadowfacts.yeoldetanks.entity.ModEntities;
+import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.compat.YOTCompat;
@@ -21,11 +23,17 @@ public class CommonProxy {
 		YeOldeTanks.log.info("Initializing items");
 		YeOldeTanks.items.preInit(event);
 
-		YeOldeTanks.log.info("Registering TileEntities");
+		YeOldeTanks.log.info("Registering tile entities");
 		registerTileEntities();
 
 		YeOldeTanks.log.info("Registering recipes");
-		registerRecipes();
+		ModRecipes.register();
+
+		YeOldeTanks.log.info("Registering entities");
+		ModEntities.init();
+
+		YeOldeTanks.log.info("Registering achievements");
+		ModAchievements.registerAchievements();
 
 		YOTCompat.registerModules();
 		registerClientModules();
@@ -44,10 +52,6 @@ public class CommonProxy {
 
 	private void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, YeOldeTanks.modId + ".tileentity.barrel");
-	}
-
-	private void registerRecipes() {
-		YOTRecipes.register();
 	}
 
 	protected void registerClientModules() {}

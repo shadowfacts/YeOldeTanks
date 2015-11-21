@@ -18,11 +18,12 @@ import org.apache.logging.log4j.Logger;
 /**
  * @author shadowfacts
  */
-@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, guiFactory = YeOldeTanks.guiFactory)
+@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = YeOldeTanks.guiFactory)
 public class YeOldeTanks {
 
 	public static final String modId = "YeOldeTanks";
 	public static final String name = "Ye Olde Tanks";
+	public static final String version = "1.2.0";
 	private static final String proxyPrefix = "net.shadowfacts.yeoldetanks.proxy.";
 	public static final String guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory";
 

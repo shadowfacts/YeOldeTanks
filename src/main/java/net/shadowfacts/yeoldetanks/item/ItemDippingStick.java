@@ -3,16 +3,19 @@ package net.shadowfacts.yeoldetanks.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+import net.shadowfacts.yeoldetanks.achievement.AchievementProvider;
+import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 
 /**
  * @author shadowfacts
  */
-public class ItemDippingStick extends Item {
+public class ItemDippingStick extends Item implements AchievementProvider {
 
 	public ItemDippingStick() {
 		setUnlocalizedName("yot.dippingstick");
@@ -40,5 +43,10 @@ public class ItemDippingStick extends Item {
 		}
 
 		return false;
+	}
+
+	@Override
+	public Achievement getAchievement() {
+		return ModAchievements.craftDippingStick;
 	}
 }

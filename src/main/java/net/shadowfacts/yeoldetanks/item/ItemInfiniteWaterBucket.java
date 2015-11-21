@@ -4,14 +4,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.shadowfacts.yeoldetanks.achievement.AchievementProvider;
+import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 
 /**
  * @author shadowfacts
  */
-public class ItemInfiniteWaterBucket extends ItemBucket{
+public class ItemInfiniteWaterBucket extends ItemBucket implements AchievementProvider {
 
 	public ItemInfiniteWaterBucket() {
 		super(Blocks.water);
@@ -37,5 +40,10 @@ public class ItemInfiniteWaterBucket extends ItemBucket{
 
 		player.swingItem();
 		return stack;
+	}
+
+	@Override
+	public Achievement getAchievement() {
+		return ModAchievements.craftInfiniteWaterBucket;
 	}
 }

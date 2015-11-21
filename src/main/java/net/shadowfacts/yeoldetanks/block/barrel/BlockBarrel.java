@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
@@ -16,6 +17,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+import net.shadowfacts.yeoldetanks.achievement.AchievementProvider;
+import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
 
 import java.util.ArrayList;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 /**
  * @author shadowfacts
  */
-public class BlockBarrel extends Block implements ITileEntityProvider {
+public class BlockBarrel extends Block implements ITileEntityProvider, AchievementProvider {
 
 	public BlockBarrel() {
 		super(Material.rock);
@@ -153,5 +156,10 @@ public class BlockBarrel extends Block implements ITileEntityProvider {
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
 		return new TileEntityBarrel();
+	}
+
+	@Override
+	public Achievement getAchievement() {
+		return ModAchievements.craftBarrel;
 	}
 }
