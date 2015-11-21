@@ -24,10 +24,7 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	public static final int FLUID_AMOUNT = 16;
 	public static final int FLUID_TYPE = 15;
 	public static final int FLUID_CAPACITY = 14;
-//	private static final int LID = 13;
 
-//	public boolean lid;
-//	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
 	public EntityFluidTank tank;
 
 	public EntityBarrelMinecart(World world) {
@@ -52,9 +49,6 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 
 	@Override
 	public boolean interactFirst(EntityPlayer player) {
-//		if (player.getHeldItem() == null && player.isSneaking()) {
-//			lid = !lid;
-//		} else {
 		if (!player.isSneaking()) {
 			if (CoFHUtils.fillHandlerWithContainer(player.worldObj, this, player)) {
 				onEntityUpdate();
@@ -69,14 +63,12 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	protected void writeEntityToNBT(NBTTagCompound tag) {
 		super.writeEntityToNBT(tag);
 		tank.writeToNBT(tag);
-//		tag.setBoolean("lid", lid);
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound tag) {
 		super.readEntityFromNBT(tag);
 		tank.readFromNBT(tag);
-//		lid = tag.getBoolean("lid");
 	}
 
 	@Override

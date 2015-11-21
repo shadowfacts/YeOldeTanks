@@ -77,7 +77,9 @@ public class EntityFluidTank implements IFluidTank {
 
 	@Override
 	public FluidStack getFluid() {
-		return new FluidStack(getFluidFromDataWatcher(), getFluidAmount());
+		Fluid fluid = getFluidFromDataWatcher();
+		if (fluid == null) return null;
+		return new FluidStack(fluid, getFluidAmount());
 	}
 
 	@Override
@@ -125,10 +127,10 @@ public class EntityFluidTank implements IFluidTank {
 		int filled = capacity - fluid.amount;
 
 		if (resource.amount < filled) {
-			fluid.amount += resource.amount;
+			setFluidAmount(fluid.amount + resource.amount);
 			filled = resource.amount;
 		} else {
-			fluid.amount = capacity;
+			setFluidAmount(capacity);
 		}
 
 		return filled;
@@ -149,8 +151,8 @@ public class EntityFluidTank implements IFluidTank {
 		FluidStack stack = new FluidStack(fluid, drained);
 
 		if (doDrain) {
-			fluid.amount -= drained;
-			if (fluid.amount <= 0) {
+			setFluidAmount(fluid.amount - drained);
+			if (getFluidAmount() <= 0) {
 				setFluid(null);
 			}
 		}
