@@ -21,6 +21,7 @@ public class ItemBarrelMinecart extends Item implements AchievementProvider {
 	public ItemBarrelMinecart() {
 		setMaxStackSize(1);
 		setUnlocalizedName("yot.barrelminecart");
+		setTextureName("yeoldetanks:barrelMinecart");
 		setCreativeTab(YeOldeTanks.tab);
 	}
 

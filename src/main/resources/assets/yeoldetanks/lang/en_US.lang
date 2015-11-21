@@ -4,6 +4,7 @@ tile.yot.barrel.name=Barrel
 # Items
 item.yot.dippingstick.name=Dipping Stick
 item.yot.infiniteWaterBucket.name=Infinite Water Bucket
+item.yot.barrelminecart.name=Minecart with Barrel
 
 # Entities
 entity.YeOldeTanks.yot_barrel_minecart.name=Minecart with Barrel
