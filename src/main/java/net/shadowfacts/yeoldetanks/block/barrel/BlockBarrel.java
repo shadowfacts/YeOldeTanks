@@ -33,12 +33,7 @@ public class BlockBarrel extends Block implements ITileEntityProvider, Achieveme
 		setBlockName("yot.barrel");
 		setCreativeTab(YeOldeTanks.tab);
 		setHardness(.5f);
-
-	}
-
-	@Override
-	public IIcon getIcon(int side, int meta) {
-		return Blocks.iron_block.getIcon(side, meta);
+		setBlockTextureName("iron_block");
 	}
 
 	@Override
