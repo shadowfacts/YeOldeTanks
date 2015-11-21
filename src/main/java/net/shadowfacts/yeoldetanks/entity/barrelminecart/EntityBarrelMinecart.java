@@ -74,7 +74,11 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	@Override
 	public void killMinecart(DamageSource damageSource) {
 		super.killMinecart(damageSource);
-		func_145778_a(Item.getItemFromBlock(YeOldeTanks.blocks.barrel), 1, 0);
+//		func_145778_a(Item.getItemFromBlock(YeOldeTanks.blocks.barrel), 1, 0);
+		ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
+		stack.stackTagCompound = new NBTTagCompound();
+		tank.writeToNBT(stack.stackTagCompound);
+		entityDropItem(stack, 0);
 	}
 
 	@Override
