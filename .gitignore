@@ -9,6 +9,7 @@
 hs_err_pid*
 
 /run
+!/run/mods/tabula/saves/*
 /logs
 
 # windows
