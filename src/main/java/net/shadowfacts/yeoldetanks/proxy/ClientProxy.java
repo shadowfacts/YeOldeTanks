@@ -6,7 +6,7 @@ import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelTESR;
 import net.shadowfacts.yeoldetanks.client.render.minecart.RenderBarrelMinecart;
-import net.shadowfacts.yeoldetanks.compat.YOTCompat;
+import net.shadowfacts.yeoldetanks.compat.ModCompat;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 /**
@@ -16,7 +16,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	protected void registerClientModules() {
-		YOTCompat.registerClientModules();
+		ModCompat.registerClientModules();
 	}
 
 	@Override

@@ -50,13 +50,4 @@ public class ItemBlockBarrel extends ItemBlock {
 		tooltip.add(fluid.amount + "mb / " + YOTConfig.barrelCapacity + "mb");
 	}
 
-//	@Override
-//	public ItemStack getContainerItem(ItemStack itemStack) {
-//		return itemStack;
-//	}
-//
-//	@Override
-//	public boolean hasContainerItem(ItemStack stack) {
-//		return true;
-//	}
 }

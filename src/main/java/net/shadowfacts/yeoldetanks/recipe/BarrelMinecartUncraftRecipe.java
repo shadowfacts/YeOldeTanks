@@ -15,18 +15,17 @@ public class BarrelMinecartUncraftRecipe implements IRecipe {
 	@Override
 	public boolean matches(InventoryCrafting crafting, World world) {
 		int cartCount = 0;
-		boolean other = false;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
 			if (stack != null) {
 				if (stack.getItem() == YeOldeTanks.items.barrelMinecart) {
 					cartCount++;
 				} else {
-					other = true;
+					return false;
 				}
 			}
 		}
-		return cartCount == 1 && !other;
+		return cartCount == 1;
 	}
 
 	@Override

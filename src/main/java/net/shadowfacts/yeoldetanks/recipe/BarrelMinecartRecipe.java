@@ -18,7 +18,6 @@ public class BarrelMinecartRecipe implements IRecipe {
 	public boolean matches(InventoryCrafting crafting, World world) {
 		int cartCount = 0;
 		int barrelCount = 0;
-		boolean other = false;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
 			if (stack != null) {
@@ -27,12 +26,12 @@ public class BarrelMinecartRecipe implements IRecipe {
 				} else if (stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
 					barrelCount++;
 				} else {
-					other = true;
+					return false;
 				}
 			}
 		}
 
-		return cartCount == 1 && barrelCount == 1 && !other;
+		return cartCount == 1 && barrelCount == 1;
 	}
 
 	@Override

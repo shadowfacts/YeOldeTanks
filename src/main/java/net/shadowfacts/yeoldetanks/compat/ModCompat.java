@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+import net.shadowfacts.yeoldetanks.compat.modules.CompatThermalExpansion;
 import net.shadowfacts.yeoldetanks.compat.modules.CompatWaila;
 import net.shadowfacts.yeoldetanks.compat.modules.computercraft.CompatComputerCraft;
 
@@ -16,12 +17,13 @@ import java.util.List;
 /**
  * @author shadowfacts
  */
-public class YOTCompat {
+public class ModCompat {
 
 	private static List<Class> modules = new ArrayList<>();
 
 	public static void registerModules() {
 		register(CompatComputerCraft.class);
+		register(CompatThermalExpansion.class);
 	}
 
 	public static void registerClientModules() {

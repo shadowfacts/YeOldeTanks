@@ -9,7 +9,7 @@ import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
-import net.shadowfacts.yeoldetanks.compat.YOTCompat;
+import net.shadowfacts.yeoldetanks.compat.ModCompat;
 
 /**
  * @author shadowfacts
@@ -23,25 +23,24 @@ public class CommonProxy {
 
 		registerTileEntities();
 
-		ModRecipes.preInit();
-
 		ModEntities.preInit();
 
 		ModAchievements.registerAchievements();
 
-		YOTCompat.registerModules();
+		ModCompat.registerModules();
 		registerClientModules();
-		YOTCompat.preInit(event);
+		ModCompat.preInit(event);
 
 		registerRenderers();
 	}
 
 	public void init(FMLInitializationEvent event) {
-		YOTCompat.init(event);
+		ModCompat.init(event);
+		ModRecipes.init();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		YOTCompat.postInit(event);
+		ModCompat.postInit(event);
 		ModRecipes.postInit();
 	}
 
