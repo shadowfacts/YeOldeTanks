@@ -1,8 +1,8 @@
 package net.shadowfacts.yeoldetanks.recipe;
 
-import li.cil.oc.common.block.Item;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
