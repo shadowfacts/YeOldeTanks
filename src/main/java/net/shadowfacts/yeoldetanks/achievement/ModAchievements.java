@@ -15,6 +15,7 @@ public class ModAchievements {
 	public static Achievement craftDippingStick;
 	public static Achievement craftBarrelCart;
 	public static Achievement craftInfiniteWaterBucket;
+	public static Achievement craftCreativeBarrel;
 
 	public static void registerAchievements() {
 		YeOldeTanks.log.info("Registering achievements");
@@ -31,8 +32,11 @@ public class ModAchievements {
 		craftInfiniteWaterBucket = new Achievement("yot.craftInfiniteWaterBucket", "yot.craftInfiniteWaterBucket", -2, 0, YeOldeTanks.items.infiniteWaterBucket, null)
 				.initIndependentStat().registerStat();
 
+		craftCreativeBarrel = new Achievement("yot.craftCreativeBarrel", "yot.craftCreativeBarrel", 0, -10, YeOldeTanks.blocks.creativeBarrel, null)
+				.initIndependentStat().registerStat();
 
-		page = new AchievementPage("Ye Olde Tanks", craftBarrel, craftDippingStick, craftBarrelCart, craftInfiniteWaterBucket);
+
+		page = new AchievementPage("Ye Olde Tanks", craftBarrel, craftDippingStick, craftBarrelCart, craftInfiniteWaterBucket, craftCreativeBarrel);
 		AchievementPage.registerAchievementPage(page);
 	}
 

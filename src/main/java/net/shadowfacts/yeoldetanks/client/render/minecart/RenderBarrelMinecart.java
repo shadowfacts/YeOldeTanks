@@ -18,8 +18,6 @@ import org.lwjgl.opengl.GL11;
  */
 public class RenderBarrelMinecart extends RenderMinecart {
 
-//	private static final TileEntityBarrel te = new TileEntityBarrel();
-
 	private static final ResourceLocation texture = new ResourceLocation("yeoldetanks", "textures/model/barrel.png");
 	private ModelBarrel model = new ModelBarrel();
 	private ModelFluid modelFluid = new ModelFluid();
@@ -29,10 +27,6 @@ public class RenderBarrelMinecart extends RenderMinecart {
 		EntityBarrelMinecart barrel = (EntityBarrelMinecart)entity;
 
 		GL11.glPushMatrix();
-
-//		GL11.glTranslatef(-.5f, -.65f, -.5f);
-//
-//		GL11.glTranslatef(.5f, 1.5f, .5f);
 
 		GL11.glTranslatef(0, .85f, 0);
 

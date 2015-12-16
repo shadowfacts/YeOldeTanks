@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
+import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -48,6 +49,7 @@ public class CommonProxy {
 		YeOldeTanks.log.info("Registering tile entities");
 
 		GameRegistry.registerTileEntity(TileEntityBarrel.class, YeOldeTanks.modId + ".tileentity.barrel");
+		GameRegistry.registerTileEntity(TileEntityCreativeBarrel.class, YeOldeTanks.modId + ".tileentity.creativebarrel");
 	}
 
 	protected void registerClientModules() {}

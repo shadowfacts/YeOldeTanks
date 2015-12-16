@@ -38,6 +38,8 @@ public class ModRecipes {
 		addRecipe(new BarrelMinecartRecipe());
 		addRecipe(new BarrelMinecartUncraftRecipe());
 		addShapelessRecipe(new ItemStack(items.dippingStick), blocks.barrel, stick);
+
+		addShapelessRecipe(new ItemStack(blocks.creativeBarrel), Blocks.dirt);
 	}
 
 	@SuppressWarnings("unchecked")

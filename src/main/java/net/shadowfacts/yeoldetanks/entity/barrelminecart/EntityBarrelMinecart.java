@@ -20,11 +20,6 @@ import net.shadowfacts.yeoldetanks.entity.EntityFluidTank;
  */
 public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler {
 
-
-	public static final int FLUID_AMOUNT = 16;
-	public static final int FLUID_TYPE = 15;
-	public static final int FLUID_CAPACITY = 14;
-
 	public EntityFluidTank tank;
 
 	public EntityBarrelMinecart(World world) {
@@ -74,7 +69,6 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	@Override
 	public void killMinecart(DamageSource damageSource) {
 		super.killMinecart(damageSource);
-//		func_145778_a(Item.getItemFromBlock(YeOldeTanks.blocks.barrel), 1, 0);
 		ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
 		stack.stackTagCompound = new NBTTagCompound();
 		tank.writeToNBT(stack.stackTagCompound);

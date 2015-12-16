@@ -138,7 +138,6 @@ public class EntityFluidTank implements IFluidTank {
 
 	@Override
 	public FluidStack drain(int maxDrain, boolean doDrain) {
-		int capacity = getCapacity();
 		FluidStack fluid = getFluid();
 
 		if (fluid == null) return null;

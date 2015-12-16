@@ -5,12 +5,10 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -65,20 +63,13 @@ public class BlockBarrel extends Block implements ITileEntityProvider, Achieveme
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem() == null && player.isSneaking()) {
-			TileEntity te = world.getTileEntity(x, y, z);
-			if (te instanceof TileEntityBarrel) {
-				TileEntityBarrel barrel = (TileEntityBarrel)te;
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te != null && te instanceof TileEntityBarrel) {
+			TileEntityBarrel barrel = (TileEntityBarrel)te;
+
+			if (player.getHeldItem() == null && player.isSneaking()) {
 				barrel.lid = !barrel.lid;
-			}
-		} else {
-
-			TileEntity te = world.getTileEntity(x, y, z);
-
-			if (te != null && te instanceof TileEntityBarrel) {
-
-				TileEntityBarrel barrel = (TileEntityBarrel)te;
-
+			} else {
 				if (CoFHUtils.fillHandlerWithContainer(world, barrel, player)) {
 					return true;
 				} else if (CoFHUtils.fillContainerFromHandler(world, barrel, player, barrel.tank.getFluid())) {

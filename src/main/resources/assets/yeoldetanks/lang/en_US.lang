@@ -1,5 +1,6 @@
 # Blocks
 tile.yot.barrel.name=Barrel
+tile.yot.creativeBarrel.name=§dCreative Barrel
 
 # Items
 item.yot.dippingstick.name=Dipping Stick
@@ -24,3 +25,5 @@ achievement.yot.craftBarrelCart=Fluid Transport
 achievement.yot.craftBarrelCart.desc=Craft a Barrel Minecart
 achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
 achievement.yot.craftInfiniteWaterBucket.desc=Craft an Infinite Water Bucket
+achievement.yot.craftCreativeBarrel=Cheater!
+achievement.yot.craftCreativeBarrel.desc=Craft a Creative Barrel

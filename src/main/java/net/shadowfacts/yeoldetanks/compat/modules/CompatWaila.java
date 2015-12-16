@@ -5,6 +5,8 @@ import cpw.mods.fml.common.event.FMLInterModComms;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import net.shadowfacts.yeoldetanks.block.barrel.BarrelDataProvider;
 import net.shadowfacts.yeoldetanks.block.barrel.BlockBarrel;
+import net.shadowfacts.yeoldetanks.block.creativebarrel.BlockCreativeBarrel;
+import net.shadowfacts.yeoldetanks.block.creativebarrel.CreativeBarrelDataProvider;
 import net.shadowfacts.yeoldetanks.compat.Compat;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.BarrelMinecartEntityProvider;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
@@ -22,6 +24,7 @@ public class CompatWaila {
 
 	public static void callback(IWailaRegistrar registrar) {
 		registrar.registerBodyProvider(new BarrelDataProvider(), BlockBarrel.class);
+		registrar.registerBodyProvider(new CreativeBarrelDataProvider(), BlockCreativeBarrel.class);
 		registrar.registerBodyProvider(new BarrelMinecartEntityProvider(), EntityBarrelMinecart.class);
 	}
 

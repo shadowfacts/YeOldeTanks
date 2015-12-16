@@ -21,11 +21,11 @@ public class FMLEventHandler {
 	public void onCraft(PlayerEvent.ItemCraftedEvent event) {
 		Item item = event.crafting.getItem();
 		if (item instanceof AchievementProvider) {
-			event.player.addStat(((AchievementProvider)item).getAchievement(), 1);
+			((AchievementProvider)item).grantAchievement(event.player);
 		} else if (item instanceof ItemBlock) {
 			Block block = ((ItemBlock)item).field_150939_a;
 			if (block instanceof AchievementProvider) {
-				event.player.addStat(((AchievementProvider)block).getAchievement(), 1);
+				((AchievementProvider)block).grantAchievement(event.player);
 			}
 		}
 
@@ -61,11 +61,11 @@ public class FMLEventHandler {
 	public void onSmelt(PlayerEvent.ItemSmeltedEvent event) {
 		Item item = event.smelting.getItem();
 		if (item instanceof AchievementProvider) {
-			event.player.addStat(((AchievementProvider)item).getAchievement(), 1);
+			((AchievementProvider)item).grantAchievement(event.player);
 		} else if (item instanceof ItemBlock) {
 			Block block = ((ItemBlock)item).field_150939_a;
 			if (block instanceof AchievementProvider) {
-				event.player.addStat(((AchievementProvider)block).getAchievement(), 1);
+				((AchievementProvider)block).grantAchievement(event.player);
 			}
 		}
 	}
