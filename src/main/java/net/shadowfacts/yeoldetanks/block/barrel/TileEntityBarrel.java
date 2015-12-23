@@ -9,6 +9,7 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedPeripheral;
 import li.cil.oc.api.network.SimpleComponent;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -35,9 +36,18 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeri
 
 	public boolean lid;
 
+	private int ticks = 0;
+
 	@Override
 	public void updateEntity() {
-		if (YOTConfig.autoOutputBottom && tank.getFluid() != null && tank.getFluidAmount() > 0) {
+		if (worldObj.isRemote) {
+			Minecraft.getMinecraft().mcProfiler.startSection("yot.te.barrel");
+		}
+		ticks++;
+		if (YOTConfig.autoOutputBottom &&
+				ticks == 20 &&
+				tank.getFluid() != null && tank.getFluidAmount() > 0) {
+			ticks = 0;
 			TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
 			if (te != null && te instanceof IFluidHandler) {
 				IFluidHandler fluidHandler = (IFluidHandler) te;
@@ -46,6 +56,9 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeri
 					update();
 				}
 			}
+		}
+		if (worldObj.isRemote) {
+			Minecraft.getMinecraft().mcProfiler.endSection();
 		}
 	}
 

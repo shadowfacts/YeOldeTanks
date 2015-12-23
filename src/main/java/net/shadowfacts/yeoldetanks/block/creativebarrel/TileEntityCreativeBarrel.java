@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.block.creativebarrel;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -19,9 +20,15 @@ public class TileEntityCreativeBarrel extends TileEntity implements IFluidHandle
 
 	public boolean lid;
 
+	private int ticks = 0;
+
 	@Override
 	public void updateEntity() {
-		if (YOTConfig.autoOutputBottom && tank.getFluid() != null) {
+		ticks++;
+		if (YOTConfig.autoOutputBottom &&
+				ticks == 20 &&
+				tank.getFluid() != null) {
+			ticks = 0;
 			TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
 			if (te != null && te instanceof IFluidHandler) {
 				IFluidHandler fluidHandler = (IFluidHandler)te;
