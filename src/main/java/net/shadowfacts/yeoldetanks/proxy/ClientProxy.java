@@ -2,6 +2,8 @@ package net.shadowfacts.yeoldetanks.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
@@ -11,6 +13,7 @@ import net.shadowfacts.yeoldetanks.client.render.creativebarrel.CreativeBarrelTE
 import net.shadowfacts.yeoldetanks.client.render.minecart.RenderBarrelMinecart;
 import net.shadowfacts.yeoldetanks.compat.ModCompat;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
+import net.shadowfacts.yeoldetanks.network.PacketUpdateTE;
 
 /**
  * @author shadowfacts
@@ -20,6 +23,12 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	protected void registerClientModules() {
 		ModCompat.registerClientModules();
+	}
+
+	@Override
+	protected void registerPackets(SimpleNetworkWrapper network) {
+		super.registerPackets(network);
+		network.registerMessage(PacketUpdateTE.Handler.class, PacketUpdateTE.class, 0, Side.CLIENT);
 	}
 
 	@Override

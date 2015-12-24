@@ -51,8 +51,8 @@ public class CommonProxy {
 		registerRenderers();
 	}
 
-	private void registerPackets(SimpleNetworkWrapper network) {
-		network.registerMessage(PacketUpdateTE.Handler.class, PacketUpdateTE.class, 0, Side.CLIENT);
+	protected void registerPackets(SimpleNetworkWrapper network) {
+
 	}
 
 	public void init(FMLInitializationEvent event) {
