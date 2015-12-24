@@ -1,6 +1,8 @@
 package net.shadowfacts.yeoldetanks.misc;
 
-import net.minecraftforge.fluids.*;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTank;
 
 /**
  * @author shadowfacts

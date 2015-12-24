@@ -1,6 +1,5 @@
 package net.shadowfacts.yeoldetanks;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -9,10 +8,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.MinecraftForge;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
-import net.shadowfacts.yeoldetanks.event.FMLEventHandler;
-import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
 import net.shadowfacts.yeoldetanks.item.ModItems;
 import net.shadowfacts.yeoldetanks.proxy.CommonProxy;
 import org.apache.logging.log4j.LogManager;

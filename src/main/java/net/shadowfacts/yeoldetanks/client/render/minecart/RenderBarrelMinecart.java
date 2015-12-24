@@ -2,16 +2,12 @@ package net.shadowfacts.yeoldetanks.client.render.minecart;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.entity.RenderMinecart;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.item.EntityMinecart;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelFluid;
 import net.shadowfacts.yeoldetanks.client.render.RenderUtils;
-import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelTESR;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 import org.lwjgl.opengl.GL11;
 

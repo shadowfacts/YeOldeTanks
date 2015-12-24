@@ -10,16 +10,16 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.minecraftforge.common.MinecraftForge;
 import net.shadowfacts.yeoldetanks.YOTConfig;
+import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
+import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
+import net.shadowfacts.yeoldetanks.compat.ModCompat;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.event.FMLEventHandler;
 import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
 import net.shadowfacts.yeoldetanks.network.PacketUpdateTE;
 import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
-import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
-import net.shadowfacts.yeoldetanks.compat.ModCompat;
 
 /**
  * @author shadowfacts

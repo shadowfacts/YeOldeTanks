@@ -16,9 +16,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cpw.mods.fml.common.registry.GameRegistry.*;
+import static cpw.mods.fml.common.registry.GameRegistry.addRecipe;
+import static cpw.mods.fml.common.registry.GameRegistry.addShapelessRecipe;
 import static net.minecraft.init.Items.*;
-
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.blocks;
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.items;
 
