@@ -3,12 +3,14 @@ package net.shadowfacts.yeoldetanks.block.creativebarrel;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -20,6 +22,7 @@ import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.client.render.creativebarrel.CreativeBarrelISBRH;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,6 +36,34 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, A
 		setCreativeTab(YeOldeTanks.tab);
 		setHardness(.5f);
 		setBlockTextureName("iron_block");
+	}
+
+	@Override
+	public void addCollisionBoxesToList(World world, int x, int y, int z, AxisAlignedBB aabb, List list, Entity entity) {
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+		float f = 0.05f;
+
+		TileEntity te = world.getTileEntity(x, y, z);
+		if (te instanceof TileEntityCreativeBarrel) {
+			if (((TileEntityCreativeBarrel)te).lid) {
+				this.setBlockBounds(0, 1, 0, 1, 1, 1);
+				super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+			}
+		}
+
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+		this.setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+		this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
+		super.addCollisionBoxesToList(world, x, y, z, aabb, list, entity);
+
+		setBlockBounds(0, 0, 0, 1, 1, 1);
+
+		this.setBlockBoundsForItemRender();
 	}
 
 	@Override
