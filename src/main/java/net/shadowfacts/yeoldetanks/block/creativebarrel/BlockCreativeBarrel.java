@@ -67,6 +67,24 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, A
 	}
 
 	@Override
+	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+		if (entity.posX > x && entity.posX < x + 1 &&
+				entity.posY > y && entity.posY < y + 1 &&
+				entity.posZ > z && entity.posZ < z + 1) {
+			TileEntity te = world.getTileEntity(x, y, z);
+			if (te instanceof TileEntityCreativeBarrel) {
+				TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
+				if (barrel.tank.getFluid() != null) {
+					Block fluidBlock = barrel.tank.getFluid().getFluid().getBlock();
+					if (fluidBlock != null) {
+						fluidBlock.onEntityCollidedWithBlock(world, x, y, z, entity);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		return new ArrayList<>();
 	}
