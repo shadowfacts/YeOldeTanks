@@ -16,15 +16,19 @@ public class YOTTileEntity extends TileEntity {
 	}
 
 	public void sendNetworkUpdate(NBTTagCompound tag) {
-		PacketUpdateTE msg = new PacketUpdateTE(xCoord, yCoord, zCoord, tag);
-		NetworkRegistry.TargetPoint point = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64);
-		YeOldeTanks.network.sendToAllAround(msg, point);
+		if (!worldObj.isRemote) {
+			PacketUpdateTE msg = new PacketUpdateTE(xCoord, yCoord, zCoord, tag);
+			NetworkRegistry.TargetPoint point = new NetworkRegistry.TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 64);
+			YeOldeTanks.network.sendToAllAround(msg, point);
+		}
 	}
 
 	public void sendNetworkUpdate() {
-		NBTTagCompound tag = new NBTTagCompound();
-		writeToNBT(tag);
-		sendNetworkUpdate(tag);
+		if (!worldObj.isRemote) {
+			NBTTagCompound tag = new NBTTagCompound();
+			writeToNBT(tag);
+			sendNetworkUpdate(tag);
+		}
 	}
 
 }
