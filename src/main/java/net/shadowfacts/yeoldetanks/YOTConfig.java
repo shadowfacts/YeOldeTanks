@@ -26,6 +26,9 @@ public class YOTConfig {
 	@ConfigProperty(comment = "Automatically output to the bottom")
 	public static boolean autoOutputBottom = true;
 
+	@ConfigProperty(comment = "Mystical, magical stuff and things", category = "misc", name = "#BlameEllpeck")
+	public static boolean blameEllpeck = false;
+
 	public static void init(FMLPreInitializationEvent event) {
 		YeOldeTanks.log.info("Loading config");
 		ConfigManager.instance.configDirPath = event.getModConfigurationDirectory().getAbsolutePath();

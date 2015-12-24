@@ -25,6 +25,7 @@ public class YOTConfigGui extends GuiConfig {
 		List<IConfigElement> list = new ArrayList<>();
 
 		list.add(getCategory("general", StringHelper.localize("yot.config.ctgy.general"), ""));
+		list.add(getCategory("misc", StringHelper.localize("yot.config.ctgy.misc"), ""));
 
 		return list;
 	}

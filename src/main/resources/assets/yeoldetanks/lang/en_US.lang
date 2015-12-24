@@ -12,6 +12,7 @@ entity.YeOldeTanks.yot_barrel_minecart.name=Minecart with Barrel
 
 # Config
 yot.config.ctgy.general=General
+yot.config.ctgy.misc=Miscellaneous
 
 # Creative Tabs
 itemGroup.yot=YeOldeTanks
