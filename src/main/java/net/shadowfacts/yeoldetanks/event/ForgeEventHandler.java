@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.event;
 
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -34,43 +35,43 @@ public class ForgeEventHandler {
 	public void renderPlayer(RenderPlayerEvent.Specials.Post event) {
 		EntityPlayer player = event.entityPlayer;
 
-		if(player.isInvisible() || player.getHideCape()){
-			return;
+		if (!player.isInvisible() && !player.getHideCape() &&
+				player.getUniqueID().equals(shadowfacts)) {
+
+			float size = 0.3F;
+
+			double bobHeight = 70;
+			double theTime = Minecraft.getSystemTime();
+			double time = theTime / 50;
+
+			if (time - bobHeight >= lastTime) {
+				this.lastTime = time;
+			}
+
+			GL11.glPushMatrix();
+			GL11.glTranslated(0D, -0.775D, 0D);
+			GL11.glRotatef(180F, 1.0F, 0.0F, 1.0F);
+			GL11.glScalef(size, size, size);
+
+			if (time - (bobHeight / 2) >= lastTime) {
+				GL11.glTranslated(0, (time - lastTime) / 100, 0);
+			} else {
+				GL11.glTranslated(0, -(time - lastTime) / 100 + bobHeight / 100, 0);
+			}
+
+			GL11.glRotated(theTime / 20, 0, 1, 0);
+			GL11.glTranslatef(-0.5f, 0, -0.5f);
+
+			GL11.glDisable(GL11.GL_LIGHTING);
+			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
+			RenderBlocks.getInstance().renderBlockAsItem(YeOldeTanks.blocks.barrel, 0, 1F);
+			GL11.glEnable(GL11.GL_LIGHTING);
+
+			GL11.glPopMatrix();
 		}
-
-		float size = 0.3F;
-
-		double bobHeight = 70;
-		double theTime = Minecraft.getSystemTime();
-		double time = theTime/50;
-
-		if(time-bobHeight >= lastTime){
-			this.lastTime = time;
-		}
-
-		GL11.glPushMatrix();
-		GL11.glTranslated(0D, -0.775D, 0D);
-		GL11.glRotatef(180F, 1.0F, 0.0F, 1.0F);
-		GL11.glScalef(size, size, size);
-
-		if(time - (bobHeight / 2) >= lastTime){
-			GL11.glTranslated(0, (time - lastTime)/100, 0);
-		} else {
-			GL11.glTranslated(0, -(time - lastTime) / 100 + bobHeight / 100, 0);
-		}
-
-		GL11.glRotated(theTime / 20, 0, 1, 0);
-		GL11.glTranslatef(-0.5f, 0, -0.5f);
-
-		GL11.glDisable(GL11.GL_LIGHTING);
-		Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-		RenderBlocks.getInstance().renderBlockAsItem(YeOldeTanks.blocks.barrel, 0, 1F);
-		GL11.glEnable(GL11.GL_LIGHTING);
-
-		GL11.glPopMatrix();
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void handleNameFormat(PlayerEvent.NameFormat event) {
 		if (event.entityPlayer.getUniqueID().equals(shadowfacts)) {
 			event.displayname = StringHelper.PURPLE + event.displayname + StringHelper.WHITE;
