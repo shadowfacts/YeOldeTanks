@@ -1,5 +1,7 @@
 package net.shadowfacts.yeoldetanks.entity.barrelminecart;
 
+import cpw.mods.fml.common.Optional;
+import mods.railcraft.api.carts.IFluidCart;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +20,8 @@ import net.shadowfacts.yeoldetanks.entity.EntityFluidTank;
 /**
  * @author shadowfacts
  */
-public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler {
+@Optional.Interface(iface = "mods.railcraft.api.carts.IFluidCart", modid = "Railcraft")
+public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler, IFluidCart {
 
 	public EntityFluidTank tank;
 
@@ -122,5 +125,27 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	@Override
 	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
 		return new FluidTankInfo[]{ tank.getInfo() };
+	}
+
+
+//	IFluidCart
+	@Override
+	public boolean canPassFluidRequests(Fluid fluid) {
+		return false;
+	}
+
+	@Override
+	public boolean canAcceptPushedFluid(EntityMinecart requester, Fluid fluid) {
+		return tank.getFluid() != null && tank.getFluidAmount() > 0 && tank.getFluid().getFluid().equals(fluid);
+	}
+
+	@Override
+	public boolean canProvidePulledFluid(EntityMinecart requester, Fluid fluid) {
+		return tank.getFluid() != null && tank.getFluidAmount() > 0 && tank.getFluid().getFluid().equals(fluid);
+	}
+
+	@Override
+	public void setFilling(boolean filling) {
+
 	}
 }

@@ -23,7 +23,6 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float delta) {
 		TileEntityBarrel barrel = (TileEntityBarrel)te;
 
-
 		GL11.glPushMatrix();
 
 		GL11.glTranslatef((float) x + .5f, (float) y + 1.5f, (float) z + .5f);
@@ -51,7 +50,6 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 
 				float fluidPercent = -(float) barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
 				GL11.glTranslatef(0, fluidPercent * .9f, 0);
-
 
 				bindTexture(fluidLocation);
 				modelFluid.renderAll();
