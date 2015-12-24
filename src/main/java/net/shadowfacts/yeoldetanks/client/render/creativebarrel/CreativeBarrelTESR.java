@@ -48,7 +48,7 @@ public class CreativeBarrelTESR extends TileEntitySpecialRenderer {
 
 				GL11.glPushMatrix();
 
-				GL11.glTranslatef(0, YOTConfig.blameEllpeck ? .9f : -9.f, 0);
+				GL11.glTranslatef(0, YOTConfig.blameEllpeck ? .9f : -.9f, 0);
 
 				bindTexture(fluidLocation);
 				modelFluid.renderAll();
