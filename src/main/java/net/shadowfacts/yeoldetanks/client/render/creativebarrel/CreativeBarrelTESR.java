@@ -2,12 +2,12 @@ package net.shadowfacts.yeoldetanks.client.render.creativebarrel;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelFluid;
+import net.shadowfacts.yeoldetanks.client.render.RenderUtils;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -32,25 +32,14 @@ public class CreativeBarrelTESR extends TileEntitySpecialRenderer {
 		model.renderAll(barrel.lid);
 
 		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null) {
-			IIcon fluidTexture = barrel.tank.getFluid().getFluid().getStillIcon();
+			ResourceLocation fluidTexture = RenderUtils.getTexture(barrel.tank.getFluid().getFluid());
 
 			if (fluidTexture != null) {
-				String domain = "minecraft";
-				String name;
-				if (fluidTexture.getIconName().contains(":")) {
-					domain = fluidTexture.getIconName().split(":")[0];
-					name = fluidTexture.getIconName().split(":")[1];
-				} else {
-					name = fluidTexture.getIconName();
-				}
-
-				ResourceLocation fluidLocation = new ResourceLocation(domain, "textures/blocks/" + name + ".png");
-
 				GL11.glPushMatrix();
 
 				GL11.glTranslatef(0, YOTConfig.blameEllpeck ? .9f : -.9f, 0);
 
-				bindTexture(fluidLocation);
+				bindTexture(fluidTexture);
 				modelFluid.renderAll();
 
 				GL11.glPopMatrix();

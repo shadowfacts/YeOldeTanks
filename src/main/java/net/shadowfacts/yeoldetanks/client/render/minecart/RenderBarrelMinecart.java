@@ -10,6 +10,8 @@ import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelBarrel;
 import net.shadowfacts.yeoldetanks.client.model.ModelFluid;
+import net.shadowfacts.yeoldetanks.client.render.RenderUtils;
+import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelTESR;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 import org.lwjgl.opengl.GL11;
 
@@ -36,29 +38,20 @@ public class RenderBarrelMinecart extends RenderMinecart {
 		model.renderAll(false);
 
 		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
-			IIcon fluidTexture = barrel.tank.getFluid().getFluid().getStillIcon();
+			ResourceLocation fluidTexture = RenderUtils.getTexture(barrel.tank.getFluid().getFluid());
 
-			String domain = "minecraft";
-			String name;
-			if (fluidTexture.getIconName().contains(":")) {
-				domain = fluidTexture.getIconName().split(":")[0].toLowerCase();
-				name = fluidTexture.getIconName().split(":")[1];
-			} else {
-				name = fluidTexture.getIconName();
+			if (fluidTexture != null) {
+				GL11.glPushMatrix();
+
+				float fluidPercent = -(float) barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
+				GL11.glTranslatef(0, fluidPercent * .9f, 0);
+
+
+				bindTexture(fluidTexture);
+				modelFluid.renderAll();
+
+				GL11.glPopMatrix();
 			}
-
-			ResourceLocation fluidLocation = new ResourceLocation(domain, "textures/blocks/" + name + ".png");
-
-			GL11.glPushMatrix();
-
-			float fluidPercent = -(float) barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
-			GL11.glTranslatef(0, fluidPercent * .9f, 0);
-
-
-			bindTexture(fluidLocation);
-			modelFluid.renderAll();
-
-			GL11.glPopMatrix();
 		}
 
 		GL11.glPopMatrix();
