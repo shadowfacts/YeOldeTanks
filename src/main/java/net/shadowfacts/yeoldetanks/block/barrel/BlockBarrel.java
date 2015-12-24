@@ -113,8 +113,8 @@ public class BlockBarrel extends Block implements ITileEntityProvider, Achieveme
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(x, y, z);
-		if (te != null && te instanceof TileEntityBarrel) {
-			TileEntityBarrel barrel = (TileEntityBarrel)te;
+		if (te instanceof TileEntityBarrel) {
+			TileEntityBarrel barrel = (TileEntityBarrel) te;
 
 			if (player.getHeldItem() == null && player.isSneaking()) {
 				barrel.lid = !barrel.lid;

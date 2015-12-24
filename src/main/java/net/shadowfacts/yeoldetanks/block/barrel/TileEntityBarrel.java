@@ -9,7 +9,6 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedPeripheral;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -18,6 +17,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import net.shadowfacts.yeoldetanks.YOTConfig;
+import net.shadowfacts.yeoldetanks.tileentity.YOTTileEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,41 +30,29 @@ import java.util.List;
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
 })
-public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeripheral, SimpleComponent, ManagedPeripheral {
+public class TileEntityBarrel extends YOTTileEntity implements IFluidHandler, IPeripheral, SimpleComponent, ManagedPeripheral {
 
 	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
 
 	public boolean lid;
 
-	private int ticks = 0;
+	private void update() {
+		markDirty();
+		sendNetworkUpdate();
+	}
 
 	@Override
 	public void updateEntity() {
-		if (worldObj.isRemote) {
-			Minecraft.getMinecraft().mcProfiler.startSection("yot.te.barrel");
-		}
-		ticks++;
 		if (YOTConfig.autoOutputBottom &&
-				ticks == 20 &&
 				tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			ticks = 0;
 			TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
 			if (te != null && te instanceof IFluidHandler) {
 				IFluidHandler fluidHandler = (IFluidHandler) te;
 				if (fluidHandler.canFill(ForgeDirection.UP, tank.getFluid().getFluid())) {
 					drain(ForgeDirection.DOWN, fluidHandler.fill(ForgeDirection.UP, drain(ForgeDirection.DOWN, tank.getCapacity(), false), true), true);
-					update();
 				}
 			}
 		}
-		if (worldObj.isRemote) {
-			Minecraft.getMinecraft().mcProfiler.endSection();
-		}
-	}
-
-	private void update() {
-		markDirty();
-		worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 	}
 
 	@Override
@@ -101,8 +89,9 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeri
 	@Override
 	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
 		if (canFill(from, null)) {
-			update();
-			return tank.fill(resource, doFill);
+			int filled = tank.fill(resource, doFill);
+			if (doFill) update();
+			return filled;
 		}
 		return 0;
 	}
@@ -110,11 +99,12 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeri
 	@Override
 	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
 		if (canDrain(from, null)) {
-			update();
 			if (resource == null || !resource.isFluidEqual(tank.getFluid())) {
 				return null;
 			}
-			return tank.drain(resource.amount, doDrain);
+			FluidStack stack = tank.drain(resource.amount, doDrain);
+			if (doDrain) update();
+			return stack;
 		}
 		return null;
 	}
@@ -122,8 +112,9 @@ public class TileEntityBarrel extends TileEntity implements IFluidHandler, IPeri
 	@Override
 	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
 		if (canDrain(from, null)) {
-			update();
-			return tank.drain(maxDrain, doDrain);
+			FluidStack stack = tank.drain(maxDrain, doDrain);
+			if (doDrain) update();
+			return stack;
 		}
 		return null;
 	}

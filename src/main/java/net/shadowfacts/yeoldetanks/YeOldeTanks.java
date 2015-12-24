@@ -6,6 +6,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
@@ -37,6 +38,8 @@ public class YeOldeTanks {
 	@Mod.Instance(modId)
 	public static YeOldeTanks instance;
 
+	public static SimpleNetworkWrapper network;
+
 //	Content
 	public static ModBlocks blocks = new ModBlocks();
 	public static ModItems items = new ModItems();
@@ -51,10 +54,6 @@ public class YeOldeTanks {
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		FMLCommonHandler.instance().bus().register(new FMLEventHandler());
-		MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
-		YOTConfig.init(event);
-
 		proxy.preInit(event);
 	}
 
