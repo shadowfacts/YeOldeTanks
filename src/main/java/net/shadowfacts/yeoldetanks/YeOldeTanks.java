@@ -8,8 +8,10 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
 import net.shadowfacts.yeoldetanks.event.FMLEventHandler;
+import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
 import net.shadowfacts.yeoldetanks.item.ModItems;
 import net.shadowfacts.yeoldetanks.proxy.CommonProxy;
 import org.apache.logging.log4j.LogManager;
@@ -50,6 +52,7 @@ public class YeOldeTanks {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(new FMLEventHandler());
+		MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
 		YOTConfig.init(event);
 
 		proxy.preInit(event);
