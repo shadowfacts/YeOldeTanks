@@ -61,4 +61,12 @@ public class PacketUpdateTE implements IMessage {
 			return null;
 		}
 	}
+
+	public static class DummyHandler implements IMessageHandler<PacketUpdateTE, IMessage> {
+
+		@Override
+		public IMessage onMessage(PacketUpdateTE message, MessageContext ctx) {
+			return null;
+		}
+	}
 }

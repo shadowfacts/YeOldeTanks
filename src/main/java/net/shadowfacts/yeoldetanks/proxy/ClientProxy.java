@@ -27,8 +27,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	protected void registerPackets(SimpleNetworkWrapper network) {
-		super.registerPackets(network);
-		network.registerMessage(PacketUpdateTE.Handler.class, PacketUpdateTE.class, 0, Side.CLIENT);
+		network.registerMessage(new PacketUpdateTE.Handler(), PacketUpdateTE.class, 0, Side.CLIENT);
 	}
 
 	@Override

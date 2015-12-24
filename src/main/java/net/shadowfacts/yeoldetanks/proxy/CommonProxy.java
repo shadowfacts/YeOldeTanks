@@ -5,6 +5,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -52,7 +53,7 @@ public class CommonProxy {
 	}
 
 	protected void registerPackets(SimpleNetworkWrapper network) {
-
+		network.registerMessage(PacketUpdateTE.DummyHandler.class, PacketUpdateTE.class, 0, Side.CLIENT);
 	}
 
 	public void init(FMLInitializationEvent event) {
