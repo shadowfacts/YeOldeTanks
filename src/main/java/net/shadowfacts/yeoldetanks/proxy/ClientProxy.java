@@ -4,6 +4,8 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
 import net.shadowfacts.yeoldetanks.client.render.barrel.BarrelISBRH;
@@ -26,11 +28,6 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	protected void registerPackets(SimpleNetworkWrapper network) {
-		network.registerMessage(new PacketUpdateTE.Handler(), PacketUpdateTE.class, 0, Side.CLIENT);
-	}
-
-	@Override
 	public void registerRenderers() {
 		registerTESRs();
 		registerISBRHs();
@@ -46,5 +43,10 @@ public class ClientProxy extends CommonProxy {
 	private void registerISBRHs() {
 		RenderingRegistry.registerBlockHandler(BarrelISBRH.RENDER_ID, new BarrelISBRH());
 		RenderingRegistry.registerBlockHandler(CreativeBarrelISBRH.RENDER_ID, new CreativeBarrelISBRH());
+	}
+
+	@Override
+	public World getClientWorld() {
+		return Minecraft.getMinecraft().theWorld;
 	}
 }

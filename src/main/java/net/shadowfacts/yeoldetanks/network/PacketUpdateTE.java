@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.tileentity.YOTTileEntity;
 
 /**
@@ -52,20 +53,12 @@ public class PacketUpdateTE implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketUpdateTE msg, MessageContext ctx) {
-			World world = Minecraft.getMinecraft().theWorld;
+			World world = YeOldeTanks.proxy.getClientWorld();
 			TileEntity te = world.getTileEntity(msg.x, msg.y, msg.z);
 			if (te instanceof YOTTileEntity) {
 				((YOTTileEntity)te).onNetworkUpdate(msg.tag);
 			}
 
-			return null;
-		}
-	}
-
-	public static class DummyHandler implements IMessageHandler<PacketUpdateTE, IMessage> {
-
-		@Override
-		public IMessage onMessage(PacketUpdateTE message, MessageContext ctx) {
 			return null;
 		}
 	}

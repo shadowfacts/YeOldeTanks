@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -52,8 +53,8 @@ public class CommonProxy {
 		registerRenderers();
 	}
 
-	protected void registerPackets(SimpleNetworkWrapper network) {
-		network.registerMessage(PacketUpdateTE.DummyHandler.class, PacketUpdateTE.class, 0, Side.CLIENT);
+	private void registerPackets(SimpleNetworkWrapper network) {
+		network.registerMessage(PacketUpdateTE.Handler.class, PacketUpdateTE.class, 0, Side.CLIENT);
 	}
 
 	public void init(FMLInitializationEvent event) {
@@ -76,5 +77,9 @@ public class CommonProxy {
 	protected void registerClientModules() {}
 
 	public void registerRenderers() {}
+
+	public World getClientWorld() {
+		return null;
+	}
 
 }
