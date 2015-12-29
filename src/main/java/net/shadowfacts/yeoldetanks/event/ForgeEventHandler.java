@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.shadowfacts.shadowmc.util.StringHelper;
@@ -71,10 +72,10 @@ public class ForgeEventHandler {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void handleNameFormat(PlayerEvent.NameFormat event) {
 		if (event.entityPlayer.getUniqueID().equals(shadowfacts)) {
-			event.displayname = StringHelper.PURPLE + event.displayname + StringHelper.WHITE;
+			event.displayname = EnumChatFormatting.DARK_PURPLE + event.displayname + EnumChatFormatting.RESET;
 		}
 	}
 

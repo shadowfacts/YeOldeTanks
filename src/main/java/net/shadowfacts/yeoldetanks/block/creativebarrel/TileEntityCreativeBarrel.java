@@ -23,9 +23,14 @@ public class TileEntityCreativeBarrel extends YOTTileEntity implements IFluidHan
 
 	public boolean lid;
 
+	private int prevAmount = tank.getFluidAmount();
+	
 	private void update() {
 		markDirty();
-		sendNetworkUpdate();
+		if (Math.abs(prevAmount - tank.getFluidAmount()) > 1000) {
+			prevAmount = tank.getFluidAmount();
+			sendNetworkUpdate();
+		}
 	}
 
 	@Override

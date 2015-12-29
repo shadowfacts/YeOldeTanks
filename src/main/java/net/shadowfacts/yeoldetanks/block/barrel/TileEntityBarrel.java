@@ -36,9 +36,14 @@ public class TileEntityBarrel extends YOTTileEntity implements IFluidHandler, IP
 
 	public boolean lid;
 
+	private int prevAmount = tank.getFluidAmount();
+
 	private void update() {
 		markDirty();
-		sendNetworkUpdate();
+		if (Math.abs(prevAmount - tank.getFluidAmount()) > 1000) {
+			prevAmount = tank.getFluidAmount();
+			sendNetworkUpdate();
+		}
 	}
 
 	@Override
