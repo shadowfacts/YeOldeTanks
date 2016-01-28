@@ -1,0 +1,30 @@
+# Blocks
+tile.yot.barrel.name=桶
+tile.yot.creativeBarrel.name=§d创造模式桶
+
+# Items
+item.yot.dippingstick.name=浸渍的木棍
+item.yot.infiniteWaterBucket.name=无限水桶
+item.yot.barrelminecart.name=水桶矿车
+
+# Entities
+entity.YeOldeTanks.yot_barrel_minecart.name=水桶矿车
+
+# Config
+yot.config.ctgy.general=基础
+yot.config.ctgy.misc=杂项
+
+# Creative Tabs
+itemGroup.yot=叶奥尔德坦克
+
+# Achievements
+achievement.yot.craftBarrel=优于桶™
+achievement.yot.craftBarrel.desc=制作一个桶
+achievement.yot.craftDippingStick=Dippity Dip, Dip, Dip
+achievement.yot.craftDippingStick.desc=制作一个浸渍的木棍
+achievement.yot.craftBarrelCart=流体输送
+achievement.yot.craftBarrelCart.desc=制作一个水桶矿车
+achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
+achievement.yot.craftInfiniteWaterBucket.desc=制作一个无限水桶
+achievement.yot.craftCreativeBarrel=骗子!
+achievement.yot.craftCreativeBarrel.desc=制作一个
