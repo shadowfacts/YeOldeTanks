@@ -11,7 +11,7 @@ item.yot.barrelminecart.name=水桶矿车
 entity.YeOldeTanks.yot_barrel_minecart.name=水桶矿车
 
 # Config
-yot.config.ctgy.general=一般
+yot.config.ctgy.general=基础
 yot.config.ctgy.misc=杂项
 
 # Creative Tabs
