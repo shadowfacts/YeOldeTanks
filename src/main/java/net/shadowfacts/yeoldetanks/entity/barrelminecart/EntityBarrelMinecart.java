@@ -1,45 +1,46 @@
 package net.shadowfacts.yeoldetanks.entity.barrelminecart;
 
-import cpw.mods.fml.common.Optional;
-import mods.railcraft.api.carts.IFluidCart;
-import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.entity.EntityFluidTank;
+import net.shadowfacts.yeoldetanks.entity.ModEntities;
 
 /**
  * @author shadowfacts
  */
-@Optional.Interface(iface = "mods.railcraft.api.carts.IFluidCart", modid = "Railcraft")
-public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler, IFluidCart {
+public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler {
 
 	public EntityFluidTank tank;
 
 	public EntityBarrelMinecart(World world) {
 		super(world);
+		tank = new EntityFluidTank(dataWatcher, 23, 24, 25, YOTConfig.barrelCapacity);
 	}
 
 	public EntityBarrelMinecart(World world, double x, double y, double z) {
-		super(world, x, y, z);
-	}
-
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		tank = new EntityFluidTank(dataWatcher);
-		tank.init(YOTConfig.barrelCapacity);
+		this(world);
+		this.setPosition(x, y, z);
+		this.motionX = 0.0D;
+		this.motionY = 0.0D;
+		this.motionZ = 0.0D;
+		this.prevPosX = x;
+		this.prevPosY = y;
+		this.prevPosZ = z;
 	}
 
 	@Override
@@ -50,6 +51,15 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	@Override
 	public boolean interactFirst(EntityPlayer player) {
 		if (!player.isSneaking()) {
+			if (player.getHeldItem() != null && player.getHeldItem().getItem() == YeOldeTanks.items.dippingStick && !worldObj.isRemote) {
+				if (tank.getFluid() != null) {
+					player.addChatComponentMessage(new ChatComponentText("Fluid: " + tank.getFluid().getLocalizedName()));
+					player.addChatComponentMessage(new ChatComponentText(tank.getFluidAmount() + "mb / " + tank.getCapacity() + "mb"));
+				} else {
+					player.addChatComponentMessage(new ChatComponentText("Empty"));
+				}
+				return true;
+			}
 			if (CoFHUtils.fillHandlerWithContainer(player.worldObj, this, player)) {
 				onEntityUpdate();
 			} else if (CoFHUtils.fillContainerFromHandler(player.worldObj, this, player, tank.getFluid())) {
@@ -75,8 +85,8 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	public void killMinecart(DamageSource damageSource) {
 		super.killMinecart(damageSource);
 		ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
-		stack.stackTagCompound = new NBTTagCompound();
-		tank.writeToNBT(stack.stackTagCompound);
+		stack.setTagCompound(new NBTTagCompound());
+		tank.writeToNBT(stack.getTagCompound());
 		entityDropItem(stack, 0);
 	}
 
@@ -86,23 +96,28 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	}
 
 	@Override
-	public Block func_145817_o() {
-		return YeOldeTanks.blocks.barrel;
+	public boolean hasDisplayTile() {
+		return true;
 	}
 
 	@Override
-	public int getMinecartType() {
-		return 0;
+	public IBlockState getDisplayTile() {
+		return YeOldeTanks.blocks.barrel.getDefaultState();
+	}
+
+	@Override
+	public EnumMinecartType getMinecartType() {
+		return ModEntities.TANK_CART_TYPE;
 	}
 
 //	IFluidHandler
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+	public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
 		return tank.fill(resource, doFill);
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
 		if (resource == null || !resource.isFluidEqual(tank.getFluid())) {
 			return null;
 		}
@@ -110,44 +125,23 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
 		return tank.drain(maxDrain, doDrain);
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
+	public boolean canFill(EnumFacing from, Fluid fluid) {
 		return true;
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
+	public boolean canDrain(EnumFacing from, Fluid fluid) {
 		return true;
 	}
 
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+	public FluidTankInfo[] getTankInfo(EnumFacing from) {
 		return new FluidTankInfo[]{ tank.getInfo() };
 	}
 
-
-//	IFluidCart
-	@Override
-	public boolean canPassFluidRequests(Fluid fluid) {
-		return false;
-	}
-
-	@Override
-	public boolean canAcceptPushedFluid(EntityMinecart requester, Fluid fluid) {
-		return tank.getFluid() != null && tank.getFluidAmount() > 0 && tank.getFluid().getFluid().equals(fluid);
-	}
-
-	@Override
-	public boolean canProvidePulledFluid(EntityMinecart requester, Fluid fluid) {
-		return tank.getFluid() != null && tank.getFluidAmount() > 0 && tank.getFluid().getFluid().equals(fluid);
-	}
-
-	@Override
-	public void setFilling(boolean filling) {
-
-	}
 }

@@ -1,6 +1,6 @@
 package net.shadowfacts.yeoldetanks;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.shadowfacts.shadowmc.config.Config;
 import net.shadowfacts.shadowmc.config.ConfigManager;
 import net.shadowfacts.shadowmc.config.ConfigProperty;
@@ -31,8 +31,9 @@ public class YOTConfig {
 
 	public static void init(FMLPreInitializationEvent event) {
 		YeOldeTanks.log.info("Loading config");
-		ConfigManager.instance.configDirPath = event.getModConfigurationDirectory().getAbsolutePath();
-		ConfigManager.instance.register(YeOldeTanks.modId, YOTConfig.class);
+		ConfigManager.instance.configDir
+				= event.getModConfigurationDirectory();
+		ConfigManager.instance.register(YeOldeTanks.modId, YOTConfig.class, YeOldeTanks.modId);
 		ConfigManager.instance.load(YeOldeTanks.modId);
 	}
 

@@ -12,7 +12,9 @@ import net.shadowfacts.yeoldetanks.YeOldeTanks;
 /**
  * @author shadowfacts
  */
-public class BarrelMinecartRecipe implements IRecipe {
+public class RecipeBarrelMinecart implements IRecipe {
+
+//	TODO: fix broken recipe
 
 	@Override
 	public boolean matches(InventoryCrafting crafting, World world) {
@@ -46,8 +48,8 @@ public class BarrelMinecartRecipe implements IRecipe {
 
 		if (barrel != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.items.barrelMinecart);
-			if (barrel.stackTagCompound != null) {
-				stack.stackTagCompound = (NBTTagCompound)barrel.stackTagCompound.copy();
+			if (barrel.getTagCompound() != null) {
+				stack.setTagCompound((NBTTagCompound)barrel.getTagCompound().copy());
 			}
 			return stack;
 		}
@@ -64,5 +66,11 @@ public class BarrelMinecartRecipe implements IRecipe {
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(YeOldeTanks.items.barrelMinecart);
 	}
+
+	@Override
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+		return new ItemStack[inv.getSizeInventory()];
+	}
+
 
 }

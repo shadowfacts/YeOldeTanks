@@ -1,36 +1,47 @@
 package net.shadowfacts.yeoldetanks.block;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.barrel.BlockBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.BlockCreativeBarrel;
 import net.shadowfacts.yeoldetanks.item.ItemBlockBarrel;
 import net.shadowfacts.yeoldetanks.item.ItemBlockCreativeBarrel;
+import net.shadowfacts.yeoldetanks.item.ItemModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shadowfacts
  */
 public class ModBlocks {
 
+	private List<ItemModelProvider> modelProviders = new ArrayList<>();
+
 	public BlockBarrel barrel;
 	public BlockCreativeBarrel creativeBarrel;
 
-	public void preInit(FMLPreInitializationEvent event) {
+	public void initBlocks() {
 		YeOldeTanks.log.info("Initializing blocks");
 
-		createBlocks();
-		registerBlocks();
+		barrel = register(new BlockBarrel(), ItemBlockBarrel.class);
+		creativeBarrel = register(new BlockCreativeBarrel(), ItemBlockCreativeBarrel.class);
 	}
 
-	private void createBlocks() {
-		barrel = new BlockBarrel();
-		creativeBarrel = new BlockCreativeBarrel();
+	public void initModels() {
+		modelProviders.forEach(ItemModelProvider::initModel);
 	}
 
-	private void registerBlocks() {
-		GameRegistry.registerBlock(barrel, ItemBlockBarrel.class, "yot.barrel");
-		GameRegistry.registerBlock(creativeBarrel, ItemBlockCreativeBarrel.class, "yot.creativeBarrel");
+	private <T extends Block> T register(T block) {
+		return register(block, ItemBlock.class);
+	}
+
+	private <T extends Block> T register(T block, Class<? extends ItemBlock> itemBlockClass) {
+		GameRegistry.registerBlock(block, itemBlockClass);
+		if (block instanceof ItemModelProvider) modelProviders.add((ItemModelProvider)block);
+		return block;
 	}
 
 }

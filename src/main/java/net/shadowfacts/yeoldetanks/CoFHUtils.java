@@ -4,7 +4,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
@@ -26,20 +25,18 @@ public class CoFHUtils {
 		FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
 
 		if (fluid != null) {
-			if (handler.fill(ForgeDirection.UNKNOWN, fluid, false) == fluid.amount || player.capabilities.isCreativeMode) {
+			if (handler.fill(null, fluid, false) == fluid.amount || player.capabilities.isCreativeMode) {
 				ItemStack returnStack = FluidContainerRegistry.drainFluidContainer(container);
 				if (world.isRemote) {
 					return true;
 				}
 				if (!player.capabilities.isCreativeMode) {
 					if (disposePlayerItem(player.getCurrentEquippedItem(), returnStack, player, true)) {
-						if (!world.isRemote) {
-							player.openContainer.detectAndSendChanges();
-							((EntityPlayerMP) player).sendContainerAndContentsToPlayer(player.openContainer, player.openContainer.getInventory());
-						}
+						player.openContainer.detectAndSendChanges();
+						((EntityPlayerMP)player).sendContainerToPlayer(player.openContainer);
 					}
 				}
-				handler.fill(ForgeDirection.UNKNOWN, fluid, true);
+				handler.fill(null, fluid, true);
 				return true;
 			}
 		}
@@ -70,11 +67,11 @@ public class CoFHUtils {
 				} else {
 					if (disposePlayerItem(player.getCurrentEquippedItem(), returnStack, player, true)) {
 						player.openContainer.detectAndSendChanges();
-						((EntityPlayerMP) player).sendContainerAndContentsToPlayer(player.openContainer, player.openContainer.getInventory());
+						((EntityPlayerMP) player).sendContainerToPlayer(player.openContainer);
 					}
 				}
 			}
-			handler.drain(ForgeDirection.UNKNOWN, fluid.amount, true);
+			handler.drain(null, fluid.amount, true);
 			return true;
 		}
 		return false;
@@ -99,7 +96,7 @@ public class CoFHUtils {
 		} else if (allowDrop) {
 			stack.stackSize -= 1;
 			if (dropStack != null && !entityplayer.inventory.addItemStackToInventory(dropStack)) {
-				entityplayer.func_146097_a(dropStack, false, true);
+				entityplayer.dropItem(dropStack, false, true);
 			}
 			return true;
 		}

@@ -7,27 +7,30 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
-import net.shadowfacts.yeoldetanks.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
+import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 
 import java.util.List;
 
 /**
  * @author shadowfacts
  */
-public class ItemInfiniteWaterBucket extends ItemFluidContainer implements AchievementProvider {
+public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemModelProvider, AchievementProvider {
 
 	public ItemInfiniteWaterBucket() {
 		super(-1, 1000);
-		setUnlocalizedName("yot.infiniteWaterBucket");
-		setTextureName("yeoldetanks:infinitewater");
+		setUnlocalizedName("infiniteWaterBucket");
+		setRegistryName("infiniteWaterBucket");
+		setCreativeTab(YeOldeTanks.tab);
 		setMaxStackSize(1);
 		FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(this), new ItemStack(this));
 	}
@@ -38,12 +41,12 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements Achie
 			MovingObjectPosition mop = this.getMovingObjectPositionFromPlayer(world, player, false);
 			if (mop == null) return stack;
 
-			ForgeDirection dir = ForgeDirection.getOrientation(mop.sideHit);
-			int placeX = mop.blockX + dir.offsetX;
-			int placeY = mop.blockY + dir.offsetY;
-			int placeZ = mop.blockZ + dir.offsetZ;
-			if (world.getBlock(placeX, placeY, placeZ).getMaterial().isReplaceable()) {
-				world.setBlock(placeX, placeY, placeZ, Blocks.flowing_water, 0, 2);
+			int placeX = mop.getBlockPos().getX() + mop.sideHit.getFrontOffsetX();
+			int placeY = mop.getBlockPos().getY() + mop.sideHit.getFrontOffsetY();
+			int placeZ = mop.getBlockPos().getZ() + mop.sideHit.getFrontOffsetZ();
+			BlockPos placePos = new BlockPos(placeX, placeY, placeZ);
+			if (world.getBlockState(placePos).getBlock().getMaterial().isReplaceable()) {
+				world.setBlockState(placePos, Blocks.flowing_water.getStateFromMeta(0), 2);
 			}
 		}
 
@@ -55,10 +58,10 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements Achie
 	@SuppressWarnings("unchecked")
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		ItemStack stack = new ItemStack(this);
-		stack.stackTagCompound = new NBTTagCompound();
+		stack.setTagCompound(new NBTTagCompound());
 		NBTTagCompound fluid = new NBTTagCompound();
 		new FluidStack(FluidRegistry.WATER, 1000).writeToNBT(fluid);
-		stack.stackTagCompound.setTag("Fluid", fluid);
+		stack.getTagCompound().setTag("Fluid", fluid);
 		list.add(stack);
 	}
 
@@ -86,7 +89,12 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements Achie
 	}
 
 	@Override
-	public Achievement getAchievement() {
+	public void initModel() {
+		ClientProxy.registerInvModel(this, 0, "infiniteWaterBucket");
+	}
+
+	@Override
+	public Achievement getAchievement(ItemStack stack) {
 		return ModAchievements.craftInfiniteWaterBucket;
 	}
 }

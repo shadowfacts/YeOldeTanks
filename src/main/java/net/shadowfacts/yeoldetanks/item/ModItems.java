@@ -1,35 +1,38 @@
 package net.shadowfacts.yeoldetanks.item;
 
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author shadowfacts
  */
 public class ModItems {
 
+	private List<ItemModelProvider> modelProviders = new ArrayList<>();
+
 	public ItemDippingStick dippingStick;
 	public ItemInfiniteWaterBucket infiniteWaterBucket;
 	public ItemBarrelMinecart barrelMinecart;
 
-	public void preInit(FMLPreInitializationEvent event) {
+	public void initItems() {
 		YeOldeTanks.log.info("Initializing items");
 
-		createItems();
-		registerItems();
+		dippingStick = register(new ItemDippingStick());
+		infiniteWaterBucket = register(new ItemInfiniteWaterBucket());
+		barrelMinecart = register(new ItemBarrelMinecart());
 	}
 
-	private void createItems() {
-		dippingStick = new ItemDippingStick();
-		infiniteWaterBucket = new ItemInfiniteWaterBucket();
-		barrelMinecart = new ItemBarrelMinecart();
+	public void initModels() {
+		modelProviders.forEach(ItemModelProvider::initModel);
 	}
-
-	private void registerItems() {
-		GameRegistry.registerItem(dippingStick, "yot.dippingstick");
-		GameRegistry.registerItem(infiniteWaterBucket, "yot.infiniteWaterBucket");
-		GameRegistry.registerItem(barrelMinecart, "yot.barrelminecart");
+	private <T extends Item> T register(T item) {
+		GameRegistry.registerItem(item);
+		if (item instanceof ItemModelProvider) modelProviders.add((ItemModelProvider)item);
+		return item;
 	}
 
 }

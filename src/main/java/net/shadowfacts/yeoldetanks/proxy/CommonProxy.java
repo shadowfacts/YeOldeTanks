@@ -1,26 +1,19 @@
 package net.shadowfacts.yeoldetanks.proxy;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
-import net.shadowfacts.yeoldetanks.compat.ModCompat;
+import net.shadowfacts.yeoldetanks.compat.computercraft.CompatComputerCraft;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
-import net.shadowfacts.yeoldetanks.event.FMLEventHandler;
 import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
-import net.shadowfacts.yeoldetanks.network.PacketUpdateTE;
 import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 
 /**
@@ -29,16 +22,12 @@ import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
-		YeOldeTanks.network = NetworkRegistry.INSTANCE.newSimpleChannel(YeOldeTanks.modId);
-		registerPackets(YeOldeTanks.network);
-
-		FMLCommonHandler.instance().bus().register(new FMLEventHandler());
 		MinecraftForge.EVENT_BUS.register(new ForgeEventHandler());
 
 		YOTConfig.init(event);
 
-		YeOldeTanks.blocks.preInit(event);
-		YeOldeTanks.items.preInit(event);
+		YeOldeTanks.blocks.initBlocks();
+		YeOldeTanks.items.initItems();
 
 		registerTileEntities();
 
@@ -46,24 +35,21 @@ public class CommonProxy {
 
 		ModAchievements.registerAchievements();
 
-		ModCompat.registerModules();
+		YeOldeTanks.compat.registerModule(CompatComputerCraft.class);
 		registerClientModules();
-		ModCompat.preInit(event);
+
+		YeOldeTanks.compat.preInit(event);
 
 		registerRenderers();
 	}
 
-	private void registerPackets(SimpleNetworkWrapper network) {
-		network.registerMessage(PacketUpdateTE.Handler.class, PacketUpdateTE.class, 0, Side.CLIENT);
-	}
-
 	public void init(FMLInitializationEvent event) {
-		ModCompat.init(event);
+		YeOldeTanks.compat.init(event);
 		ModRecipes.init();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		ModCompat.postInit(event);
+		YeOldeTanks.compat.postInit(event);
 		ModRecipes.postInit();
 	}
 

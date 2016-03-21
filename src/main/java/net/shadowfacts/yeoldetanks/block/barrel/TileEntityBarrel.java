@@ -1,6 +1,5 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import cpw.mods.fml.common.Optional;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
@@ -10,14 +9,18 @@ import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedPeripheral;
 import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.fluids.*;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidTankInfo;
+import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fml.common.Optional;
+import net.shadowfacts.shadowmc.fluid.FluidTank;
+import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
+import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
 import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.tileentity.YOTTileEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,116 +33,95 @@ import java.util.List;
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
 })
-public class TileEntityBarrel extends YOTTileEntity implements IFluidHandler, IPeripheral, SimpleComponent, ManagedPeripheral {
+public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, ITickable, IPeripheral, SimpleComponent, ManagedPeripheral {
 
+	@AutoSerializeNBT
 	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
-
-	public boolean lid;
 
 	private int prevAmount = tank.getFluidAmount();
 
-	private void update() {
+	private void save() {
 		markDirty();
-		if (Math.abs(prevAmount - tank.getFluidAmount()) > 1000) {
+		if (Math.abs(prevAmount - tank.getFluidAmount()) >= 1000) {
 			prevAmount = tank.getFluidAmount();
-			sendNetworkUpdate();
+			sync();
 		}
 	}
 
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if (YOTConfig.autoOutputBottom &&
 				tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+			TileEntity te = worldObj.getTileEntity(pos.down());
 			if (te != null && te instanceof IFluidHandler) {
 				IFluidHandler fluidHandler = (IFluidHandler) te;
-				if (fluidHandler.canFill(ForgeDirection.UP, tank.getFluid().getFluid())) {
-					drain(ForgeDirection.DOWN, fluidHandler.fill(ForgeDirection.UP, drain(ForgeDirection.DOWN, tank.getCapacity(), false), true), true);
+				if (fluidHandler.canFill(EnumFacing.UP, tank.getFluid().getFluid())) {
+					drain(EnumFacing.DOWN, fluidHandler.fill(EnumFacing.UP, drain(EnumFacing.DOWN, tank.getCapacity(), false), true), true);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound tag) {
-		super.writeToNBT(tag);
-		tank.writeToNBT(tag);
-		tag.setBoolean("Lid", lid);
+	public void load(NBTTagCompound tag, boolean loadInventory) {
+
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		readFromNBT(tag, true);
-	}
-
-	public void readFromNBT(NBTTagCompound tag, boolean loadCoords) {
-		if (loadCoords) super.readFromNBT(tag);
-		tank.readFromNBT(tag);
-		lid = tag.getBoolean("Lid");
-	}
-
-	@Override
-	public Packet getDescriptionPacket() {
-		NBTTagCompound tag = new NBTTagCompound();
-		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, blockMetadata, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		readFromNBT(pkt.func_148857_g());
+	public NBTTagCompound save(NBTTagCompound tag, boolean saveInventory) {
+		return tag;
 	}
 
 	//	IFluidHandler
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+	public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
 		if (canFill(from, null)) {
 			int filled = tank.fill(resource, doFill);
-			if (doFill) update();
+			if (doFill) save();
 			return filled;
 		}
 		return 0;
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
 		if (canDrain(from, null)) {
 			if (resource == null || !resource.isFluidEqual(tank.getFluid())) {
 				return null;
 			}
 			FluidStack stack = tank.drain(resource.amount, doDrain);
-			if (doDrain) update();
+			if (doDrain) save();
 			return stack;
 		}
 		return null;
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
 		if (canDrain(from, null)) {
 			FluidStack stack = tank.drain(maxDrain, doDrain);
-			if (doDrain) update();
+			if (doDrain) save();
 			return stack;
 		}
 		return null;
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.fillFromAnySide || from == ForgeDirection.UP || from == ForgeDirection.UNKNOWN;
+	public boolean canFill(EnumFacing from, Fluid fluid) {
+		return YOTConfig.fillFromAnySide || from == EnumFacing.UP || from == null;
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.drainFromAnySide || from == ForgeDirection.DOWN || from == ForgeDirection.UP || from == ForgeDirection.UNKNOWN;
+	public boolean canDrain(EnumFacing from, Fluid fluid) {
+		return YOTConfig.drainFromAnySide || from == EnumFacing.DOWN || from == EnumFacing.UP || from == null;
 	}
 
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+	public FluidTankInfo[] getTankInfo(EnumFacing from) {
 		return new FluidTankInfo[]{tank.getInfo()};
 	}
 
-	// Computers
+//	Computers
 	private static String[] methodNames = new String[] {
 			"getFluid",
 			"getFluidAmount"
@@ -147,7 +129,7 @@ public class TileEntityBarrel extends YOTTileEntity implements IFluidHandler, IP
 	private static List<String> methodList = Arrays.asList(methodNames);
 	private static String peripheralName = "yot_barrel";
 
-	// ComputerCraft
+//	ComputerCraft
 	@Override
 	public String getType() {
 		return peripheralName;
@@ -218,4 +200,5 @@ public class TileEntityBarrel extends YOTTileEntity implements IFluidHandler, IP
 	public String getComponentName() {
 		return peripheralName;
 	}
+
 }

@@ -1,13 +1,13 @@
 package net.shadowfacts.yeoldetanks;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.shadowfacts.shadowmc.compat.CompatManager;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
 import net.shadowfacts.yeoldetanks.item.ModItems;
 import net.shadowfacts.yeoldetanks.proxy.CommonProxy;
@@ -34,7 +34,7 @@ public class YeOldeTanks {
 	@Mod.Instance(modId)
 	public static YeOldeTanks instance;
 
-	public static SimpleNetworkWrapper network;
+	public static CompatManager compat = new CompatManager(modId);
 
 //	Content
 	public static ModBlocks blocks = new ModBlocks();

@@ -1,17 +1,20 @@
 package net.shadowfacts.yeoldetanks.event;
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.shadowfacts.shadowmc.util.StringHelper;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.shadowfacts.shadowmc.config.ConfigManager;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import org.lwjgl.opengl.GL11;
 
@@ -36,7 +39,7 @@ public class ForgeEventHandler {
 	public void renderPlayer(RenderPlayerEvent.Specials.Post event) {
 		EntityPlayer player = event.entityPlayer;
 
-		if (!player.isInvisible() && !player.getHideCape() &&
+		if (!player.isInvisible() &&
 				player.getUniqueID().equals(shadowfacts)) {
 
 			float size = 0.3F;
@@ -65,7 +68,8 @@ public class ForgeEventHandler {
 
 			GL11.glDisable(GL11.GL_LIGHTING);
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.locationBlocksTexture);
-			RenderBlocks.getInstance().renderBlockAsItem(YeOldeTanks.blocks.barrel, 0, 1F);
+//			RenderBlocks.getInstance().renderBlockAsItem(YeOldeTanks.blocks.barrel, 0, 1F);
+//			TODO: fix this
 			GL11.glEnable(GL11.GL_LIGHTING);
 
 			GL11.glPopMatrix();
@@ -76,6 +80,66 @@ public class ForgeEventHandler {
 	public void handleNameFormat(PlayerEvent.NameFormat event) {
 		if (event.entityPlayer.getUniqueID().equals(shadowfacts)) {
 			event.displayname = EnumChatFormatting.DARK_PURPLE + event.displayname + EnumChatFormatting.RESET;
+		}
+	}
+
+	@SubscribeEvent
+	public void onCraft(net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent event) {
+		Item item = event.crafting.getItem();
+//		if (item instanceof AchievementProvider) {
+//			((AchievementProvider)item).grantAchievement(event.player);
+//		} else if (item instanceof ItemBlock) {
+//			Block block = ((ItemBlock)item).field_150939_a;
+//			if (block instanceof AchievementProvider) {
+//				((AchievementProvider)block).grantAchievement(event.player);
+//			}
+//		}
+
+//		if (item == YeOldeTanks.items.dippingStick) {
+//			ItemStack barrel = null;
+//			for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
+//				ItemStack stack = event.craftMatrix.getStackInSlot(i);
+//				if (stack != null && stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
+//					barrel = stack;
+//				}
+//			}
+//			if (barrel != null) {
+//				event.player.inventory.addItemStackToInventory(barrel);
+//			}
+////		} else if (item == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
+//			boolean hasCart = false;
+//
+//			for (int i = 0; i < event.craftMatrix.getSizeInventory(); i++) {
+//				ItemStack stack = event.craftMatrix.getStackInSlot(i);
+//				if (stack != null && stack.getItem() == YeOldeTanks.items.barrelMinecart) {
+//					hasCart = true;
+//					break;
+//				}
+//			}
+//
+//			if (hasCart) {
+//				event.player.inventory.addItemStackToInventory(new ItemStack(Items.minecart));
+//			}
+//		}
+	}
+
+//	@SubscribeEvent
+//	public void onSmelt(PlayerEvent.ItemSmeltedEvent event) {
+//		Item item = event.smelting.getItem();
+//		if (item instanceof AchievementProvider) {
+//			((AchievementProvider)item).grantAchievement(event.player);
+//		} else if (item instanceof ItemBlock) {
+//			Block block = ((ItemBlock)item).field_150939_a;
+//			if (block instanceof AchievementProvider) {
+//				((AchievementProvider)block).grantAchievement(event.player);
+//			}
+//		}
+//	}
+
+	@SubscribeEvent
+	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.modID.equals(YeOldeTanks.modId)) {
+			ConfigManager.instance.load(YeOldeTanks.modId);
 		}
 	}
 

@@ -1,128 +1,109 @@
 package net.shadowfacts.yeoldetanks.block.creativebarrel;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
+import net.shadowfacts.shadowmc.fluid.CreativeFluidTank;
+import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
+import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
 import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.misc.CreativeFluidTank;
-import net.shadowfacts.yeoldetanks.tileentity.YOTTileEntity;
 
 /**
  * @author shadowfacts
  */
-public class TileEntityCreativeBarrel extends YOTTileEntity implements IFluidHandler {
+public class TileEntityCreativeBarrel extends BaseTileEntity implements IFluidHandler, ITickable {
 
+	@AutoSerializeNBT
 	public CreativeFluidTank tank = new CreativeFluidTank(100000);
 
+	@AutoSerializeNBT
 	public boolean lid;
 
 	private int prevAmount = tank.getFluidAmount();
 	
-	private void update() {
+	private void save() {
 		markDirty();
 		if (Math.abs(prevAmount - tank.getFluidAmount()) > 1000) {
 			prevAmount = tank.getFluidAmount();
-			sendNetworkUpdate();
+			sync();
 		}
 	}
 
 	@Override
-	public void updateEntity() {
+	public void update() {
 		if (YOTConfig.autoOutputBottom &&
 				tank.getFluid() != null) {
-			TileEntity te = worldObj.getTileEntity(xCoord, yCoord - 1, zCoord);
+			TileEntity te = worldObj.getTileEntity(pos.down());
 			if (te != null && te instanceof IFluidHandler) {
 				IFluidHandler fluidHandler = (IFluidHandler)te;
-				if (fluidHandler.canFill(ForgeDirection.UP, tank.getFluid().getFluid())) {
-					drain(ForgeDirection.DOWN, fluidHandler.fill(ForgeDirection.UP, drain(ForgeDirection.DOWN, tank.getCapacity(), false), true), true);
+				if (fluidHandler.canFill(EnumFacing.UP, tank.getFluid().getFluid())) {
+					drain(EnumFacing.DOWN, fluidHandler.fill(EnumFacing.UP, drain(EnumFacing.DOWN, tank.getCapacity(), false), true), true);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound tag) {
-		super.writeToNBT(tag);
-		tank.writeToNBT(tag);
-		tag.setBoolean("Lid", lid);
+	public void load(NBTTagCompound tag, boolean loadInventory) {
+
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag) {
-		readFromNBT(tag, true);
-	}
-
-	public void readFromNBT(NBTTagCompound tag, boolean loadCoords) {
-		if (loadCoords) super.readFromNBT(tag);
-		tank.readFromNBT(tag);
-		lid = tag.getBoolean("Lid");
-	}
-
-	@Override
-	public Packet getDescriptionPacket() {
-		NBTTagCompound tag = new NBTTagCompound();
-		writeToNBT(tag);
-		return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, blockMetadata, tag);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-		readFromNBT(pkt.func_148857_g());
+	public NBTTagCompound save(NBTTagCompound tag, boolean saveInventory) {
+		return tag;
 	}
 
 //	IFluidHandler
 	@Override
-	public int fill(ForgeDirection from, FluidStack resource, boolean doFill) {
+	public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
 		if (canFill(from, null)) {
 			int filled = tank.fill(resource, doFill);
-			if (doFill) update();
+			if (doFill) save();
 			return filled;
 		}
 		return 0;
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, FluidStack resource, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
 		if (canDrain(from, null)) {
 			if (resource == null || !resource.isFluidEqual(tank.getFluid())) {
 				return null;
 			}
 			FluidStack stack = tank.drain(resource.amount, doDrain);
-			if (doDrain) update();
+			if (doDrain) save();
 			return stack;
 		}
 		return null;
 	}
 
 	@Override
-	public FluidStack drain(ForgeDirection from, int maxDrain, boolean doDrain) {
+	public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
 		if (canDrain(from, null)) {
 			FluidStack stack = tank.drain(maxDrain, doDrain);
-			if (doDrain) update();
+			if (doDrain) save();
 			return stack;
 		}
 		return null;
 	}
 
 	@Override
-	public boolean canFill(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.fillFromAnySide || from == ForgeDirection.UP || from == ForgeDirection.UNKNOWN;
+	public boolean canFill(EnumFacing from, Fluid fluid) {
+		return YOTConfig.fillFromAnySide || from == EnumFacing.UP || from == null;
 	}
 
 	@Override
-	public boolean canDrain(ForgeDirection from, Fluid fluid) {
-		return YOTConfig.drainFromAnySide|| from == ForgeDirection.DOWN || from == ForgeDirection.UNKNOWN;
+	public boolean canDrain(EnumFacing from, Fluid fluid) {
+		return YOTConfig.drainFromAnySide|| from == EnumFacing.DOWN || from == null;
 	}
 
 	@Override
-	public FluidTankInfo[] getTankInfo(ForgeDirection from) {
+	public FluidTankInfo[] getTankInfo(EnumFacing from) {
 		return new FluidTankInfo[]{ tank.getInfo() };
 	}
 

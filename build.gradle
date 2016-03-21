@@ -1,50 +1,47 @@
-// Config
-ext.configFile = file('build.properties')
-configFile.withReader {
-	def prop = new Properties()
-	prop.load(it)
-	project.ext.config = new ConfigSlurper().parse(prop)
-}
-
-// Buildscript
 buildscript {
 	repositories {
-		mavenCentral()
+		jcenter()
 		maven {
 			name "forge"
 			url "http://files.minecraftforge.net/maven/"
 		}
-		maven {
-			name "sonatype"
-			url "https://oss.sonatype.org/content/repositories/snapshots"
-		}
 	}
 	dependencies {
-		classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
+		classpath "net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT"
 	}
 }
 
-// Plugins
-apply plugin: "forge"
-apply plugin: "curseforge"
-apply plugin: "maven"
-apply from: "gradle/scripts/dependencies.gradle"
-apply from: "gradle/scripts/artifacts.gradle"
+plugins {
+	id "com.matthewprenger.cursegradle" version "1.0.6"
+}
 
-// Info
+apply plugin: "net.minecraftforge.gradle.forge"
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-version = "${config.mc_version}-${config.mod_version}"
-group = config.group
-archivesBaseName = config.archivesBaseName
+version = mc_version + "-" + mod_version
 
-// Minecraft/Forge
 minecraft {
-	version = "${config.mc_version}-${config.forge_version}"
+	version = mc_version + "-" + forge_version
+	mappings = mcp_mappings
 	runDir = "run"
+}
 
-	srgExtra "PK: net/shadowfacts/shadowlib net/shadowfacts/shadowmc/shadowlib"
+repositories {
+	maven {
+		name "shadowfacts"
+		url "http://mvn.rx14.co.uk/shadowfacts/"
+	}
+	maven {
+		name "OpenComputers"
+		url "http://maven.cil.li/"
+	}
+}
+
+dependencies {
+	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
+	deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 
 processResources {
@@ -57,5 +54,25 @@ processResources {
 	}
 	from (sourceSets.main.resources.srcDirs) {
 		exclude 'mcmod.info'
+	}
+}
+
+curseforge {
+	apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
+
+	project {
+		id = "236923"
+
+		addGameVersion "1.8.9"
+		addGameVersion "Java 8"
+
+		mainArtifact(jar) {
+			releaseType = "beta"
+			changelog = ""
+
+			relations {
+				requiredLibrary "shadowmc"
+			}
+		}
 	}
 }

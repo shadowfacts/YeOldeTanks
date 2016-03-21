@@ -1,6 +1,6 @@
 /**
  * This file is part of the public ComputerCraft API - http://www.computercraft.info
- * Copyright Daniel Ratcliffe, 2011-2015. This API may be redistributed unmodified and in full only.
+ * Copyright Daniel Ratcliffe, 2011-2016. This API may be redistributed unmodified and in full only.
  * For help using the API, and posting your mods, visit the forums at computercraft.info.
  */
 
@@ -13,6 +13,8 @@ import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import dan200.computercraft.api.permissions.ITurtlePermissionProvider;
 import dan200.computercraft.api.redstone.IBundledRedstoneProvider;
 import dan200.computercraft.api.turtle.ITurtleUpgrade;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 import java.lang.reflect.Method;
@@ -46,7 +48,7 @@ public final class ComputerCraftAPI
 
     public static String getAPIVersion()
     {
-        return "1.74";
+        return "1.78";
     }
 
 	/**
@@ -192,13 +194,13 @@ public final class ComputerCraftAPI
      * @return If there is a block capable of emitting bundled redstone at the location, it's signal (0-65535) will be returned.
      * If there is no block capable of emitting bundled redstone at the location, -1 will be returned.
      */
-    public static int getBundledRedstoneOutput( World world, int x, int y, int z, int side )
+    public static int getBundledRedstoneOutput( World world, BlockPos pos, int side )
     {
         findCC();
         if( computerCraft_getDefaultBundledRedstoneOutput != null )
         {
             try {
-                return (Integer)computerCraft_getDefaultBundledRedstoneOutput.invoke( null, world, x, y, z, side );
+                return (Integer)computerCraft_getDefaultBundledRedstoneOutput.invoke( null, world, pos, side );
             } catch (Exception e){
                 // It failed
             }
@@ -270,7 +272,7 @@ public final class ComputerCraftAPI
                     IBundledRedstoneProvider.class
                 } );
                 computerCraft_getDefaultBundledRedstoneOutput = findCCMethod( "getDefaultBundledRedstoneOutput", new Class[] {
-                    World.class, Integer.TYPE, Integer.TYPE, Integer.TYPE, Integer.TYPE
+                    World.class, BlockPos.class, EnumFacing.class
                 } );
                 computerCraft_registerMediaProvider = findCCMethod( "registerMediaProvider", new Class[] {
                     IMediaProvider.class

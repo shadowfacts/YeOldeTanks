@@ -1,12 +1,12 @@
 package net.shadowfacts.yeoldetanks.recipe;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -16,9 +16,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cpw.mods.fml.common.registry.GameRegistry.addRecipe;
-import static cpw.mods.fml.common.registry.GameRegistry.addShapelessRecipe;
 import static net.minecraft.init.Items.*;
+import static net.minecraftforge.fml.common.registry.GameRegistry.addRecipe;
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.blocks;
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.items;
 
@@ -35,11 +34,10 @@ public class ModRecipes {
 
 		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', cauldron));
 		addRecipe(new ShapedOreRecipe(items.infiniteWaterBucket, "I I", "BIB", 'I', "ingotIron", 'B', "bucketWater"));
-		addRecipe(new BarrelMinecartRecipe());
-		addRecipe(new BarrelMinecartUncraftRecipe());
-		addShapelessRecipe(new ItemStack(items.dippingStick), blocks.barrel, stick);
+		addRecipe(new RecipeBarrelMinecart());
+		addRecipe(new RecipeUncraftBarrelMinecart());
+		addRecipe(new RecipeDippingStick());
 
-		addShapelessRecipe(new ItemStack(blocks.creativeBarrel), Blocks.dirt);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -48,7 +46,7 @@ public class ModRecipes {
 
 		List<IRecipe> toAdd = new ArrayList<>();
 
-		for (IRecipe recipe : (List<IRecipe>)CraftingManager.getInstance().getRecipeList()) {
+		for (IRecipe recipe : CraftingManager.getInstance().getRecipeList()) {
 
 			if (recipe instanceof ShapedRecipes) {
 				ShapedRecipes shaped = (ShapedRecipes)recipe;

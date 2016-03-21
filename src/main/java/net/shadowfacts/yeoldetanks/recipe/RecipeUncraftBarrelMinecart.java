@@ -1,16 +1,18 @@
 package net.shadowfacts.yeoldetanks.recipe;
 
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+import net.shadowfacts.yeoldetanks.item.ItemBarrelMinecart;
 
 /**
  * @author shadowfacts
  */
-public class BarrelMinecartUncraftRecipe implements IRecipe {
+public class RecipeUncraftBarrelMinecart implements IRecipe {
 
 	@Override
 	public boolean matches(InventoryCrafting crafting, World world) {
@@ -40,7 +42,7 @@ public class BarrelMinecartUncraftRecipe implements IRecipe {
 
 		if (cart != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
-			stack.stackTagCompound = (NBTTagCompound)cart.stackTagCompound.copy();
+			stack.setTagCompound((NBTTagCompound)cart.getTagCompound().copy());
 			return stack;
 		}
 
@@ -55,6 +57,21 @@ public class BarrelMinecartUncraftRecipe implements IRecipe {
 	@Override
 	public ItemStack getRecipeOutput() {
 		return new ItemStack(YeOldeTanks.blocks.barrel);
+	}
+
+	@Override
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+		ItemStack[] remaining = new ItemStack[inv.getSizeInventory()];
+
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack != null &&  stack.getItem() instanceof ItemBarrelMinecart) {
+				remaining[i] = new ItemStack(Items.minecart);
+				break;
+			}
+		}
+
+		return remaining;
 	}
 
 }
