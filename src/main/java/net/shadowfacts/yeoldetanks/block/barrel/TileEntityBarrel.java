@@ -17,8 +17,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fml.common.Optional;
+import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
 import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
+import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
 import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 
@@ -59,6 +61,13 @@ public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, I
 					drain(EnumFacing.DOWN, fluidHandler.fill(EnumFacing.UP, drain(EnumFacing.DOWN, tank.getCapacity(), false), true), true);
 				}
 			}
+		}
+	}
+
+	@Override
+	public void onLoad() {
+		if (worldObj.isRemote) {
+			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
 	}
 
