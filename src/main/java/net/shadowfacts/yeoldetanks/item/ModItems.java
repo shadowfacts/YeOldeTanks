@@ -29,8 +29,9 @@ public class ModItems {
 	public void initModels() {
 		modelProviders.forEach(ItemModelProvider::initModel);
 	}
+
 	private <T extends Item> T register(T item) {
-		GameRegistry.registerItem(item);
+		GameRegistry.register(item);
 		if (item instanceof ItemModelProvider) modelProviders.add((ItemModelProvider)item);
 		return item;
 	}

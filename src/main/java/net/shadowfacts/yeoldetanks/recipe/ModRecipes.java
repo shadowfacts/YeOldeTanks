@@ -29,10 +29,10 @@ public class ModRecipes {
 	public static void init() {
 		YeOldeTanks.log.info("Registering recipes");
 
-		OreDictionary.registerOre("bucketWater", water_bucket);
+		OreDictionary.registerOre("bucketWater", WATER_BUCKET);
 		OreDictionary.registerOre("bucketWater", items.infiniteWaterBucket);
 
-		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', cauldron));
+		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', CAULDRON));
 		addRecipe(new ShapedOreRecipe(items.infiniteWaterBucket, "I I", "BIB", 'I', "ingotIron", 'B', "bucketWater"));
 		addRecipe(new RecipeBarrelMinecart());
 		addRecipe(new RecipeUncraftBarrelMinecart());
@@ -55,7 +55,7 @@ public class ModRecipes {
 				boolean addNew = false;
 				for (int i = 0; i < newStacks.length; i++) {
 					ItemStack stack = newStacks[i];
-					if (stack != null && stack.getItem() == water_bucket) {
+					if (stack != null && stack.getItem() == WATER_BUCKET) {
 						newStacks[i] = new ItemStack(items.infiniteWaterBucket);
 						addNew = true;
 					}
@@ -71,7 +71,7 @@ public class ModRecipes {
 				boolean addNew = false;
 				for (int i = 0; i < newStacks.size(); i++) {
 					ItemStack stack = newStacks.get(i);
-					if (stack != null && stack.getItem() == water_bucket) {
+					if (stack != null && stack.getItem() == WATER_BUCKET) {
 						newStacks.set(i, new ItemStack(items.infiniteWaterBucket));
 						addNew = true;
 					}
@@ -92,7 +92,7 @@ public class ModRecipes {
 					boolean addNew = false;
 					for (int i = 0; i < newInputs.length; i++) {
 						if (newInputs[i] != null && newInputs[i] instanceof ItemStack) {
-							if (((ItemStack)newInputs[i]).getItem() == water_bucket) {
+							if (((ItemStack)newInputs[i]).getItem() == WATER_BUCKET) {
 								newInputs[i] = new ItemStack(items.infiniteWaterBucket);
 								addNew = true;
 							}
@@ -100,7 +100,7 @@ public class ModRecipes {
 					}
 
 					if (addNew) {
-						ShapedOreRecipe newRecipe = new ShapedOreRecipe(recipe.getRecipeOutput(), "FFF", "FFF", "FFF", 'F', Blocks.fire);
+						ShapedOreRecipe newRecipe = new ShapedOreRecipe(recipe.getRecipeOutput(), "FFF", "FFF", "FFF", 'F', Blocks.FIRE);
 
 						inputField.set(newRecipe, newInputs);
 
@@ -123,7 +123,7 @@ public class ModRecipes {
 					boolean addNew = false;
 					for (int i = 0; i < newInputs.size(); i++) {
 						if (newInputs.get(i) != null && newInputs.get(i) instanceof ItemStack) {
-							if (((ItemStack)newInputs.get(i)).getItem() == water_bucket) {
+							if (((ItemStack)newInputs.get(i)).getItem() == WATER_BUCKET) {
 								newInputs.set(i, new ItemStack(items.infiniteWaterBucket));
 								addNew = true;
 							}
@@ -131,7 +131,7 @@ public class ModRecipes {
 					}
 
 					if (addNew) {
-						ShapelessOreRecipe newRecipe = new ShapelessOreRecipe(recipe.getRecipeOutput(), Blocks.fire);
+						ShapelessOreRecipe newRecipe = new ShapelessOreRecipe(recipe.getRecipeOutput(), Blocks.FIRE);
 
 						inputsField.set(newRecipe, newInputs);
 
@@ -147,4 +147,5 @@ public class ModRecipes {
 
 		toAdd.stream().forEach(GameRegistry::addRecipe);
 	}
+
 }

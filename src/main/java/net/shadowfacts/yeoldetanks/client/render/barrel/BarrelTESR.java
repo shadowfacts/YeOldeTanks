@@ -20,16 +20,14 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
 		TileEntityBarrel barrel = (TileEntityBarrel)te;
 
-		GL11.glPushMatrix();
-
-		GL11.glTranslatef((float) x + .5f, (float) y + 1.5f, (float) z + .5f);
-		GL11.glRotatef(180, 1, 0, 0);
-
 		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
 			ResourceLocation fluidTexture = RenderUtils.getTexture(barrel.tank.getFluid().getFluid());
 
 			if (fluidTexture != null) {
 				GL11.glPushMatrix();
+
+				GL11.glTranslatef((float) x + .5f, (float) y + 1.5f, (float) z + .5f);
+				GL11.glRotatef(180, 1, 0, 0);
 
 				float fluidPercent = -(float) barrel.tank.getFluidAmount() / barrel.tank.getCapacity();
 				GL11.glTranslatef(0, fluidPercent * .9f, 0);
@@ -40,8 +38,6 @@ public class BarrelTESR extends TileEntitySpecialRenderer {
 				GL11.glPopMatrix();
 			}
 		}
-
-		GL11.glPopMatrix();
 	}
 
 }

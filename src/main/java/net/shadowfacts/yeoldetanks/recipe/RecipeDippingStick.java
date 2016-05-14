@@ -22,7 +22,7 @@ public class RecipeDippingStick implements IRecipe {
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == Items.stick) {
+				if (stack.getItem() == Items.STICK) {
 					sticks++;
 				} else if (stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
 					barrels++;

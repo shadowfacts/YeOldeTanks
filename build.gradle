@@ -29,9 +29,14 @@ minecraft {
 }
 
 repositories {
+	jcenter()
 	maven {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
+	}
+	maven {
+		name "ProfMobius"
+		url "http://mobiusstrip.eu/maven/"
 	}
 	maven {
 		name "OpenComputers"
@@ -41,6 +46,9 @@ repositories {
 
 dependencies {
 	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
+	compile group: "org.projectlombok", name: "lombok", version: "1.16.6"
+
+	deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version + "_" + mc_version
 	deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 
@@ -63,7 +71,7 @@ curseforge {
 	project {
 		id = "236923"
 
-		addGameVersion "1.8.9"
+		addGameVersion "1.9"
 		addGameVersion "Java 8"
 
 		mainArtifact(jar) {

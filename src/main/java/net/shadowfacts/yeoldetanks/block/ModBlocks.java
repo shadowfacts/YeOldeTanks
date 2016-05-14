@@ -10,6 +10,7 @@ import net.shadowfacts.yeoldetanks.item.ItemBlockBarrel;
 import net.shadowfacts.yeoldetanks.item.ItemBlockCreativeBarrel;
 import net.shadowfacts.yeoldetanks.item.ItemModelProvider;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,12 +36,26 @@ public class ModBlocks {
 	}
 
 	private <T extends Block> T register(T block) {
-		return register(block, ItemBlock.class);
+		return register(block, (ItemBlock)new ItemBlock(block).setRegistryName(block.getRegistryName()));
 	}
 
 	private <T extends Block> T register(T block, Class<? extends ItemBlock> itemBlockClass) {
-		GameRegistry.registerBlock(block, itemBlockClass);
+		try {
+			Constructor<? extends ItemBlock> ctor = itemBlockClass.getConstructor(Block.class);
+
+			return register(block, ctor.newInstance(block));
+
+		} catch (ReflectiveOperationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private <T extends Block> T register(T block, ItemBlock itemBlock) {
+		GameRegistry.register(block);
+		GameRegistry.register(itemBlock);
+
 		if (block instanceof ItemModelProvider) modelProviders.add((ItemModelProvider)block);
+
 		return block;
 	}
 

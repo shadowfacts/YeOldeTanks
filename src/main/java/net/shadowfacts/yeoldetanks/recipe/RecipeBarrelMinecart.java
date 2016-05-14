@@ -23,7 +23,7 @@ public class RecipeBarrelMinecart implements IRecipe {
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
 			if (stack != null) {
-				if (stack.getItem() == Items.minecart) {
+				if (stack.getItem() == Items.MINECART) {
 					cartCount++;
 				} else if (stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
 					barrelCount++;

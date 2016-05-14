@@ -5,8 +5,8 @@ import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.DummyConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
-import net.shadowfacts.shadowmc.config.ConfigManager;
 import net.shadowfacts.shadowmc.util.StringHelper;
+import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ public class YOTConfigGui extends GuiConfig {
 
 	@SuppressWarnings("unchecked")
 	private static IConfigElement getCategory(String category, String name, String tooltipKey) {
-		IConfigElement configElement = new ConfigElement(ConfigManager.instance.getConfigurationObject(YeOldeTanks.modId).getCategory(category));
+		IConfigElement configElement = new ConfigElement(YOTConfig.config.getCategory(category));
 		return new DummyConfigElement.DummyCategoryElement(name, tooltipKey, configElement.getChildElements());
 	}
 

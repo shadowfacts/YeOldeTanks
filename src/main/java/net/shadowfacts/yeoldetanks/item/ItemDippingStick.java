@@ -5,9 +5,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -29,7 +31,7 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 	}
 
 	@Override
-	public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
@@ -37,26 +39,28 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 				TileEntityBarrel barrel = (TileEntityBarrel) te;
 
 				if (barrel.tank.getFluid() != null) {
-					player.addChatComponentMessage(new ChatComponentText("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.addChatComponentMessage(new ChatComponentText(barrel.tank.getFluidAmount() + "mb / " + barrel.tank.getCapacity() + "mb"));
+					player.addChatComponentMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
+					player.addChatComponentMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / " + barrel.tank.getCapacity() + "mb"));
 				} else {
-					player.addChatComponentMessage(new ChatComponentText("Empty"));
+					player.addChatComponentMessage(new TextComponentString("Empty"));
 				}
 
 
-				return true;
+				return EnumActionResult.SUCCESS;
 			} else if (te instanceof TileEntityCreativeBarrel) {
 				TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel) te;
 				if (barrel.tank.getFluid() != null) {
-					player.addChatComponentMessage(new ChatComponentText("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.addChatComponentMessage(new ChatComponentText(barrel.tank.getFluidAmount() + "mb / ∞ mb"));
+					player.addChatComponentMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
+					player.addChatComponentMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / ∞ mb"));
 				} else {
-					player.addChatComponentMessage(new ChatComponentText("Empty"));
+					player.addChatComponentMessage(new TextComponentString("Empty"));
 				}
+
+				return EnumActionResult.SUCCESS;
 			}
 		}
 
-		return false;
+		return EnumActionResult.PASS;
 	}
 
 	@Override

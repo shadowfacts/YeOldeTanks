@@ -1,9 +1,11 @@
 package net.shadowfacts.yeoldetanks;
 
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.shadowfacts.shadowmc.config.Config;
-import net.shadowfacts.shadowmc.config.ConfigManager;
-import net.shadowfacts.shadowmc.config.ConfigProperty;
+import net.shadowfacts.config.Config;
+import net.shadowfacts.config.ConfigManager;
+
+import java.io.File;
 
 /**
  * @author shadowfacts
@@ -11,30 +13,39 @@ import net.shadowfacts.shadowmc.config.ConfigProperty;
 @Config(name = "YeOldeTanks")
 public class YOTConfig {
 
-	@ConfigProperty(comment = "The capacity of the barrel in milibuckets")
+	public static Configuration config;
+
+	@Config.Prop(description = "The capacity of the barrel in milibuckets")
 	public static int barrelCapacity = 55000;
 
-	@ConfigProperty(comment = "Can the barrel be filled from any side.\nBy default, it can only be filled from the top if the lid is off.")
+	@Config.Prop(description = "Can the barrel be filled from any side.\nBy default, it can only be filled from the top if the lid is off.")
 	public static boolean fillFromAnySide = false;
 
-	@ConfigProperty(comment = "Can the barrel be drained from any side.\nBy default, it can only be drained from the bottom")
+	@Config.Prop(description = "Can the barrel be drained from any side.\nBy default, it can only be drained from the bottom")
 	public static boolean drainFromAnySide = false;
 
-	@ConfigProperty(comment = "Render the fluid contained in the barrel")
+	@Config.Prop(description = "Render the fluid contained in the barrel")
 	public static boolean renderFluid = true;
 
-	@ConfigProperty(comment = "Automatically output to the bottom")
+	@Config.Prop(description = "Automatically output to the bottom")
 	public static boolean autoOutputBottom = true;
 
-	@ConfigProperty(comment = "Mystical, magical stuff and things", category = "misc", name = "#BlameEllpeck")
+	@Config.Prop(description = "Mystical, magical stuff and things", category = "misc", name = "#BlameEllpeck")
 	public static boolean blameEllpeck = false;
 
 	public static void init(FMLPreInitializationEvent event) {
+		config = new Configuration(new File(event.getModConfigurationDirectory(), "YeOldeTanks.cfg"));
+		load();
+	}
+
+	public static void load() {
 		YeOldeTanks.log.info("Loading config");
-		ConfigManager.instance.configDir
-				= event.getModConfigurationDirectory();
-		ConfigManager.instance.register(YeOldeTanks.modId, YOTConfig.class, YeOldeTanks.modId);
-		ConfigManager.instance.load(YeOldeTanks.modId);
+
+		config.load();
+
+		ConfigManager.load(YOTConfig.class, Configuration.class, config);
+
+		if (config.hasChanged()) config.save();
 	}
 
 }

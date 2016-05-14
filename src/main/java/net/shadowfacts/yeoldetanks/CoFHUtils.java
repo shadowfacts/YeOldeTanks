@@ -3,6 +3,7 @@ package net.shadowfacts.yeoldetanks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -19,9 +20,8 @@ import net.minecraftforge.fluids.IFluidHandler;
 public class CoFHUtils {
 
 //	FluidHelper
-	public static boolean fillHandlerWithContainer(World world, IFluidHandler handler, EntityPlayer player) {
-
-		ItemStack container = player.getCurrentEquippedItem();
+	public static boolean fillHandlerWithContainer(World world, IFluidHandler handler, EntityPlayer player, EnumHand hand) {
+		ItemStack container = player.getHeldItem(hand);
 		FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
 
 		if (fluid != null) {
@@ -31,7 +31,7 @@ public class CoFHUtils {
 					return true;
 				}
 				if (!player.capabilities.isCreativeMode) {
-					if (disposePlayerItem(player.getCurrentEquippedItem(), returnStack, player, true)) {
+					if (disposePlayerItem(player.getHeldItem(hand), returnStack, player, true)) {
 						player.openContainer.detectAndSendChanges();
 						((EntityPlayerMP)player).sendContainerToPlayer(player.openContainer);
 					}
@@ -43,9 +43,9 @@ public class CoFHUtils {
 		return false;
 	}
 
-	public static boolean fillContainerFromHandler(World world, IFluidHandler handler, EntityPlayer player, FluidStack tankFluid) {
+	public static boolean fillContainerFromHandler(World world, IFluidHandler handler, EntityPlayer player, EnumHand hand, FluidStack tankFluid) {
 
-		ItemStack container = player.getCurrentEquippedItem();
+		ItemStack container = player.getHeldItem(hand);
 
 		if (FluidContainerRegistry.isEmptyContainer(container)) {
 			ItemStack returnStack = FluidContainerRegistry.fillFluidContainer(tankFluid, container);
@@ -65,7 +65,7 @@ public class CoFHUtils {
 						container = null;
 					}
 				} else {
-					if (disposePlayerItem(player.getCurrentEquippedItem(), returnStack, player, true)) {
+					if (disposePlayerItem(player.getHeldItem(hand), returnStack, player, true)) {
 						player.openContainer.detectAndSendChanges();
 						((EntityPlayerMP) player).sendContainerToPlayer(player.openContainer);
 					}

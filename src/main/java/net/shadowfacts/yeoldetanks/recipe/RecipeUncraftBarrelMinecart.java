@@ -66,7 +66,7 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack != null &&  stack.getItem() instanceof ItemBarrelMinecart) {
-				remaining[i] = new ItemStack(Items.minecart);
+				remaining[i] = new ItemStack(Items.MINECART);
 				break;
 			}
 		}

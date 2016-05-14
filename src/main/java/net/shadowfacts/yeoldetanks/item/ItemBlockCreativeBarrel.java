@@ -7,8 +7,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
@@ -22,6 +22,7 @@ public class ItemBlockCreativeBarrel extends ItemBlock {
 
 	public ItemBlockCreativeBarrel(Block block) {
 		super(block);
+		setRegistryName(block.getRegistryName());
 	}
 
 	@Override
@@ -53,4 +54,5 @@ public class ItemBlockCreativeBarrel extends ItemBlock {
 		tooltip.add(fluid.getLocalizedName());
 		tooltip.add(fluid.amount + "mb / ∞ mb");
 	}
+
 }

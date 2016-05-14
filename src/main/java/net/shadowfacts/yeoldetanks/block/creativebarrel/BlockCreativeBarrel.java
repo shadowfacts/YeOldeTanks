@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -13,10 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
@@ -37,8 +38,14 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 
 	public static final PropertyBool LID = PropertyBool.create("lid");
 
+	private static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
+	private static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
+	private static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
+	private static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
+	private static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+
 	public BlockCreativeBarrel() {
-		super(Material.rock);
+		super(Material.ROCK);
 		setUnlocalizedName("creativeBarrel");
 		setRegistryName("creativeBarrel");
 		setCreativeTab(YeOldeTanks.tab);
@@ -47,8 +54,8 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	protected BlockState createBlockState() {
-		return new BlockState(this, LID);
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, LID);
 	}
 
 	@Override
@@ -62,32 +69,16 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity entity) {
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.3125F, 1.0F);
-		super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-		float f = 0.05f;
-
-		if (state.getValue(LID)) {
-			this.setBlockBounds(0, 1, 0, 1, 1, 1);
-			super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-		}
-
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, f, 1.0F, 1.0F);
-		super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, f);
-		super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-		this.setBlockBounds(1.0F - f, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-		super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-		this.setBlockBounds(0.0F, 0.0F, 1.0F - f, 1.0F, 1.0F, 1.0F);
-		super.addCollisionBoxesToList(world, pos, state, mask, list, entity);
-
-		setBlockBounds(0, 0, 0, 1, 1, 1);
-
-		this.setBlockBoundsForItemRender();
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, Entity entity) {
+	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if (entity.posX > pos.getX() && entity.posX < pos.getX() + 1 &&
 				entity.posY > pos.getY() && entity.posY < pos.getY() + 1 &&
 				entity.posZ > pos.getZ() && entity.posZ < pos.getZ() + 1) {
@@ -97,7 +88,7 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 				if (barrel.tank.getFluid() != null) {
 					Block fluidBlock = barrel.tank.getFluid().getFluid().getBlock();
 					if (fluidBlock != null) {
-						fluidBlock.onEntityCollidedWithBlock(world, pos, entity);
+						fluidBlock.onEntityCollidedWithBlock(world, pos, state, entity);
 					}
 				}
 			}
@@ -130,16 +121,16 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityCreativeBarrel) {
 			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel) te;
-			if (player.getHeldItem() == null && player.isSneaking()) {
+			if (player.getHeldItem(hand) == null && player.isSneaking()) {
 				setLidState(world, pos, state, !state.getValue(LID));
 			} else {
-				if (CoFHUtils.fillHandlerWithContainer(world, barrel, player)) {
+				if (CoFHUtils.fillHandlerWithContainer(world, barrel, player, hand)) {
 					return true;
-				} else if (CoFHUtils.fillContainerFromHandler(world, barrel, player, barrel.tank.getFluid())) {
+				} else if (CoFHUtils.fillContainerFromHandler(world, barrel, player, hand, barrel.tank.getFluid())) {
 					return true;
 				}
 			}
@@ -148,12 +139,12 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
+	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		if (side == EnumFacing.DOWN) {
 			return true;
 		} else if (side == EnumFacing.UP) {
@@ -163,7 +154,7 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(YeOldeTanks.blocks.creativeBarrel);
 
 		TileEntity te = world.getTileEntity(pos);
@@ -179,7 +170,7 @@ public class BlockCreativeBarrel extends Block implements ITileEntityProvider, I
 	}
 
 	@Override
-	public int getLightValue(IBlockAccess world, BlockPos pos) {
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		if (te instanceof TileEntityCreativeBarrel) {
 			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;

@@ -2,19 +2,17 @@ package net.shadowfacts.yeoldetanks.item;
 
 
 import net.minecraft.block.BlockRailBase;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.yeoldetanks.YOTConfig;
@@ -38,7 +36,7 @@ public class ItemBarrelMinecart extends Item implements ItemModelProvider, Achie
 	}
 
 	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (world.getBlockState(pos).getBlock() instanceof BlockRailBase) {
 			if (!world.isRemote) {
 				EntityBarrelMinecart cart = new EntityBarrelMinecart(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
@@ -53,10 +51,10 @@ public class ItemBarrelMinecart extends Item implements ItemModelProvider, Achie
 			}
 
 			stack.stackSize--;
-			return true;
+			return EnumActionResult.SUCCESS;
 		}
 
-		return false;
+		return EnumActionResult.FAIL;
 	}
 
 	@Override

@@ -1,9 +1,5 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import dan200.computercraft.api.lua.ILuaContext;
-import dan200.computercraft.api.lua.LuaException;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IPeripheral;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedPeripheral;
@@ -31,11 +27,11 @@ import java.util.List;
  * @author shadowfacts
  */
 @Optional.InterfaceList({
-		@Optional.Interface(modid = "ComputerCraft", iface = "dan200.computercraft.api.peripheral.IPeripheral"),
+//		@Optional.Interface(modid = "ComputerCraft", iface = "dan200.computercraft.api.peripheral.IPeripheral"),
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
 		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
 })
-public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, ITickable, IPeripheral, SimpleComponent, ManagedPeripheral {
+public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, ITickable/*, IPeripheral*/, SimpleComponent, ManagedPeripheral {
 
 	@AutoSerializeNBT
 	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
@@ -139,52 +135,52 @@ public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, I
 	private static String peripheralName = "yot_barrel";
 
 //	ComputerCraft
-	@Override
-	public String getType() {
-		return peripheralName;
-	}
-
-	@Override
-	public String[] getMethodNames() {
-		return methodNames;
-	}
-
-	@Override
-	@Optional.Method(modid = "ComputerCraft")
-	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException {
-		switch (method) {
-			case 0:
-				return new Object[]{ tank.getFluid().getLocalizedName() };
-			case 1:
-				return new Object[]{ tank.getFluidAmount() };
-			default:
-				throw new LuaException("No such method");
-		}
-	}
-
-	@Override
-	@Optional.Method(modid = "ComputerCraft")
-	public void attach(IComputerAccess computer) {
-
-	}
-
-	@Override
-	@Optional.Method(modid = "ComputerCraft")
-	public void detach(IComputerAccess computer) {
-
-	}
-
-	@Override
-	@Optional.Method(modid = "ComputerCraft")
-	public boolean equals(IPeripheral other) {
-		if (other instanceof TileEntityBarrel) {
-			TileEntityBarrel te = (TileEntityBarrel)other;
-			return te.tank.getFluid().equals(this.tank.getFluid());
-		}
-		return false;
-	}
-
-
+//	@Override
+//	public String getType() {
+//		return peripheralName;
+//	}
+//
+//	@Override
+//	public String[] getMethodNames() {
+//		return methodNames;
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "ComputerCraft")
+//	public Object[] callMethod(IComputerAccess computer, ILuaContext context, int method, Object[] arguments) throws LuaException, InterruptedException {
+//		switch (method) {
+//			case 0:
+//				return new Object[]{ tank.getFluid().getLocalizedName() };
+//			case 1:
+//				return new Object[]{ tank.getFluidAmount() };
+//			default:
+//				throw new LuaException("No such method");
+//		}
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "ComputerCraft")
+//	public void attach(IComputerAccess computer) {
+//
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "ComputerCraft")
+//	public void detach(IComputerAccess computer) {
+//
+//	}
+//
+//	@Override
+//	@Optional.Method(modid = "ComputerCraft")
+//	public boolean equals(IPeripheral other) {
+//		if (other instanceof TileEntityBarrel) {
+//			TileEntityBarrel te = (TileEntityBarrel)other;
+//			return te.tank.getFluid().equals(this.tank.getFluid());
+//		}
+//		return false;
+//	}
+//
+//
 //	OpenComputers
 	@Override
 	public String[] methods() {

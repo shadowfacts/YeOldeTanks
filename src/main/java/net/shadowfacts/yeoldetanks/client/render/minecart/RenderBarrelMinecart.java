@@ -4,14 +4,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderMinecart;
-import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.util.ResourceLocation;
 import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.client.model.ModelLid;
 import net.shadowfacts.yeoldetanks.client.model.ModelFluid;
 import net.shadowfacts.yeoldetanks.client.render.RenderUtils;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
-import org.lwjgl.opengl.GL11;
 
 /**
  * @author shadowfacts
@@ -25,9 +22,8 @@ public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
 	}
 
 	@Override
-	protected void func_180560_a(EntityBarrelMinecart minecart, float partialTicks, IBlockState state) {
-		super.func_180560_a(minecart, partialTicks, state);
-
+	protected void renderCartContents(EntityBarrelMinecart minecart, float partialTicks, IBlockState state) {
+		super.renderCartContents(minecart, partialTicks, state);
 
 		if (YOTConfig.renderFluid && minecart.tank.getFluid() != null && minecart.tank.getFluidAmount() > 0) {
 			ResourceLocation fluidTexture = RenderUtils.getTexture(minecart.tank.getFluid().getFluid());
@@ -49,7 +45,6 @@ public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
 				GlStateManager.popMatrix();
 			}
 		}
-
 	}
 
 }
