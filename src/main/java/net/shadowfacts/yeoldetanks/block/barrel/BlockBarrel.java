@@ -1,7 +1,6 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -21,19 +20,20 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
-import net.shadowfacts.yeoldetanks.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author shadowfacts
  */
-public class BlockBarrel extends Block implements ITileEntityProvider, ItemModelProvider, AchievementProvider {
+public class BlockBarrel extends Block implements ItemModelProvider, AchievementProvider {
 
 	public static final PropertyBool LID = PropertyBool.create("lid");
 
@@ -52,6 +52,7 @@ public class BlockBarrel extends Block implements ITileEntityProvider, ItemModel
 		setDefaultState(getDefaultState().withProperty(LID, false));
 	}
 
+	@Nonnull
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, LID);
@@ -62,11 +63,11 @@ public class BlockBarrel extends Block implements ITileEntityProvider, ItemModel
 		return state.getValue(LID) ? 1 : 0;
 	}
 
+	@Nonnull
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(LID, meta == 1);
 	}
-
 
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
@@ -95,6 +96,7 @@ public class BlockBarrel extends Block implements ITileEntityProvider, ItemModel
 		}
 	}
 
+	@Nonnull
 	@Override
 	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		return new ArrayList<>();
@@ -152,6 +154,7 @@ public class BlockBarrel extends Block implements ITileEntityProvider, ItemModel
 		return false;
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
@@ -184,13 +187,19 @@ public class BlockBarrel extends Block implements ITileEntityProvider, ItemModel
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int metadata) {
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new TileEntityBarrel();
 	}
 
 	@Override
-	public void initModel() {
-		ClientProxy.registerInvModel(this, 0, "barrel");
+	public void initItemModel() {
+		YeOldeTanks.proxy.registerInvModel(this, 0, "barrel");
 	}
 
 	@Override

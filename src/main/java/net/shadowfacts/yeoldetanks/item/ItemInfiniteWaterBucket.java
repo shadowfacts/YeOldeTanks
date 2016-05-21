@@ -19,10 +19,12 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.ItemFluidContainer;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -39,6 +41,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 		FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(this), new ItemStack(this));
 	}
 
+	@Nonnull
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
@@ -50,7 +53,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 			int placeZ = rayTrace.getBlockPos().getZ() + rayTrace.sideHit.getFrontOffsetZ();
 			BlockPos placePos = new BlockPos(placeX, placeY, placeZ);
 			IBlockState placeState = world.getBlockState(placePos);
-			if (placeState.getBlock().getMaterial(placeState).isReplaceable()) {
+			if (placeState.getMaterial().isReplaceable()) {
 				world.setBlockState(placePos, Blocks.FLOWING_WATER.getStateFromMeta(0), 2);
 			}
 		}
@@ -70,6 +73,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 		list.add(stack);
 	}
 
+	@Nonnull
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
 		return stack;
@@ -94,8 +98,8 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 	}
 
 	@Override
-	public void initModel() {
-		ClientProxy.registerInvModel(this, 0, "infiniteWaterBucket");
+	public void initItemModel() {
+		YeOldeTanks.proxy.registerInvModel(this, 0, "infiniteWaterBucket");
 	}
 
 	@Override

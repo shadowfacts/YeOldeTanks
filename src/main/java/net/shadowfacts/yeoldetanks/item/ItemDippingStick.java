@@ -12,6 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
@@ -64,8 +65,8 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 	}
 
 	@Override
-	public void initModel() {
-		ClientProxy.registerInvModel(this, 0, "dippingStick");
+	public void initItemModel() {
+		YeOldeTanks.proxy.registerInvModel(this, 0, "dippingStick");
 	}
 
 	@Override

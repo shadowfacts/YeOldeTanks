@@ -58,12 +58,12 @@ public class TileEntityCreativeBarrel extends BaseTileEntity implements IFluidHa
 	}
 
 	@Override
-	public void load(NBTTagCompound tag, boolean loadInventory) {
+	public void readFromNBT(NBTTagCompound tag) {
 
 	}
 
 	@Override
-	public NBTTagCompound save(NBTTagCompound tag, boolean saveInventory) {
+	public NBTTagCompound writeToNBT(NBTTagCompound tag) {
 		return tag;
 	}
 

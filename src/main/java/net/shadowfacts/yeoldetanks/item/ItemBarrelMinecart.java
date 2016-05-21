@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
@@ -77,8 +78,8 @@ public class ItemBarrelMinecart extends Item implements ItemModelProvider, Achie
 	}
 
 	@Override
-	public void initModel() {
-		ClientProxy.registerInvModel(this, 0, "barrelMinecart");
+	public void initItemModel() {
+		YeOldeTanks.proxy.registerInvModel(this, 0, "barrelMinecart");
 	}
 
 	@Override

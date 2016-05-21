@@ -12,14 +12,12 @@ import net.shadowfacts.yeoldetanks.client.render.RenderUtils;
 /**
  * @author shadowfacts
  */
-public class CreativeBarrelTESR extends TileEntitySpecialRenderer {
+public class CreativeBarrelTESR extends TileEntitySpecialRenderer<TileEntityCreativeBarrel> {
 
 	private ModelFluid modelFluid = new ModelFluid();
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
-		TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
-
+	public void renderTileEntityAt(TileEntityCreativeBarrel barrel, double x, double y, double z, float partialTicks, int destroyStage) {
 		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null) {
 			ResourceLocation fluidTexture = RenderUtils.getTexture(barrel.tank.getFluid().getFluid());
 

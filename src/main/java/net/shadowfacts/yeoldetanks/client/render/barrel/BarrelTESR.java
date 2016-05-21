@@ -12,14 +12,12 @@ import org.lwjgl.opengl.GL11;
 /**
  * @author shadowfacts
  */
-public class BarrelTESR extends TileEntitySpecialRenderer {
+public class BarrelTESR extends TileEntitySpecialRenderer<TileEntityBarrel> {
 
 	private ModelFluid modelFluid = new ModelFluid();
 
 	@Override
-	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
-		TileEntityBarrel barrel = (TileEntityBarrel)te;
-
+	public void renderTileEntityAt(TileEntityBarrel barrel, double x, double y, double z, float partialTicks, int destroyStage) {
 		if (YOTConfig.renderFluid && barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
 			ResourceLocation fluidTexture = RenderUtils.getTexture(barrel.tank.getFluid().getFluid());
 

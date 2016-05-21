@@ -42,7 +42,9 @@ public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, I
 		markDirty();
 		if (Math.abs(prevAmount - tank.getFluidAmount()) >= 1000) {
 			prevAmount = tank.getFluidAmount();
-			sync();
+			if (!worldObj.isRemote) {
+				sync();
+			}
 		}
 	}
 
@@ -65,16 +67,6 @@ public class TileEntityBarrel extends BaseTileEntity implements IFluidHandler, I
 		if (worldObj.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
-	}
-
-	@Override
-	public void load(NBTTagCompound tag, boolean loadInventory) {
-
-	}
-
-	@Override
-	public NBTTagCompound save(NBTTagCompound tag, boolean saveInventory) {
-		return tag;
 	}
 
 	//	IFluidHandler
