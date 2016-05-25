@@ -33,7 +33,7 @@ public class YeOldeTanks {
 
 	public static final String modId = "YeOldeTanks";
 	public static final String name = "Ye Olde Tanks";
-	public static final String version = "1.2.0";
+	public static final String version = "1.7.1";
 	private static final String proxyPrefix = "net.shadowfacts.yeoldetanks.proxy.";
 	public static final String guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory";
 
