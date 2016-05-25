@@ -11,7 +11,7 @@ import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
  */
 public class ModEntities {
 
-	public static EntityMinecart.Type TANK_CART_TYPE = EnumHelper.addEnum(EntityMinecart.Type.class, "YOTTANK", 7, "MinecartYOTTank");
+	public static EntityMinecart.Type TANK_CART_TYPE = EnumHelper.addEnum(EntityMinecart.Type.class, "YOTTANK", new Class<?>[]{int.class, String.class}, 7, "MinecartYOTTank");
 
 	public static void preInit() {
 		YeOldeTanks.log.info("Registering entities");
