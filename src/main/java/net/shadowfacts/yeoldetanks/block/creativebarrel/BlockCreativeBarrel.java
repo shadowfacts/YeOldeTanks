@@ -19,6 +19,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
@@ -126,16 +128,19 @@ public class BlockCreativeBarrel extends Block implements ItemModelProvider, Ach
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileEntityCreativeBarrel) {
-			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel) te;
-			if (player.getHeldItem(hand) == null && player.isSneaking()) {
-				setLidState(world, pos, state, !state.getValue(LID));
-			} else {
-				if (CoFHUtils.fillHandlerWithContainer(world, barrel, player, hand)) {
-					return true;
-				} else if (CoFHUtils.fillContainerFromHandler(world, barrel, player, hand, barrel.tank.getFluid())) {
-					return true;
-				}
+		if (player.getHeldItem(hand) == null && player.isSneaking()) {
+			setLidState(world, pos, state, !state.getValue(LID));
+		} else {
+			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
+			boolean result = false;
+			if (CoFHUtils.fillHandlerWithContainer(world, handler, player, hand)) {
+				result = true;
+			} else if (CoFHUtils.fillContainerFromHandler(world, handler, player, hand, handler.getTankProperties()[0].getContents())) {
+				result = true;
+			}
+			if (result) {
+				((TileEntityCreativeBarrel)te).save();
+				return true;
 			}
 		}
 		return false;

@@ -14,6 +14,7 @@ import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
 import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
+import net.shadowfacts.yeoldetanks.compat.CompatWaila;
 import net.shadowfacts.yeoldetanks.compat.computercraft.CompatComputerCraft;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
@@ -28,14 +29,13 @@ import javax.annotation.Nonnull;
 /**
  * @author shadowfacts
  */
-@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = YeOldeTanks.guiFactory)
+@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory",dependencies = "required-after:shadowmc@[3.3.7,);")
 public class YeOldeTanks {
 
 	public static final String modId = "YeOldeTanks";
 	public static final String name = "Ye Olde Tanks";
 	public static final String version = "1.7.1";
 	private static final String proxyPrefix = "net.shadowfacts.yeoldetanks.proxy.";
-	public static final String guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory";
 
 	public static Logger log = LogManager.getLogger(modId);
 
@@ -74,23 +74,24 @@ public class YeOldeTanks {
 
 		ModAchievements.registerAchievements();
 
-		YeOldeTanks.compat.registerModule(CompatComputerCraft.class);
+		compat.registerModule(CompatComputerCraft.class);
+		compat.registerModule(CompatWaila.class);
 		proxy.registerClientModules();
 
-		YeOldeTanks.compat.preInit(event);
+		compat.preInit(event);
 
 		proxy.registerRenderers();
 	}
 
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
-		YeOldeTanks.compat.init(event);
+		compat.init(event);
 		ModRecipes.init();
 	}
 
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		YeOldeTanks.compat.postInit(event);
+		compat.postInit(event);
 		ModRecipes.postInit();
 	}
 

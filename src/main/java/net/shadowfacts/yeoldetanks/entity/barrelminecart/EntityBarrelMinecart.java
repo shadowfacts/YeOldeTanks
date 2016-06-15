@@ -15,10 +15,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.FluidTankInfo;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YOTConfig;
@@ -28,7 +26,7 @@ import net.shadowfacts.yeoldetanks.entity.ModEntities;
 /**
  * @author shadowfacts
  */
-public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandler {
+public class EntityBarrelMinecart extends EntityMinecart {
 
 	private static final DataParameter<Integer> AMOUNT = EntityDataManager.createKey(EntityBarrelMinecart.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> CAPACITY = EntityDataManager.createKey(EntityBarrelMinecart.class, DataSerializers.VARINT);
@@ -69,8 +67,8 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 				}
 				return EnumActionResult.SUCCESS;
 			}
-			if (!CoFHUtils.fillHandlerWithContainer(player.worldObj, this, player, hand)) {
-				CoFHUtils.fillContainerFromHandler(player.worldObj, this, player, hand, tank.getFluid());
+			if (!CoFHUtils.fillHandlerWithContainer(player.worldObj, tank, player, hand)) {
+				CoFHUtils.fillContainerFromHandler(player.worldObj, tank, player, hand, tank.getFluid());
 			}
 		}
 		return EnumActionResult.SUCCESS;
@@ -117,38 +115,18 @@ public class EntityBarrelMinecart extends EntityMinecart implements IFluidHandle
 		return ModEntities.TANK_CART_TYPE;
 	}
 
-//	IFluidHandler
 	@Override
-	public int fill(EnumFacing from, FluidStack resource, boolean doFill) {
-		return tank.fill(resource, doFill);
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public FluidStack drain(EnumFacing from, FluidStack resource, boolean doDrain) {
-		if (resource == null || !resource.isFluidEqual(tank.getFluid())) {
-			return null;
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
+			return (T)tank;
+		} else {
+			return super.getCapability(capability, facing);
 		}
-		return tank.drain(resource.amount, doDrain);
-	}
-
-	@Override
-	public FluidStack drain(EnumFacing from, int maxDrain, boolean doDrain) {
-		return tank.drain(maxDrain, doDrain);
-	}
-
-	@Override
-	public boolean canFill(EnumFacing from, Fluid fluid) {
-		return true;
-	}
-
-	@Override
-	public boolean canDrain(EnumFacing from, Fluid fluid) {
-		return true;
-	}
-
-	@Override
-	public FluidTankInfo[] getTankInfo(EnumFacing from) {
-		return new FluidTankInfo[]{ tank.getInfo() };
 	}
 
 }

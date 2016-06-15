@@ -7,7 +7,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 /**
  * Redistributed, with permission from CoFHLib
@@ -25,7 +25,7 @@ public class CoFHUtils {
 		FluidStack fluid = FluidContainerRegistry.getFluidForFilledItem(container);
 
 		if (fluid != null) {
-			if (handler.fill(null, fluid, false) == fluid.amount || player.capabilities.isCreativeMode) {
+			if (handler.fill(fluid, false) == fluid.amount || player.capabilities.isCreativeMode) {
 				ItemStack returnStack = FluidContainerRegistry.drainFluidContainer(container);
 				if (world.isRemote) {
 					return true;
@@ -36,7 +36,7 @@ public class CoFHUtils {
 						((EntityPlayerMP)player).sendContainerToPlayer(player.openContainer);
 					}
 				}
-				handler.fill(null, fluid, true);
+				handler.fill(fluid, true);
 				return true;
 			}
 		}
@@ -71,7 +71,7 @@ public class CoFHUtils {
 					}
 				}
 			}
-			handler.drain(null, fluid.amount, true);
+			handler.drain(fluid.amount, true);
 			return true;
 		}
 		return false;
