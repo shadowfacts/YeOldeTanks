@@ -4,15 +4,14 @@ import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedPeripheral;
 import li.cil.oc.api.network.SimpleComponent;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fml.common.Optional;
 import net.shadowfacts.shadowmc.ShadowMC;
+import net.shadowfacts.shadowmc.capability.CapHolder;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
 import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
@@ -33,6 +32,7 @@ import java.util.List;
 public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPeripheral*/, SimpleComponent, ManagedPeripheral {
 
 	@AutoSerializeNBT
+	@CapHolder(capabilities = IFluidHandler.class)
 	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
 
 	private int prevAmount = tank.getFluidAmount();
@@ -63,20 +63,6 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 	public void onLoad() {
 		if (worldObj.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
-		}
-	}
-
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
-			return (T)tank;
-		} else {
-			return super.getCapability(capability, facing);
 		}
 	}
 
