@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -37,6 +38,10 @@ public class ModRecipes {
 		addRecipe(new RecipeBarrelMinecart());
 		addRecipe(new RecipeUncraftBarrelMinecart());
 		addRecipe(new RecipeDippingStick());
+
+		RecipeSorter.register("BarrelMinecart", RecipeBarrelMinecart.class, RecipeSorter.Category.SHAPED, "");
+		RecipeSorter.register("UncraftBarrelMinecart", RecipeUncraftBarrelMinecart.class, RecipeSorter.Category.SHAPED, "");
+		RecipeSorter.register("DippingStick", RecipeDippingStick.class, RecipeSorter.Category.SHAPELESS, "");
 
 	}
 
