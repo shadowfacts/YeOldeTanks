@@ -29,12 +29,12 @@ import javax.annotation.Nonnull;
 /**
  * @author shadowfacts
  */
-@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory",dependencies = "required-after:shadowmc@[3.3.7,);")
+@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory", dependencies = "required-after:shadowmc@[3.4.1,);", acceptedMinecraftVersions = "[1.10.2]")
 public class YeOldeTanks {
 
 	public static final String modId = "YeOldeTanks";
 	public static final String name = "Ye Olde Tanks";
-	public static final String version = "1.7.1";
+	public static final String version = "@VERSION@";
 	private static final String proxyPrefix = "net.shadowfacts.yeoldetanks.proxy.";
 
 	public static Logger log = LogManager.getLogger(modId);
