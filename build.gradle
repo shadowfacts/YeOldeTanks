@@ -26,6 +26,9 @@ minecraft {
 	version = mc_version + "-" + forge_version
 	mappings = mcp_mappings
 	runDir = "run"
+
+	replaceIn "YeOldeTanks.java"
+	replace "@VERSION@", mod_version
 }
 
 repositories {
@@ -47,7 +50,7 @@ repositories {
 dependencies {
 	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
 
-	deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version + "_" + mc_version
+	deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version
 	deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 
@@ -70,11 +73,11 @@ curseforge {
 	project {
 		id = "236923"
 
-		addGameVersion "1.9.4"
+		addGameVersion "1.10.2"
 		addGameVersion "Java 8"
 
 		mainArtifact(jar) {
-			releaseType = "beta"
+			releaseType = "release"
 			changelog = ""
 
 			relations {
