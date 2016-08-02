@@ -52,8 +52,8 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 		if (YOTConfig.autoOutputBottom &&
 				tank.getFluid() != null && tank.getFluidAmount() > 0) {
 			TileEntity te = worldObj.getTileEntity(pos.down());
-			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN)) {
-				IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.DOWN);
+			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
+				IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 				tank.drain(fluidHandler.fill(tank.drain(tank.getCapacity(), false), true), true);
 			}
 		}
