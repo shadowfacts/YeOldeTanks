@@ -1,11 +1,11 @@
 # Blocks
 tile.yot.barrel.name=桶
-tile.yot.creativeBarrel.name=§d创造模式桶
+tile.yot.creative_barrel.name=§d创造模式桶
 
 # Items
-item.yot.dippingstick.name=浸渍的木棍
-item.yot.infiniteWaterBucket.name=无限水桶
-item.yot.barrelminecart.name=水桶矿车
+item.yot.dipping_stick.name=浸渍的木棍
+item.yot.infinite_water_bucket.name=无限水桶
+item.yot.barrel_minecart.name=水桶矿车
 
 # Entities
 entity.YeOldeTanks.yot_barrel_minecart.name=水桶矿车

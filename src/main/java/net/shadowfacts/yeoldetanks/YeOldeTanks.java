@@ -1,7 +1,7 @@
 package net.shadowfacts.yeoldetanks;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -24,12 +24,10 @@ import net.shadowfacts.yeoldetanks.recipe.ModRecipes;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
-
 /**
  * @author shadowfacts
  */
-@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory", dependencies = "required-after:shadowmc@[3.4.1,);", acceptedMinecraftVersions = "[1.10.2]")
+@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory", dependencies = "required-after:shadowmc@[3.4.1,);")
 public class YeOldeTanks {
 
 	public static final String modId = "YeOldeTanks";
@@ -53,8 +51,8 @@ public class YeOldeTanks {
 
 	public static CreativeTabs tab = new CreativeTabs("yot") {
 		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(blocks.barrel);
+		public ItemStack getTabIconItem() {
+			return new ItemStack(blocks.barrel);
 		}
 	};
 

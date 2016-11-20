@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
@@ -48,8 +49,8 @@ public class BlockCreativeBarrel extends Block implements ItemModelProvider, Ach
 
 	public BlockCreativeBarrel() {
 		super(Material.ROCK);
-		setUnlocalizedName("creativeBarrel");
-		setRegistryName("creativeBarrel");
+		setUnlocalizedName("creative_barrel");
+		setRegistryName("creative_barrel");
 		setCreativeTab(YeOldeTanks.tab);
 		setHardness(.5f);
 		setDefaultState(getDefaultState().withProperty(LID, false));
@@ -120,25 +121,20 @@ public class BlockCreativeBarrel extends Block implements ItemModelProvider, Ach
 		}
 
 		EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
-		world.spawnEntityInWorld(item);
+		world.spawnEntity(item);
 
 		super.breakBlock(world, pos, state);
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
-		if (player.getHeldItem(hand) == null && player.isSneaking()) {
+		if (player.getHeldItem(hand).isEmpty() && player.isSneaking()) {
 			setLidState(world, pos, state, !state.getValue(LID));
 		} else {
 			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-			boolean result = false;
-			if (CoFHUtils.fillHandlerWithContainer(world, handler, player, hand)) {
-				result = true;
-			} else if (CoFHUtils.fillContainerFromHandler(world, handler, player, hand, handler.getTankProperties()[0].getContents())) {
-				result = true;
-			}
-			if (result) {
+			ItemStack heldItem = player.getHeldItem(hand);
+			if (FluidUtil.interactWithFluidHandler(heldItem, handler, player).isSuccess()) {
 				((TileEntityCreativeBarrel)te).save();
 				return true;
 			}

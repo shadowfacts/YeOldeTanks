@@ -25,14 +25,14 @@ import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 public class ItemDippingStick extends Item implements ItemModelProvider, AchievementProvider {
 
 	public ItemDippingStick() {
-		setUnlocalizedName("dippingStick");
-		setRegistryName("dippingStick");
+		setUnlocalizedName("dipping_stick");
+		setRegistryName("dipping_stick");
 		setCreativeTab(YeOldeTanks.tab);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
@@ -40,10 +40,10 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 				TileEntityBarrel barrel = (TileEntityBarrel) te;
 
 				if (barrel.tank.getFluid() != null) {
-					player.addChatComponentMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.addChatComponentMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / " + barrel.tank.getCapacity() + "mb"));
+					player.sendMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
+					player.sendMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / " + barrel.tank.getCapacity() + "mb"));
 				} else {
-					player.addChatComponentMessage(new TextComponentString("Empty"));
+					player.sendMessage(new TextComponentString("Empty"));
 				}
 
 
@@ -51,10 +51,10 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 			} else if (te instanceof TileEntityCreativeBarrel) {
 				TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel) te;
 				if (barrel.tank.getFluid() != null) {
-					player.addChatComponentMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.addChatComponentMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / ∞ mb"));
+					player.sendMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
+					player.sendMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / ∞ mb"));
 				} else {
-					player.addChatComponentMessage(new TextComponentString("Empty"));
+					player.sendMessage(new TextComponentString("Empty"));
 				}
 
 				return EnumActionResult.SUCCESS;
@@ -66,7 +66,7 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 
 	@Override
 	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "dippingStick");
+		YeOldeTanks.proxy.registerInvModel(this, 0, "dipping_stick");
 	}
 
 	@Override

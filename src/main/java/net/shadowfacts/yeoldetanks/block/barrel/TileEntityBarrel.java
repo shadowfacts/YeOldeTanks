@@ -1,9 +1,5 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import li.cil.oc.api.machine.Arguments;
-import li.cil.oc.api.machine.Context;
-import li.cil.oc.api.network.ManagedPeripheral;
-import li.cil.oc.api.network.SimpleComponent;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -24,12 +20,12 @@ import java.util.List;
 /**
  * @author shadowfacts
  */
-@Optional.InterfaceList({
-//		@Optional.Interface(modid = "ComputerCraft", iface = "dan200.computercraft.api.peripheral.IPeripheral"),
-		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
-		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
-})
-public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPeripheral*/, SimpleComponent, ManagedPeripheral {
+//@Optional.InterfaceList({
+////		@Optional.Interface(modid = "ComputerCraft", iface = "dan200.computercraft.api.peripheral.IPeripheral"),
+//		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
+//		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
+//})
+public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPeripheral, SimpleComponent, ManagedPeripheral */{
 
 	@AutoSerializeNBT
 	@CapHolder(capabilities = IFluidHandler.class)
@@ -41,7 +37,7 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 		markDirty();
 		if (Math.abs(prevAmount - tank.getFluidAmount()) >= 1000) {
 			prevAmount = tank.getFluidAmount();
-			if (!worldObj.isRemote) {
+			if (!world.isRemote) {
 				sync();
 			}
 		}
@@ -51,7 +47,7 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 	public void update() {
 		if (YOTConfig.autoOutputBottom &&
 				tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			TileEntity te = worldObj.getTileEntity(pos.down());
+			TileEntity te = world.getTileEntity(pos.down());
 			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
 				IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 				tank.drain(fluidHandler.fill(tank.drain(tank.getCapacity(), false), true), true);
@@ -61,7 +57,7 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 
 	@Override
 	public void onLoad() {
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
 	}
@@ -122,28 +118,28 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 //
 //
 //	OpenComputers
-	@Override
-	public String[] methods() {
-		return methodNames;
-	}
-
-	@Override
-	public Object[] invoke(String method, Context context, Arguments args) throws Exception {
-		int methodId = methodList.indexOf(method);
-
-		switch (methodId) {
-			case 0:
-				return new Object[]{ tank.getFluid().getLocalizedName() };
-			case 1:
-				return new Object[]{ tank.getFluidAmount() };
-		}
-
-		throw new RuntimeException("No such method");
-	}
-
-	@Override
-	public String getComponentName() {
-		return peripheralName;
-	}
+//	@Override
+//	public String[] methods() {
+//		return methodNames;
+//	}
+//
+//	@Override
+//	public Object[] invoke(String method, Context context, Arguments args) throws Exception {
+//		int methodId = methodList.indexOf(method);
+//
+//		switch (methodId) {
+//			case 0:
+//				return new Object[]{ tank.getFluid().getLocalizedName() };
+//			case 1:
+//				return new Object[]{ tank.getFluidAmount() };
+//		}
+//
+//		throw new RuntimeException("No such method");
+//	}
+//
+//	@Override
+//	public String getComponentName() {
+//		return peripheralName;
+//	}
 
 }

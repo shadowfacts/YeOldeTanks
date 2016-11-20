@@ -1,11 +1,11 @@
 # Blocks
 tile.barrel.name=Barrel
-tile.creativeBarrel.name=§dCreative Barrel
+tile.creative_barrel.name=§dCreative Barrel
 
 # Items
-item.dippingStick.name=Dipping Stick
-item.infiniteWaterBucket.name=Infinite Water Bucket
-item.barrelMinecart.name=Minecart with Barrel
+item.dipping_stick.name=Dipping Stick
+item.infinite_water_bucket.name=Infinite Water Bucket
+item.barrel_minecart.name=Minecart with Barrel
 
 # Entities
 entity.YeOldeTanks.yot_barrel_minecart.name=Minecart with Barrel

@@ -37,21 +37,21 @@ repositories {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
 	}
-	maven {
-		name "ProfMobius"
-		url "http://mobiusstrip.eu/maven/"
-	}
-	maven {
-		name "OpenComputers"
-		url "http://maven.cil.li/"
-	}
+	// maven {
+	// 	name "ProfMobius"
+	// 	url "http://mobiusstrip.eu/maven/"
+	// }
+	// maven {
+	// 	name "OpenComputers"
+	// 	url "http://maven.cil.li/"
+	// }
 }
 
 dependencies {
 	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
 
-	deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version
-	deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
+	// deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version
+	// deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 
 processResources {
@@ -73,7 +73,7 @@ curseforge {
 	project {
 		id = "236923"
 
-		addGameVersion "1.10.2"
+		addGameVersion "1.11"
 		addGameVersion "Java 8"
 
 		mainArtifact(jar) {

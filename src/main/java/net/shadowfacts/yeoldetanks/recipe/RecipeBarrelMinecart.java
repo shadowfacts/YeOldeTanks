@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
@@ -22,7 +23,7 @@ public class RecipeBarrelMinecart implements IRecipe {
 		int barrelCount = 0;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (stack != null) {
+			if (!stack.isEmpty()) {
 				if (stack.getItem() == Items.MINECART) {
 					cartCount++;
 				} else if (stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
@@ -41,7 +42,7 @@ public class RecipeBarrelMinecart implements IRecipe {
 		ItemStack barrel = null;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (stack != null && stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
+			if (!stack.isEmpty() && stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
 				barrel = stack;
 			}
 		}
@@ -49,7 +50,7 @@ public class RecipeBarrelMinecart implements IRecipe {
 		if (barrel != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.items.barrelMinecart);
 			if (barrel.getTagCompound() != null) {
-				stack.setTagCompound((NBTTagCompound)barrel.getTagCompound().copy());
+				stack.setTagCompound(barrel.getTagCompound().copy());
 			}
 			return stack;
 		}
@@ -68,8 +69,8 @@ public class RecipeBarrelMinecart implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		return new ItemStack[inv.getSizeInventory()];
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+		return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 	}
 
 

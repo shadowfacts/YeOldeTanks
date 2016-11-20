@@ -1,6 +1,5 @@
 package net.shadowfacts.yeoldetanks.compat;
 
-import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.shadowfacts.shadowmc.compat.Compat;
@@ -22,10 +21,10 @@ public class CompatWaila {
 		FMLInterModComms.sendMessage("Waila", "register", "net.shadowfacts.yeoldetanks.compat.CompatWaila.callback");
 	}
 
-	public static void callback(IWailaRegistrar registrar) {
-		registrar.registerBodyProvider(new BarrelDataProvider(), BlockBarrel.class);
-		registrar.registerBodyProvider(new CreativeBarrelDataProvider(), BlockCreativeBarrel.class);
-		registrar.registerBodyProvider(new BarrelMinecartEntityProvider(), EntityBarrelMinecart.class);
-	}
+//	public static void callback(IWailaRegistrar registrar) {
+//		registrar.registerBodyProvider(new BarrelDataProvider(), BlockBarrel.class);
+//		registrar.registerBodyProvider(new CreativeBarrelDataProvider(), BlockCreativeBarrel.class);
+//		registrar.registerBodyProvider(new BarrelMinecartEntityProvider(), EntityBarrelMinecart.class);
+//	}
 
 }

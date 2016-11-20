@@ -36,7 +36,7 @@ public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickabl
 	public void update() {
 		if (YOTConfig.autoOutputBottom &&
 				tank.getFluid() != null) {
-			TileEntity te = worldObj.getTileEntity(pos.down());
+			TileEntity te = world.getTileEntity(pos.down());
 			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
 				IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 				tank.drain(fluidHandler.fill(tank.drain(tank.getCapacity(), false), true), true);
@@ -46,7 +46,7 @@ public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickabl
 
 	@Override
 	public void onLoad() {
-		if (worldObj.isRemote) {
+		if (world.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
 	}

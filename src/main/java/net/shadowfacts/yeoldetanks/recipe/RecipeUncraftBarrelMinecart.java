@@ -5,6 +5,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.item.ItemBarrelMinecart;
@@ -19,7 +20,7 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		int cartCount = 0;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (stack != null) {
+			if (!stack.isEmpty()) {
 				if (stack.getItem() == YeOldeTanks.items.barrelMinecart) {
 					cartCount++;
 				} else {
@@ -35,14 +36,14 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		ItemStack cart = null;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (stack != null && stack.getItem() == YeOldeTanks.items.barrelMinecart) {
+			if (!stack.isEmpty() && stack.getItem() == YeOldeTanks.items.barrelMinecart) {
 				cart = stack;
 			}
 		}
 
 		if (cart != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
-			stack.setTagCompound((NBTTagCompound)cart.getTagCompound().copy());
+			stack.setTagCompound(cart.getTagCompound().copy());
 			return stack;
 		}
 
@@ -60,18 +61,18 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 	}
 
 	@Override
-	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
-		ItemStack[] remaining = new ItemStack[inv.getSizeInventory()];
+	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
+		NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack != null &&  stack.getItem() instanceof ItemBarrelMinecart) {
-				remaining[i] = new ItemStack(Items.MINECART);
+			if (!stack.isEmpty() &&  stack.getItem() instanceof ItemBarrelMinecart) {
+				list.set(i, new ItemStack(Items.MINECART));
 				break;
 			}
 		}
 
-		return remaining;
+		return list;
 	}
 
 }

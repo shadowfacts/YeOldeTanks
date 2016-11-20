@@ -33,7 +33,7 @@ public class ItemBlockBarrel extends ItemBlock {
 			if (stack.getTagCompound() != null) {
 				TileEntity te = world.getTileEntity(pos);
 				if (te instanceof TileEntityBarrel) {
-					NBTTagCompound tag = (NBTTagCompound)stack.getTagCompound().copy();
+					NBTTagCompound tag = stack.getTagCompound().copy();
 					tag.setInteger("x", pos.getX());
 					tag.setInteger("y", pos.getY());
 					tag.setInteger("z", pos.getZ());

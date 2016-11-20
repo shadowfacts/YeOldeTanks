@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "yeoldetanks:items/infinite_water_bucket"
+	}
+}

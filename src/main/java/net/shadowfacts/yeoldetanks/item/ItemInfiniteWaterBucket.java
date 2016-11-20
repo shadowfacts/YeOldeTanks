@@ -11,11 +11,11 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.ItemFluidContainer;
@@ -26,7 +26,6 @@ import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 /**
  * @author shadowfacts
@@ -35,16 +34,16 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 
 	public ItemInfiniteWaterBucket() {
 		super(1000);
-		setUnlocalizedName("infiniteWaterBucket");
-		setRegistryName("infiniteWaterBucket");
+		setUnlocalizedName("infinite_water_bucket");
+		setRegistryName("infinite_water_bucket");
 		setCreativeTab(YeOldeTanks.tab);
 		setMaxStackSize(1);
-		FluidContainerRegistry.registerFluidContainer(FluidRegistry.WATER, new ItemStack(this), new ItemStack(this));
 	}
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		ItemStack stack = player.getHeldItem(hand);
 		if (!world.isRemote) {
 			RayTraceResult rayTrace = this.rayTrace(world, player, false);
 			if (rayTrace == null) return new ActionResult<>(EnumActionResult.FAIL, stack);
@@ -64,8 +63,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public void getSubItems(Item item, CreativeTabs tab, List list) {
+	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
 		ItemStack stack = new ItemStack(this);
 		stack.setTagCompound(new NBTTagCompound());
 		NBTTagCompound fluid = new NBTTagCompound();
@@ -87,7 +85,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 
 	@Override
 	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "infiniteWaterBucket");
+		YeOldeTanks.proxy.registerInvModel(this, 0, "infinite_water_bucket");
 	}
 
 	@Override
@@ -108,7 +106,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 
 		@Override
 		public FluidStack drain(int maxDrain, boolean doDrain) {
-			if (container.stackSize != 1 || maxDrain <= 0) {
+			if (container.getCount() != 1 || maxDrain <= 0) {
 				return null;
 			}
 

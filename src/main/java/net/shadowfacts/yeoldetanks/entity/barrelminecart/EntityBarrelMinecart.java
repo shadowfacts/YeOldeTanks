@@ -16,12 +16,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
 import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author shadowfacts
@@ -50,26 +53,21 @@ public class EntityBarrelMinecart extends EntityMinecart {
 		this.prevPosZ = z;
 	}
 
+	@Nonnull
 	@Override
-	public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand) {
-		return super.processInitialInteract(player, stack, hand);
-	}
-
-	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, ItemStack stack, EnumHand hand) {
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		if (!player.isSneaking()) {
-			if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == YeOldeTanks.items.dippingStick && !worldObj.isRemote) {
+			ItemStack stack = player.getHeldItem(hand);
+			if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == YeOldeTanks.items.dippingStick && !world.isRemote) {
 				if (tank.getFluid() != null) {
-					player.addChatComponentMessage(new TextComponentString("Fluid: " + tank.getFluid().getLocalizedName()));
-					player.addChatComponentMessage(new TextComponentString(tank.getFluidAmount() + "mb / " + tank.getCapacity() + "mb"));
+					player.sendMessage(new TextComponentString("Fluid: " + tank.getFluid().getLocalizedName()));
+					player.sendMessage(new TextComponentString(tank.getFluidAmount() + "mb / " + tank.getCapacity() + "mb"));
 				} else {
-					player.addChatComponentMessage(new TextComponentString("Empty"));
+					player.sendMessage(new TextComponentString("Empty"));
 				}
 				return EnumActionResult.SUCCESS;
 			}
-			if (!CoFHUtils.fillHandlerWithContainer(player.worldObj, tank, player, hand)) {
-				CoFHUtils.fillContainerFromHandler(player.worldObj, tank, player, hand, tank.getFluid());
-			}
+			FluidUtil.interactWithFluidHandler(stack, tank, player);
 		}
 		return EnumActionResult.SUCCESS;
 	}
