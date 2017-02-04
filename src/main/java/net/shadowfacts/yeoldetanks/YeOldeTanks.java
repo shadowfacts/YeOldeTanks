@@ -35,7 +35,7 @@ public class YeOldeTanks {
 	public static final String version = "@VERSION@";
 	private static final String proxyPrefix = "net.shadowfacts.yeoldetanks.proxy.";
 
-	public static Logger log = LogManager.getLogger(modId);
+	public static Logger log = LogManager.getFormatterLogger(modId);
 
 	@SidedProxy(serverSide = proxyPrefix + "CommonProxy", clientSide = proxyPrefix + "ClientProxy")
 	public static CommonProxy proxy;

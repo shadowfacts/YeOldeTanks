@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -32,6 +33,7 @@ public class ModRecipes {
 
 		OreDictionary.registerOre("bucketWater", WATER_BUCKET);
 		OreDictionary.registerOre("bucketWater", items.infiniteWaterBucket);
+		OreDictionary.registerOre("listAllwater", items.infiniteWaterBucket);
 
 		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', CAULDRON));
 		addRecipe(new ShapedOreRecipe(items.infiniteWaterBucket, "I I", "BIB", 'I', "ingotIron", 'B', "bucketWater"));
@@ -47,7 +49,7 @@ public class ModRecipes {
 
 	@SuppressWarnings("unchecked")
 	public static void postInit() {
-		YeOldeTanks.log.info("Adding Infinite Water Bucket recipes");
+		YeOldeTanks.log.info("Adding Infinite Water Bucket recipe replacements");
 
 		List<IRecipe> toAdd = new ArrayList<>();
 
@@ -72,13 +74,16 @@ public class ModRecipes {
 			} else if (recipe instanceof ShapelessRecipes) {
 				ShapelessRecipes shapeless = (ShapelessRecipes)recipe;
 
-				List<ItemStack> newStacks = new ArrayList(shapeless.recipeItems);
+				NonNullList<ItemStack> newStacks = NonNullList.withSize(shapeless.recipeItems.size(), ItemStack.EMPTY);
+
 				boolean addNew = false;
 				for (int i = 0; i < newStacks.size(); i++) {
 					ItemStack stack = newStacks.get(i);
-					if (stack != null && stack.getItem() == WATER_BUCKET) {
+					if (!stack.isEmpty() && stack.getItem() == WATER_BUCKET) {
 						newStacks.set(i, new ItemStack(items.infiniteWaterBucket));
 						addNew = true;
+					} else {
+						newStacks.set(i, shapeless.recipeItems.get(i));
 					}
 				}
 
@@ -123,15 +128,17 @@ public class ModRecipes {
 
 					Field inputsField = ShapelessOreRecipe.class.getDeclaredField("input");
 					inputsField.setAccessible(true);
-					List<Object> newInputs = new ArrayList<>((List<Object>)inputsField.get(shapeless));
+
+					List<Object> oldInputs = (List<Object>)inputsField.get(shapeless);
+					NonNullList<Object> newInputs = NonNullList.create();
 
 					boolean addNew = false;
 					for (int i = 0; i < newInputs.size(); i++) {
-						if (newInputs.get(i) != null && newInputs.get(i) instanceof ItemStack) {
-							if (((ItemStack)newInputs.get(i)).getItem() == WATER_BUCKET) {
-								newInputs.set(i, new ItemStack(items.infiniteWaterBucket));
-								addNew = true;
-							}
+						if (newInputs.get(i) instanceof ItemStack && ((ItemStack)newInputs.get(i)).getItem() == WATER_BUCKET) {
+							newInputs.set(i, new ItemStack(items.infiniteWaterBucket));
+							addNew = true;
+						} else {
+							newInputs.set(i, oldInputs.get(i));
 						}
 					}
 
@@ -150,7 +157,8 @@ public class ModRecipes {
 			}
 		}
 
-		toAdd.stream().forEach(GameRegistry::addRecipe);
+		toAdd.forEach(GameRegistry::addRecipe);
+		YeOldeTanks.log.info("Registered %d Infinite Water Bucket recipe replacements", toAdd.size());
 	}
 
 }
