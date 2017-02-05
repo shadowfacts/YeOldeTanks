@@ -30,6 +30,7 @@ import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class BlockCreativeBarrel extends Block implements ItemModelProvider, Ach
 	}
 
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);

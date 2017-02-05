@@ -50,7 +50,9 @@ public class ItemBarrelMinecart extends Item implements ItemModelProvider, Achie
 
 				world.spawnEntity(cart);
 
-				cart.tank.readFromNBT(stack.getTagCompound());
+				if (stack.hasTagCompound()) {
+					cart.tank.readFromNBT(stack.getTagCompound());
+				}
 			}
 
 			stack.shrink(1);
