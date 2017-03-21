@@ -59,7 +59,7 @@ public class RecipeDippingStick implements IRecipe {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlockBarrel) {
-				list.set(i, stack);
+				list.set(i, stack.copy());
 				break;
 			}
 		}
