@@ -16,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
@@ -67,7 +68,10 @@ public class EntityBarrelMinecart extends EntityMinecart {
 				}
 				return EnumActionResult.SUCCESS;
 			}
-			FluidUtil.interactWithFluidHandler(stack, tank, player);
+			FluidActionResult res = FluidUtil.interactWithFluidHandler(stack, tank, player);
+			if (res.isSuccess()) {
+				player.setHeldItem(hand, res.getResult());
+			}
 		}
 		return EnumActionResult.SUCCESS;
 	}

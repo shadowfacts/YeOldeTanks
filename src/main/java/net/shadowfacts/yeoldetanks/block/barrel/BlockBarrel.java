@@ -19,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -133,8 +134,10 @@ public class BlockBarrel extends Block implements ItemModelProvider, Achievement
 		} else {
 			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
 			ItemStack heldItem = player.getHeldItem(hand);
-			if (FluidUtil.interactWithFluidHandler(heldItem, handler, player).isSuccess()) {
+			FluidActionResult res = FluidUtil.interactWithFluidHandler(heldItem, handler, player);
+			if (res.isSuccess()) {
 				((TileEntityBarrel)te).save();
+				player.setHeldItem(hand, res.getResult());
 				return true;
 			}
 		}
