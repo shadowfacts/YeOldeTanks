@@ -90,7 +90,6 @@ public class YeOldeTanks {
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		compat.postInit(event);
-		ModRecipes.postInit();
 	}
 
 	private void registerTileEntities() {
