@@ -1,11 +1,11 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
+import lombok.Getter;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fml.common.Optional;
 import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.capability.CapHolder;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
@@ -13,6 +13,7 @@ import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
 import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
 import net.shadowfacts.yeoldetanks.YOTConfig;
+import net.shadowfacts.yeoldetanks.util.YOTBarrel;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +26,9 @@ import java.util.List;
 //		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.SimpleComponent"),
 //		@Optional.Interface(modid = "OpenComputers", iface = "li.cil.oc.api.network.ManagedPeripheral")
 //})
-public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPeripheral, SimpleComponent, ManagedPeripheral */{
+public class TileEntityBarrel extends BaseTileEntity implements ITickable, YOTBarrel/*, IPeripheral, SimpleComponent, ManagedPeripheral */{
 
+	@Getter
 	@AutoSerializeNBT
 	@CapHolder(capabilities = IFluidHandler.class)
 	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
@@ -62,7 +64,7 @@ public class TileEntityBarrel extends BaseTileEntity implements ITickable/*, IPe
 		}
 	}
 
-//	Computers
+	//	Computers
 	private static String[] methodNames = new String[] {
 			"getFluid",
 			"getFluidAmount"

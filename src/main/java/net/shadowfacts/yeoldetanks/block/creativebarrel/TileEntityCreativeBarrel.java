@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.block.creativebarrel;
 
+import lombok.Getter;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -12,12 +13,14 @@ import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
 import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
 import net.shadowfacts.yeoldetanks.YOTConfig;
+import net.shadowfacts.yeoldetanks.util.YOTBarrel;
 
 /**
  * @author shadowfacts
  */
-public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickable {
+public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickable, YOTBarrel {
 
+	@Getter
 	@AutoSerializeNBT
 	@CapHolder(capabilities = IFluidHandler.class)
 	public CreativeFluidTank tank = new CreativeFluidTank(100000);
@@ -49,6 +52,11 @@ public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickabl
 		if (world.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
+	}
+
+	@Override
+	public boolean isCreative() {
+		return true;
 	}
 
 }

@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.entity.barrelminecart;
 
+import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,29 +14,30 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
-import net.shadowfacts.yeoldetanks.CoFHUtils;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
+import net.shadowfacts.yeoldetanks.item.ItemDippingStick;
+import net.shadowfacts.yeoldetanks.util.YOTBarrel;
 
 import javax.annotation.Nonnull;
 
 /**
  * @author shadowfacts
  */
-public class EntityBarrelMinecart extends EntityMinecart {
+public class EntityBarrelMinecart extends EntityMinecart implements YOTBarrel {
 
 	private static final DataParameter<Integer> AMOUNT = EntityDataManager.createKey(EntityBarrelMinecart.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> CAPACITY = EntityDataManager.createKey(EntityBarrelMinecart.class, DataSerializers.VARINT);
 	private static final DataParameter<String> NAME = EntityDataManager.createKey(EntityBarrelMinecart.class, DataSerializers.STRING);
 
+	@Getter
 	public EntityFluidTank tank;
 
 	public EntityBarrelMinecart(World world) {
@@ -60,12 +62,7 @@ public class EntityBarrelMinecart extends EntityMinecart {
 		if (!player.isSneaking()) {
 			ItemStack stack = player.getHeldItem(hand);
 			if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == YeOldeTanks.items.dippingStick && !world.isRemote) {
-				if (tank.getFluid() != null) {
-					player.sendMessage(new TextComponentString("Fluid: " + tank.getFluid().getLocalizedName()));
-					player.sendMessage(new TextComponentString(tank.getFluidAmount() + "mb / " + tank.getCapacity() + "mb"));
-				} else {
-					player.sendMessage(new TextComponentString("Empty"));
-				}
+				ItemDippingStick.handleBarrel(player, this);
 				return EnumActionResult.SUCCESS;
 			}
 			FluidActionResult res = FluidUtil.interactWithFluidHandler(stack, tank, player);

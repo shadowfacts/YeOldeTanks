@@ -4,6 +4,9 @@ tile.creative_barrel.name=§dCreative Barrel
 
 # Items
 item.dipping_stick.name=Dipping Stick
+item.dipping_stick.fluid=Fluid: %s
+item.dipping_stick.amount=%s mb / %s mb
+item.dipping_stick.empty=Empty
 item.infinite_water_bucket.name=Infinite Water Bucket
 item.barrel_minecart.name=Minecart with Barrel
 

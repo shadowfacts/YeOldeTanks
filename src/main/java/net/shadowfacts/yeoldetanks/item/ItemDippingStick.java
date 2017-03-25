@@ -9,20 +9,25 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
-import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
-import net.shadowfacts.yeoldetanks.block.creativebarrel.TileEntityCreativeBarrel;
-import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
+import net.shadowfacts.yeoldetanks.util.YOTBarrel;
+
+import java.text.NumberFormat;
 
 /**
  * @author shadowfacts
  */
 public class ItemDippingStick extends Item implements ItemModelProvider, AchievementProvider {
+
+	private static final int ID = 5490;
+	private static final NumberFormat FORMAT = NumberFormat.getInstance();
 
 	public ItemDippingStick() {
 		setUnlocalizedName("dipping_stick");
@@ -36,27 +41,8 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 		if (!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 
-			if (te instanceof TileEntityBarrel) {
-				TileEntityBarrel barrel = (TileEntityBarrel) te;
-
-				if (barrel.tank.getFluid() != null) {
-					player.sendMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.sendMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / " + barrel.tank.getCapacity() + "mb"));
-				} else {
-					player.sendMessage(new TextComponentString("Empty"));
-				}
-
-
-				return EnumActionResult.SUCCESS;
-			} else if (te instanceof TileEntityCreativeBarrel) {
-				TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel) te;
-				if (barrel.tank.getFluid() != null) {
-					player.sendMessage(new TextComponentString("Fluid: " + barrel.tank.getFluid().getLocalizedName()));
-					player.sendMessage(new TextComponentString(barrel.tank.getFluidAmount() + "mb / ∞ mb"));
-				} else {
-					player.sendMessage(new TextComponentString("Empty"));
-				}
-
+			if (te instanceof YOTBarrel) {
+				handleBarrel(player, (YOTBarrel)te);
 				return EnumActionResult.SUCCESS;
 			}
 		}
@@ -73,4 +59,20 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 	public Achievement getAchievement(ItemStack stack) {
 		return ModAchievements.craftDippingStick;
 	}
+
+	public static void handleBarrel(EntityPlayer player, YOTBarrel barrel) {
+		if (barrel.getTank().getFluid() != null) {
+			String capacity = barrel.isCreative() ? "∞" : FORMAT.format(barrel.getTank().getCapacity());
+
+			sendSpamlessMessage(player, new TextComponentTranslation("item.dipping_stick.fluid", barrel.getTank().getFluid().getLocalizedName()));
+			sendSpamlessMessage(player, new TextComponentTranslation("item.dipping_stick.amount", FORMAT.format(barrel.getTank().getFluidAmount()), capacity));
+		} else {
+			sendSpamlessMessage(player, new TextComponentTranslation("item.dipping_stick.empty"));
+		}
+	}
+
+	public static void sendSpamlessMessage(EntityPlayer player, ITextComponent msg) {
+		ShadowMC.proxy.sendSpamlessMessage(player, msg, ID);
+	}
+
 }
