@@ -66,8 +66,6 @@ public class YeOldeTanks {
 		blocks.init();
 		items.init();
 
-		registerTileEntities();
-
 		ModEntities.preInit();
 
 		ModAchievements.registerAchievements();
@@ -90,13 +88,6 @@ public class YeOldeTanks {
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		compat.postInit(event);
-	}
-
-	private void registerTileEntities() {
-		YeOldeTanks.log.info("Registering tile entities");
-
-		GameRegistry.registerTileEntity(TileEntityBarrel.class, YeOldeTanks.modId + ".tileentity.barrel");
-		GameRegistry.registerTileEntity(TileEntityCreativeBarrel.class, YeOldeTanks.modId + ".tileentity.creativebarrel");
 	}
 
 }

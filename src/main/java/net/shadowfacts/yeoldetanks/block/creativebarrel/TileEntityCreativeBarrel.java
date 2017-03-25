@@ -1,58 +1,21 @@
 package net.shadowfacts.yeoldetanks.block.creativebarrel;
 
 import lombok.Getter;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.capability.CapHolder;
 import net.shadowfacts.shadowmc.fluid.CreativeFluidTank;
 import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
-import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
-import net.shadowfacts.shadowmc.tileentity.BaseTileEntity;
-import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.util.YOTBarrel;
+import net.shadowfacts.yeoldetanks.block.base.TileEntityBarrelBase;
 
 /**
  * @author shadowfacts
  */
-public class TileEntityCreativeBarrel extends BaseTileEntity implements ITickable, YOTBarrel {
+public class TileEntityCreativeBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
 	@CapHolder(capabilities = IFluidHandler.class)
 	public CreativeFluidTank tank = new CreativeFluidTank(100000);
-
-	private int prevAmount = tank.getFluidAmount();
-	
-	void save() {
-		markDirty();
-		if (Math.abs(prevAmount - tank.getFluidAmount()) > 1000) {
-			prevAmount = tank.getFluidAmount();
-			sync();
-		}
-	}
-
-	@Override
-	public void update() {
-		if (YOTConfig.autoOutputBottom &&
-				tank.getFluid() != null) {
-			TileEntity te = world.getTileEntity(pos.down());
-			if (te != null && te.hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
-				IFluidHandler fluidHandler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
-				tank.drain(fluidHandler.fill(tank.drain(tank.getCapacity(), false), true), true);
-			}
-		}
-	}
-
-	@Override
-	public void onLoad() {
-		if (world.isRemote) {
-			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
-		}
-	}
 
 	@Override
 	public boolean isCreative() {

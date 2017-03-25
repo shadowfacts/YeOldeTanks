@@ -1,224 +1,39 @@
 package net.shadowfacts.yeoldetanks.block.creativebarrel;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidActionResult;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.shadowfacts.shadowmc.achievement.AchievementProvider;
-import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-
+import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 
 /**
  * @author shadowfacts
  */
-public class BlockCreativeBarrel extends Block implements ItemModelProvider, AchievementProvider {
-
-	public static final PropertyBool LID = PropertyBool.create("lid");
-
-	private static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
-	private static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
-	private static final AxisAlignedBB AABB_WALL_SOUTH = new AxisAlignedBB(0.0D, 0.0D, 0.875D, 1.0D, 1.0D, 1.0D);
-	private static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
-	private static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
+public class BlockCreativeBarrel extends BlockBarrelBase<TileEntityCreativeBarrel> {
 
 	public BlockCreativeBarrel() {
-		super(Material.ROCK);
-		setUnlocalizedName("creative_barrel");
-		setRegistryName("creative_barrel");
-		setCreativeTab(YeOldeTanks.tab);
-		setHardness(.5f);
-		setDefaultState(getDefaultState().withProperty(LID, false));
-	}
-
-	@Nonnull
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, LID);
+		super("creative_barrel");
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(LID) ? 1 : 0;
-	}
-
-	@Nonnull
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(LID, meta == 1);
-	}
-
-	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
-	}
-
-	@Override
-	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity.posX > pos.getX() && entity.posX < pos.getX() + 1 &&
-				entity.posY > pos.getY() && entity.posY < pos.getY() + 1 &&
-				entity.posZ > pos.getZ() && entity.posZ < pos.getZ() + 1) {
-			TileEntity te = world.getTileEntity(pos);
-			if (te instanceof TileEntityCreativeBarrel) {
-				TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
-				if (barrel.tank.getFluid() != null) {
-					Block fluidBlock = barrel.tank.getFluid().getFluid().getBlock();
-					if (fluidBlock != null) {
-						fluidBlock.onEntityCollidedWithBlock(world, pos, state, entity);
-					}
-				}
-			}
-		}
-	}
-
-	@Nonnull
-	@Override
-	public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		return new ArrayList<>();
-	}
-
-	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		ItemStack dropStack = new ItemStack(YeOldeTanks.blocks.creativeBarrel);
-
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileEntityCreativeBarrel) {
-			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
-			if (barrel.tank.getFluid() != null) {
-				dropStack.setTagCompound(new NBTTagCompound());
-
-				barrel.tank.writeToNBT(dropStack.getTagCompound());
-			}
-		}
-
-		EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
-		world.spawnEntity(item);
-
-		super.breakBlock(world, pos, state);
-	}
-
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntity te = world.getTileEntity(pos);
-		if (player.getHeldItem(hand).isEmpty() && player.isSneaking()) {
-			setLidState(world, pos, state, !state.getValue(LID));
-		} else {
-			IFluidHandler handler = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, side);
-			ItemStack heldItem = player.getHeldItem(hand);
-			FluidActionResult res = FluidUtil.interactWithFluidHandler(heldItem, handler, player);
-			if (res.isSuccess()) {
-				((TileEntityCreativeBarrel)te).save();
-				player.setHeldItem(hand, res.getResult());
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isSideSolid(IBlockState base_state, IBlockAccess world, BlockPos pos, EnumFacing side) {
-		if (side == EnumFacing.DOWN) {
-			return true;
-		} else if (side == EnumFacing.UP) {
-			return world.getBlockState(pos).getValue(LID);
-		}
-		return false;
-	}
-
-	@Nonnull
-	@Override
-	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-		ItemStack stack = new ItemStack(YeOldeTanks.blocks.creativeBarrel);
-
-		TileEntity te = world.getTileEntity(pos);
-		if (te != null && te instanceof TileEntityCreativeBarrel) {
-			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
-			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
-				stack.setTagCompound(new NBTTagCompound());
-				barrel.tank.writeToNBT(stack.getTagCompound());
-			}
-		}
-
-		return stack;
-	}
-
-	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileEntityCreativeBarrel) {
-			TileEntityCreativeBarrel barrel = (TileEntityCreativeBarrel)te;
-
-			if (barrel.tank.getFluid() != null && barrel.tank.getFluidAmount() > 0) {
-				return barrel.tank.getFluid().getFluid().getLuminosity(barrel.tank.getFluid());
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean isCreative() {
 		return true;
 	}
 
-	@Nonnull
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityCreativeBarrel();
+	protected Item getBarrelItem() {
+		return Item.getItemFromBlock(YeOldeTanks.blocks.creativeBarrel);
 	}
 
 	@Override
-	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "barrel");
+	public Class<TileEntityCreativeBarrel> getTileEntityClass() {
+		return TileEntityCreativeBarrel.class;
 	}
 
 	@Override
 	public Achievement getAchievement(ItemStack stack) {
 		return ModAchievements.craftCreativeBarrel;
-	}
-
-	public static void setLidState(World world, BlockPos pos, IBlockState state, boolean value) {
-		TileEntity originalTE = world.getTileEntity(pos);
-		NBTTagCompound tag = new NBTTagCompound();
-		originalTE.writeToNBT(tag);
-
-		world.setBlockState(pos, state.withProperty(LID, value));
-
-		TileEntity newTE = world.getTileEntity(pos);
-		newTE.readFromNBT(tag);
 	}
 
 }

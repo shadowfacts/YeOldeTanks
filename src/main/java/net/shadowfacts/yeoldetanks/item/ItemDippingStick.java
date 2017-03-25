@@ -1,7 +1,6 @@
 package net.shadowfacts.yeoldetanks.item;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
 import net.minecraft.tileentity.TileEntity;
@@ -14,7 +13,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
-import net.shadowfacts.shadowmc.item.ItemModelProvider;
+import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.util.YOTBarrel;
@@ -24,14 +23,13 @@ import java.text.NumberFormat;
 /**
  * @author shadowfacts
  */
-public class ItemDippingStick extends Item implements ItemModelProvider, AchievementProvider {
+public class ItemDippingStick extends ItemBase implements AchievementProvider {
 
 	private static final int ID = 5490;
 	private static final NumberFormat FORMAT = NumberFormat.getInstance();
 
 	public ItemDippingStick() {
-		setUnlocalizedName("dipping_stick");
-		setRegistryName("dipping_stick");
+		super("dipping_stick");
 		setCreativeTab(YeOldeTanks.tab);
 		setMaxStackSize(1);
 	}
@@ -48,11 +46,6 @@ public class ItemDippingStick extends Item implements ItemModelProvider, Achieve
 		}
 
 		return EnumActionResult.PASS;
-	}
-
-	@Override
-	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "dipping_stick");
 	}
 
 	@Override

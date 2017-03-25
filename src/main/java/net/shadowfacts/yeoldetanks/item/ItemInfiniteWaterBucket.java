@@ -18,24 +18,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
-import net.shadowfacts.shadowmc.item.ItemModelProvider;
+import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 
 import javax.annotation.Nonnull;
 
+import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
+
 /**
  * @author shadowfacts
  */
-public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemModelProvider, AchievementProvider {
+public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProvider {
 
 	public ItemInfiniteWaterBucket() {
-		super(1000);
-		setUnlocalizedName("infinite_water_bucket");
-		setRegistryName("infinite_water_bucket");
+		super("infinite_water_bucket");
 		setCreativeTab(YeOldeTanks.tab);
 		setMaxStackSize(1);
 	}
@@ -65,10 +64,7 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
 		ItemStack stack = new ItemStack(this);
-		stack.setTagCompound(new NBTTagCompound());
-		NBTTagCompound fluid = new NBTTagCompound();
-		new FluidStack(FluidRegistry.WATER, 1000).writeToNBT(fluid);
-		stack.getTagCompound().setTag("Fluid", fluid);
+		((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
 		list.add(stack);
 	}
 
@@ -84,24 +80,19 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 	}
 
 	@Override
-	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "infinite_water_bucket");
-	}
-
-	@Override
 	public Achievement getAchievement(ItemStack stack) {
 		return ModAchievements.craftInfiniteWaterBucket;
 	}
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		return new InfiniteFluidHandler(stack, capacity);
+		return new InfiniteFluidHandler(stack);
 	}
 
 	public static class InfiniteFluidHandler extends FluidHandlerItemStack {
 
-		public InfiniteFluidHandler(ItemStack container, int capacity) {
-			super(container, capacity);
+		private InfiniteFluidHandler(ItemStack container) {
+			super(container, 1000);
 		}
 
 		@Override
@@ -121,6 +112,11 @@ public class ItemInfiniteWaterBucket extends ItemFluidContainer implements ItemM
 			drained.amount = drainAmount;
 
 			return drained;
+		}
+
+		@Override
+		public void setFluid(FluidStack fluid) {
+			super.setFluid(fluid);
 		}
 
 	}

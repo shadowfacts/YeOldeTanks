@@ -1,16 +1,14 @@
 package net.shadowfacts.yeoldetanks.util;
 
-import net.minecraftforge.fluids.IFluidTank;
+import net.minecraftforge.fluids.FluidTank;
 
 /**
  * @author shadowfacts
  */
 public interface YOTBarrel {
 
-	IFluidTank getTank();
+	FluidTank getTank();
 
-	default boolean isCreative() {
-		return false;
-	}
+	boolean isCreative();
 
 }

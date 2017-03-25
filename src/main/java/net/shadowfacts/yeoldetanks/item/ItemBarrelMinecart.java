@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
+import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -28,12 +29,11 @@ import java.util.List;
 /**
  * @author shadowfacts
  */
-public class ItemBarrelMinecart extends Item implements ItemModelProvider, AchievementProvider {
+public class ItemBarrelMinecart extends ItemBase implements AchievementProvider {
 
 	public ItemBarrelMinecart() {
+		super("barrel_minecart");
 		setMaxStackSize(1);
-		setUnlocalizedName("barrel_minecart");
-		setRegistryName("barrel_minecart");
 		setCreativeTab(YeOldeTanks.tab);
 	}
 
@@ -79,11 +79,6 @@ public class ItemBarrelMinecart extends Item implements ItemModelProvider, Achie
 		FluidStack fluid = FluidStack.loadFluidStackFromNBT(stack.getTagCompound());
 		tooltip.add(fluid.getLocalizedName());
 		tooltip.add(fluid.amount + "mb / " + YOTConfig.barrelCapacity + "mb");
-	}
-
-	@Override
-	public void initItemModel() {
-		YeOldeTanks.proxy.registerInvModel(this, 0, "barrel_minecart");
 	}
 
 	@Override

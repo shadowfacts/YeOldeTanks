@@ -56,6 +56,11 @@ public class EntityBarrelMinecart extends EntityMinecart implements YOTBarrel {
 		this.prevPosZ = z;
 	}
 
+	@Override
+	public boolean isCreative() {
+		return false;
+	}
+
 	@Nonnull
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {

@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.item.ItemBlockBarrel;
+import net.shadowfacts.yeoldetanks.block.base.ItemBlockBarrelBase;
 
 /**
  * @author shadowfacts
@@ -58,7 +58,7 @@ public class RecipeDippingStick implements IRecipe {
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlockBarrel) {
+			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlockBarrelBase) {
 				list.set(i, stack.copy());
 				break;
 			}
