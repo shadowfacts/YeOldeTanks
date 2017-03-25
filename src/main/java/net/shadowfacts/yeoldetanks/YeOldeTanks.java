@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * @author shadowfacts
  */
-@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory", dependencies = "required-after:shadowmc@[3.4.1,);")
+@Mod(modid = YeOldeTanks.modId, name = YeOldeTanks.name, version = YeOldeTanks.version, guiFactory = "net.shadowfacts.yeoldetanks.client.gui.YOTGuiFactory", dependencies = "required-after:shadowmc@[3.4.1,);", updateJSON = "https://update.shadowfacts.net/ye-olde-tanks")
 public class YeOldeTanks {
 
 	public static final String modId = "yeoldetanks";
