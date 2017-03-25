@@ -1,9 +1,7 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 
@@ -19,11 +17,6 @@ public class BlockBarrel extends BlockBarrelBase<TileEntityBarrel> {
 	@Override
 	public boolean isCreative() {
 		return false;
-	}
-
-	@Override
-	protected Item getBarrelItem() {
-		return Item.getItemFromBlock(YeOldeTanks.blocks.barrel);
 	}
 
 	@Override

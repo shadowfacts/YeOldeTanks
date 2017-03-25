@@ -1,0 +1,20 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "yeoldetanks:barrel"
+	},
+	"variants": {
+		"lid": {
+			"true": {
+				"submodel": "yeoldetanks:lid",
+				"x": 180
+			},
+			"false": {
+
+			}
+		},
+		"inventory": {
+			"model": "yeoldetanks:barrel"
+		}
+	}
+}

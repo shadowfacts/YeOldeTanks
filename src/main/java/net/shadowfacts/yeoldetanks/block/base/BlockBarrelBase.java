@@ -52,7 +52,9 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	public abstract boolean isCreative();
 
-	protected abstract Item getBarrelItem();
+	protected Item getBarrelItem() {
+		return Item.getItemFromBlock(this);
+	}
 
 	private ItemStack writeBarrelToStack(World world, BlockPos pos) {
 		ItemStack stack = new ItemStack(getBarrelItem());

@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.recipe;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -7,6 +8,7 @@ import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
 import static net.minecraft.init.Items.*;
 import static net.minecraftforge.fml.common.registry.GameRegistry.addRecipe;
+import static net.minecraftforge.fml.common.registry.GameRegistry.addShapelessRecipe;
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.blocks;
 import static net.shadowfacts.yeoldetanks.YeOldeTanks.items;
 
@@ -24,6 +26,7 @@ public class ModRecipes {
 
 		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', CAULDRON));
 		addRecipe(new ShapedOreRecipe(items.infiniteWaterBucket, "I I", "BIB", 'I', "ingotIron", 'B', "bucketWater"));
+		addShapelessRecipe(new ItemStack(blocks.cosmeticBarrel), blocks.barrel);
 		addRecipe(new RecipeBarrelMinecart());
 		addRecipe(new RecipeUncraftBarrelMinecart());
 		addRecipe(new RecipeDippingStick());

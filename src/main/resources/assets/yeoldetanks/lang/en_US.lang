@@ -1,6 +1,7 @@
 # Blocks
 tile.barrel.name=Barrel
 tile.creative_barrel.name=§dCreative Barrel
+tile.cosmetic_barrel.name=Cosmetic Barrel
 
 # Items
 item.dipping_stick.name=Dipping Stick
@@ -32,3 +33,5 @@ achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
 achievement.yot.craftInfiniteWaterBucket.desc=Craft an Infinite Water Bucket
 achievement.yot.craftCreativeBarrel=Cheater!
 achievement.yot.craftCreativeBarrel.desc=Craft a Creative Barrel
+achievement.yot.craftCosmeticBarrel=Pretty!
+achievement.yot.craftCosmeticBarrel.desc=Craft a Cosmetic Barrel
