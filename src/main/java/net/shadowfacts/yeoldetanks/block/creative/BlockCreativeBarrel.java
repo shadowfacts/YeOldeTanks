@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.block.creativebarrel;
+package net.shadowfacts.yeoldetanks.block.creative;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;

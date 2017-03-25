@@ -4,7 +4,7 @@ import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.barrel.BlockBarrel;
 import net.shadowfacts.yeoldetanks.block.base.ItemBlockBarrelBase;
 import net.shadowfacts.yeoldetanks.block.cosmetic.BlockCosmeticBarrel;
-import net.shadowfacts.yeoldetanks.block.creativebarrel.BlockCreativeBarrel;
+import net.shadowfacts.yeoldetanks.block.creative.BlockCreativeBarrel;
 
 /**
  * @author shadowfacts

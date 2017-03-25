@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.block.creativebarrel;
+package net.shadowfacts.yeoldetanks.block.creative;
 
 import lombok.Getter;
 import net.minecraftforge.fluids.capability.IFluidHandler;

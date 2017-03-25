@@ -3,12 +3,6 @@ package net.shadowfacts.yeoldetanks.compat;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.shadowfacts.shadowmc.compat.Compat;
-import net.shadowfacts.yeoldetanks.block.barrel.BarrelDataProvider;
-import net.shadowfacts.yeoldetanks.block.barrel.BlockBarrel;
-import net.shadowfacts.yeoldetanks.block.creativebarrel.BlockCreativeBarrel;
-import net.shadowfacts.yeoldetanks.block.creativebarrel.CreativeBarrelDataProvider;
-import net.shadowfacts.yeoldetanks.entity.barrelminecart.BarrelMinecartEntityProvider;
-import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 /**
  * @author shadowfacts
