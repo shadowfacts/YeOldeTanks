@@ -12,6 +12,7 @@ import net.shadowfacts.shadowmc.compat.CompatManager;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
 import net.shadowfacts.yeoldetanks.compat.computercraft.CompatComputerCraft;
+import net.shadowfacts.yeoldetanks.compat.top.CompatTOP;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
 import net.shadowfacts.yeoldetanks.item.ModItems;
@@ -67,6 +68,7 @@ public class YeOldeTanks {
 		ModAchievements.registerAchievements();
 
 		compat.registerModule(CompatComputerCraft.class);
+		compat.registerModule(CompatTOP.class);
 		proxy.registerClientModules();
 
 		compat.preInit(event);
