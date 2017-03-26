@@ -57,7 +57,7 @@ dependencies {
 
 	deobfCompile group: "mcp.mobius.waila", name: "Hwyla", version: hwyla_version
 	deobfCompile group: "mcjty.theoneprobe", name: "TheOneProbe", version: top_version
-	deobfCompile group: "com.github.mcjty", name: "compatlayer", version: mc_version + "-" + cl_version
+	deobfCompile group: "com.github.mcjty", name: "compatlayer", version: cl_version
 	// deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 

@@ -1,6 +1,7 @@
 package net.shadowfacts.yeoldetanks;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -47,8 +48,8 @@ public class YeOldeTanks {
 
 	public static CreativeTabs tab = new CreativeTabs("yot") {
 		@Override
-		public ItemStack getTabIconItem() {
-			return new ItemStack(blocks.barrel);
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(blocks.barrel);
 		}
 	};
 

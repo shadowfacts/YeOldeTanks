@@ -4,7 +4,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
@@ -23,7 +22,7 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		int cartCount = 0;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (!stack.isEmpty()) {
+			if (stack != null) {
 				if (stack.getItem() == YeOldeTanks.items.barrelMinecart) {
 					cartCount++;
 				} else {
@@ -39,7 +38,7 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		ItemStack cart = null;
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (!stack.isEmpty() && stack.getItem() == YeOldeTanks.items.barrelMinecart) {
+			if (stack != null && stack.getItem() == YeOldeTanks.items.barrelMinecart) {
 				cart = stack;
 			}
 		}
@@ -65,18 +64,18 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-		NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+		ItemStack[] arr = new ItemStack[inv.getSizeInventory()];
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (!stack.isEmpty() &&  stack.getItem() instanceof ItemBarrelMinecart) {
-				list.set(i, new ItemStack(Items.MINECART));
+			if (stack != null &&  stack.getItem() instanceof ItemBarrelMinecart) {
+				arr[i] = new ItemStack(Items.MINECART);
 				break;
 			}
 		}
 
-		return list;
+		return arr;
 	}
 
 }

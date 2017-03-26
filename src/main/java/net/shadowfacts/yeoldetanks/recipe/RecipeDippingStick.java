@@ -5,7 +5,6 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.block.base.ItemBlockBarrelBase;
@@ -22,7 +21,7 @@ public class RecipeDippingStick implements IRecipe {
 
 		for (int i = 0; i < crafting.getSizeInventory(); i++) {
 			ItemStack stack = crafting.getStackInSlot(i);
-			if (!stack.isEmpty()) {
+			if (stack != null) {
 				if (stack.getItem() == Items.STICK) {
 					sticks++;
 				} else if (stack.getItem() == Item.getItemFromBlock(YeOldeTanks.blocks.barrel)) {
@@ -52,19 +51,18 @@ public class RecipeDippingStick implements IRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
-
-		NonNullList<ItemStack> list = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+	public ItemStack[] getRemainingItems(InventoryCrafting inv) {
+		ItemStack[] arr = new ItemStack[inv.getSizeInventory()];
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (!stack.isEmpty() && stack.getItem() instanceof ItemBlockBarrelBase) {
-				list.set(i, stack.copy());
+			if (stack != null && stack.getItem() instanceof ItemBlockBarrelBase) {
+				arr[i] = stack.copy();
 				break;
 			}
 		}
 
-		return list;
+		return arr;
 	}
 
 }

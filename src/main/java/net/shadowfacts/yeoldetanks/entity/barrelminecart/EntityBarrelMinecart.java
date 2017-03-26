@@ -16,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
@@ -27,6 +26,7 @@ import net.shadowfacts.yeoldetanks.item.ItemDippingStick;
 import net.shadowfacts.yeoldetanks.util.YOTBarrel;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author shadowfacts
@@ -63,17 +63,13 @@ public class EntityBarrelMinecart extends EntityMinecart implements YOTBarrel {
 
 	@Nonnull
 	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, @Nullable ItemStack stack, EnumHand hand) {
 		if (!player.isSneaking()) {
-			ItemStack stack = player.getHeldItem(hand);
-			if (!player.getHeldItem(hand).isEmpty() && player.getHeldItem(hand).getItem() == YeOldeTanks.items.dippingStick && !world.isRemote) {
+			if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() == YeOldeTanks.items.dippingStick && !worldObj.isRemote) {
 				ItemDippingStick.handleBarrel(player, this);
 				return EnumActionResult.SUCCESS;
 			}
-			FluidActionResult res = FluidUtil.interactWithFluidHandler(stack, tank, player);
-			if (res.isSuccess()) {
-				player.setHeldItem(hand, res.getResult());
-			}
+			FluidUtil.interactWithFluidHandler(stack, tank, player);
 		}
 		return EnumActionResult.SUCCESS;
 	}

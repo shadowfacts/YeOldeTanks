@@ -11,7 +11,6 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -26,7 +25,9 @@ import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 
 import javax.annotation.Nonnull;
 
-import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY;
+import java.util.List;
+
+import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
 
 /**
  * @author shadowfacts
@@ -41,8 +42,7 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			RayTraceResult rayTrace = this.rayTrace(world, player, false);
 			if (rayTrace == null) return new ActionResult<>(EnumActionResult.FAIL, stack);
@@ -62,9 +62,9 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> list) {
 		ItemStack stack = new ItemStack(this);
-		((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
+		((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
 		list.add(stack);
 	}
 
@@ -97,7 +97,7 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 
 		@Override
 		public FluidStack drain(int maxDrain, boolean doDrain) {
-			if (container.getCount() != 1 || maxDrain <= 0) {
+			if (container.stackSize != 1 || maxDrain <= 0) {
 				return null;
 			}
 

@@ -55,7 +55,7 @@ public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 			int color = fluid.getFluid().getColor(fluid);
-			int brightness = Minecraft.getMinecraft().world.getCombinedLight(minecart.getPosition(), fluid.getFluid().getLuminosity(fluid));
+			int brightness = Minecraft.getMinecraft().theWorld.getCombinedLight(minecart.getPosition(), fluid.getFluid().getLuminosity(fluid));
 
 			double fluidPercent = (double)fluid.amount / minecart.tank.getCapacity();
 			double fluidY = fluidPercent * 29/32d + 1/16d;

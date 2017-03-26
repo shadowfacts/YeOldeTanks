@@ -41,9 +41,8 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (world.getBlockState(pos).getBlock() instanceof BlockRailBase) {
-			ItemStack stack = player.getHeldItem(hand);
 			if (!world.isRemote) {
 				EntityBarrelMinecart cart = new EntityBarrelMinecart(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
 
@@ -54,10 +53,13 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 					cart.setCustomNameTag(stack.getDisplayName());
 				}
 
-				world.spawnEntity(cart);
+				world.spawnEntityInWorld(cart);
 			}
 
-			stack.shrink(1);
+			stack.stackSize--;
+			if (stack.stackSize <= 0) {
+				player.setHeldItem(hand, null);
+			}
 			return EnumActionResult.SUCCESS;
 		}
 

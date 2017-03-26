@@ -12,7 +12,7 @@ item.infinite_water_bucket.name=Infinite Water Bucket
 item.barrel_minecart.name=Minecart with Barrel
 
 # Entities
-entity.yot_barrel_minecart.name=Minecart with Barrel
+entity.yeoldetanks.yot_barrel_minecart.name=Minecart with Barrel
 
 # Config
 yeoldetanks.config.gui.title=Ye Olde Tanks

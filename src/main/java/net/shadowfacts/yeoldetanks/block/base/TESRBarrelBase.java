@@ -46,7 +46,7 @@ public class TESRBarrelBase extends TileEntitySpecialRenderer<TileEntityBarrelBa
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 			int color = fluid.getFluid().getColor(fluid);
-			int brightness = Minecraft.getMinecraft().world.getCombinedLight(barrel.getPos(), fluid.getFluid().getLuminosity(fluid));
+			int brightness = Minecraft.getMinecraft().theWorld.getCombinedLight(barrel.getPos(), fluid.getFluid().getLuminosity(fluid));
 
 			double fluidPercent = barrel.isCreative() ? 1 : (double)fluid.amount / barrel.getTank().getCapacity();
 			double fluidY = fluidPercent * 29/32d + 1/16d;

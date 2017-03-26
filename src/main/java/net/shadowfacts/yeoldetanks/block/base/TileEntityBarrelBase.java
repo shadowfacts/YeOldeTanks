@@ -27,7 +27,7 @@ public abstract class TileEntityBarrelBase extends BaseTileEntity implements ITi
 		markDirty();
 		if (Math.abs(prevAmount - getTank().getFluidAmount()) >= 1000) {
 			prevAmount = getTank().getFluidAmount();
-			if (!world.isRemote) {
+			if (!worldObj.isRemote) {
 				sync();
 			}
 		}
@@ -38,7 +38,7 @@ public abstract class TileEntityBarrelBase extends BaseTileEntity implements ITi
 		if (YOTConfig.autoOutputBottom &&
 				getTank().getFluid() != null && getTank().getFluidAmount() > 0) {
 
-			TileEntity te = world.getTileEntity(pos.down());
+			TileEntity te = worldObj.getTileEntity(pos.down());
 			if (te != null && te.hasCapability(FLUID_HANDLER_CAPABILITY, EnumFacing.UP)) {
 				IFluidHandler handler = te.getCapability(FLUID_HANDLER_CAPABILITY, EnumFacing.UP);
 				getTank().drain(handler.fill(getTank().drain(getTank().getCapacity(), false), true), true);
@@ -48,7 +48,7 @@ public abstract class TileEntityBarrelBase extends BaseTileEntity implements ITi
 
 	@Override
 	public void onLoad() {
-		if (world.isRemote) {
+		if (worldObj.isRemote) {
 			ShadowMC.network.sendToServer(new PacketRequestTEUpdate(this));
 		}
 	}

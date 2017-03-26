@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -86,7 +85,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	@Override
 	@Deprecated
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn) {
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
@@ -104,24 +103,21 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 		ItemStack dropStack = writeBarrelToStack(world, pos);
 
 		EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
-		world.spawnEntity(item);
+		world.spawnEntityInWorld(item);
 
 		super.breakBlock(world, pos, state);
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		ItemStack heldItem = player.getHeldItem(hand);
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntityBarrelBase te = getTileEntity(world, pos);
-		if (heldItem.isEmpty() && player.isSneaking()) {
+		if (heldItem != null && player.isSneaking()) {
 			world.setBlockState(pos, state.cycleProperty(LID));
 			return true;
 		} else {
 			IFluidHandler handler = te.getCapability(FLUID_HANDLER_CAPABILITY, side);
-			FluidActionResult res = FluidUtil.interactWithFluidHandler(heldItem, handler, player);
-			if (res.isSuccess()) {
+			if (FluidUtil.interactWithFluidHandler(heldItem, handler, player)) {
 				te.save();
-				player.setHeldItem(hand, res.getResult());
 				return true;
 			}
 		}
