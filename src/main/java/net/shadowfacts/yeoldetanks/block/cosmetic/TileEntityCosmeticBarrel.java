@@ -3,8 +3,6 @@ package net.shadowfacts.yeoldetanks.block.cosmetic;
 import lombok.Getter;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.shadowfacts.shadowmc.capability.CapHolder;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
 import net.shadowfacts.shadowmc.nbt.AutoNBTSerializer;
 import net.shadowfacts.shadowmc.nbt.AutoSerializeNBT;
@@ -29,7 +27,6 @@ public class TileEntityCosmeticBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	@CapHolder(capabilities = IFluidHandler.class)
 	public CosmeticFluidTank tank = new CosmeticFluidTank();
 
 	@Override

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.shadowfacts.shadowmc.compat.CompatManager;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.ModBlocks;
-import net.shadowfacts.yeoldetanks.compat.CompatWaila;
 import net.shadowfacts.yeoldetanks.compat.computercraft.CompatComputerCraft;
 import net.shadowfacts.yeoldetanks.entity.ModEntities;
 import net.shadowfacts.yeoldetanks.event.ForgeEventHandler;
@@ -68,7 +67,6 @@ public class YeOldeTanks {
 		ModAchievements.registerAchievements();
 
 		compat.registerModule(CompatComputerCraft.class);
-		compat.registerModule(CompatWaila.class);
 		proxy.registerClientModules();
 
 		compat.preInit(event);

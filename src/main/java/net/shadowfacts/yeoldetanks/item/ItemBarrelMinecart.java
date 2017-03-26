@@ -17,12 +17,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.item.ItemBase;
-import net.shadowfacts.shadowmc.item.ItemModelProvider;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
-import net.shadowfacts.yeoldetanks.proxy.ClientProxy;
 
 import java.util.List;
 

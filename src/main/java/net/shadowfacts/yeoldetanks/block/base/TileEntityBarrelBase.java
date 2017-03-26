@@ -6,6 +6,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.network.PacketRequestTEUpdate;
@@ -55,6 +56,19 @@ public abstract class TileEntityBarrelBase extends BaseTileEntity implements ITi
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
 		return oldState.getBlock() != newState.getBlock();
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		return capability == FLUID_HANDLER_CAPABILITY || super.hasCapability(capability, facing);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == FLUID_HANDLER_CAPABILITY) {
+			return (T)getTank();
+		}
+		return super.getCapability(capability, facing);
 	}
 
 }

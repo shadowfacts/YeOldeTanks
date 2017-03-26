@@ -37,10 +37,9 @@ repositories {
 		name "shadowfacts"
 		url "http://mvn.rx14.co.uk/shadowfacts/"
 	}
-	// maven {
-	// 	name "ProfMobius"
-	// 	url "http://mobiusstrip.eu/maven/"
-	// }
+	maven {
+		url "http://tehnut.info/maven/"
+	}
 	// maven {
 	// 	name "OpenComputers"
 	// 	url "http://maven.cil.li/"
@@ -50,7 +49,7 @@ repositories {
 dependencies {
 	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
 
-	// deobfCompile group: "mcp.mobius.waila", name: "Waila", version: waila_version
+	deobfCompile group: "mcp.mobius.waila", name: "Hwyla", version: hwyla_version
 	// deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 

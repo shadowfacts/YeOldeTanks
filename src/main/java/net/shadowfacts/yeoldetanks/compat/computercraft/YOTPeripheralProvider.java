@@ -1,9 +1,5 @@
 package net.shadowfacts.yeoldetanks.compat.computercraft;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
-import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
-
 /**
  * @author shadowfacts
  */
