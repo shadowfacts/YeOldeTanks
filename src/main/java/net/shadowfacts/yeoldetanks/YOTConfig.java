@@ -16,7 +16,10 @@ public class YOTConfig {
 	public static Configuration config;
 
 	@Config.Prop(description = "The capacity of the barrel in millibuckets")
-	public static int barrelCapacity = 55000;
+	public static int barrelCapacity = 55_000;
+
+	@Config.Prop(description = "The capacity of the Obsidian Barrel in millibuckets")
+	public static int obsidianBarrelCapacity = 110_000;
 
 	@Config.Prop(description = "Can the barrel be filled from any side.\nBy default, it can only be filled from the top if the lid is off.")
 	public static boolean fillFromAnySide = false;

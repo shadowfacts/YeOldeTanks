@@ -1,0 +1,24 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "yeoldetanks:barrel",
+		"textures": {
+			"base": "minecraft:blocks/obsidian",
+			"particle": "minecraft:blocks/obsidian"
+		}
+	},
+	"variants": {
+		"lid": {
+			"true": {
+				"submodel": "yeoldetanks:lid",
+				"x": 180
+			},
+			"false": {
+
+			}
+		},
+		"inventory": {
+			"model": "yeoldetanks:barrel"
+		}
+	}
+}

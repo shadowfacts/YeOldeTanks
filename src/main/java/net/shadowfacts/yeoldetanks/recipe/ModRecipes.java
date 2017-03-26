@@ -27,6 +27,7 @@ public class ModRecipes {
 		addRecipe(new ShapedOreRecipe(blocks.barrel, "I I", "I I", "ICI", 'I', "ingotIron", 'C', CAULDRON));
 		addRecipe(new ShapedOreRecipe(items.infiniteWaterBucket, "I I", "BIB", 'I', "ingotIron", 'B', "bucketWater"));
 		addShapelessRecipe(new ItemStack(blocks.cosmeticBarrel), blocks.barrel);
+		addRecipe(new ShapedOreRecipe(blocks.obsidianBarrel, "O O", "O O", "OBO", 'O', "obsidian", 'B', blocks.barrel));
 		addRecipe(new RecipeBarrelMinecart());
 		addRecipe(new RecipeUncraftBarrelMinecart());
 		addRecipe(new RecipeDippingStick());

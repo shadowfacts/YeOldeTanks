@@ -2,6 +2,7 @@
 tile.barrel.name=Barrel
 tile.creative_barrel.name=§dCreative Barrel
 tile.cosmetic_barrel.name=Cosmetic Barrel
+tile.obsidian_barrel.name=Obsidian Barrel
 
 # Items
 item.dipping_stick.name=Dipping Stick
@@ -35,3 +36,5 @@ achievement.yot.craftCreativeBarrel=Cheater!
 achievement.yot.craftCreativeBarrel.desc=Craft a Creative Barrel
 achievement.yot.craftCosmeticBarrel=Pretty!
 achievement.yot.craftCosmeticBarrel.desc=Craft a Cosmetic Barrel
+achievement.yot.craftObsidianBarrel=Volcanic
+achievement.yot.craftObsidianBarrel.desc=Craft an Obsidian Barrel

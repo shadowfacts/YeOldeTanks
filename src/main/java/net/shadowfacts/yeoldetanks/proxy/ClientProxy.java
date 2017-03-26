@@ -7,6 +7,7 @@ import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 import net.shadowfacts.yeoldetanks.block.cosmetic.TileEntityCosmeticBarrel;
 import net.shadowfacts.yeoldetanks.block.creative.TileEntityCreativeBarrel;
 import net.shadowfacts.yeoldetanks.block.base.TESRBarrelBase;
+import net.shadowfacts.yeoldetanks.block.obsidian.TileEntityObsidianBarrel;
 import net.shadowfacts.yeoldetanks.client.render.minecart.RenderBarrelMinecart;
 import net.shadowfacts.yeoldetanks.compat.CompatWaila;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
@@ -32,6 +33,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBarrel.class, new TESRBarrelBase());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCreativeBarrel.class, new TESRBarrelBase());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCosmeticBarrel.class, new TESRBarrelBase());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityObsidianBarrel.class, new TESRBarrelBase());
 	}
 
 }
