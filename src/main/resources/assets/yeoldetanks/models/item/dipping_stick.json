@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "yeoldetanks:items/infinitewater"
+		"layer0": "yeoldetanks:items/dipping_stick"
 	}
 }

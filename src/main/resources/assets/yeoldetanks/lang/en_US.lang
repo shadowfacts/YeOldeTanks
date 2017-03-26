@@ -1,18 +1,23 @@
 # Blocks
 tile.barrel.name=Barrel
-tile.creativeBarrel.name=§dCreative Barrel
+tile.creative_barrel.name=§dCreative Barrel
+tile.cosmetic_barrel.name=Cosmetic Barrel
+tile.obsidian_barrel.name=Obsidian Barrel
 
 # Items
-item.dippingStick.name=Dipping Stick
-item.infiniteWaterBucket.name=Infinite Water Bucket
-item.barrelMinecart.name=Minecart with Barrel
+item.dipping_stick.name=Dipping Stick
+item.dipping_stick.fluid=Fluid: %s
+item.dipping_stick.empty=Empty
+item.infinite_water_bucket.name=Infinite Water Bucket
+item.barrel_minecart.name=Minecart with Barrel
 
 # Entities
-entity.YeOldeTanks.yot_barrel_minecart.name=Minecart with Barrel
+entity.yot_barrel_minecart.name=Minecart with Barrel
 
 # Config
-yot.config.ctgy.general=General
-yot.config.ctgy.misc=Miscellaneous
+yeoldetanks.config.gui.title=Ye Olde Tanks
+yeoldetanks.config.gui.category.general=General
+yeoldetanks.config.gui.category.misc=Miscellaneous
 
 # Creative Tabs
 itemGroup.yot=YeOldeTanks
@@ -28,3 +33,7 @@ achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
 achievement.yot.craftInfiniteWaterBucket.desc=Craft an Infinite Water Bucket
 achievement.yot.craftCreativeBarrel=Cheater!
 achievement.yot.craftCreativeBarrel.desc=Craft a Creative Barrel
+achievement.yot.craftCosmeticBarrel=Pretty!
+achievement.yot.craftCosmeticBarrel.desc=Craft a Cosmetic Barrel
+achievement.yot.craftObsidianBarrel=Volcanic
+achievement.yot.craftObsidianBarrel.desc=Craft an Obsidian Barrel

@@ -1,39 +1,30 @@
-package net.shadowfacts.yeoldetanks.client.render.minecart;
+package net.shadowfacts.yeoldetanks.block.base;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderMinecart;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.shadowfacts.shadowmc.util.RenderHelper;
 import net.shadowfacts.yeoldetanks.YOTConfig;
-import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 import org.lwjgl.opengl.GL11;
 
 /**
  * @author shadowfacts
  */
-public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
-
-	public RenderBarrelMinecart(RenderManager renderManager) {
-		super(renderManager);
-	}
+public class TESRBarrelBase extends TileEntitySpecialRenderer<TileEntityBarrelBase> {
 
 	@Override
-	protected void renderCartContents(EntityBarrelMinecart minecart, float partialTicks, IBlockState state) {
-		super.renderCartContents(minecart, partialTicks, state);
-
-		if (YOTConfig.renderFluid && minecart.tank.getFluid() != null && minecart.tank.getFluidAmount() > 0) {
-			FluidStack fluid = minecart.tank.getFluid();
-			ResourceLocation loc = fluid.getFluid().getStill(minecart.tank.getFluid());
+	public void renderTileEntityAt(TileEntityBarrelBase barrel, double x, double y, double z, float partialTicks, int destroyStage) {
+		if (YOTConfig.renderFluid && barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
+			FluidStack fluid = barrel.getTank().getFluid();
+			ResourceLocation loc = fluid.getFluid().getStill(barrel.getTank().getFluid());
 			TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(loc.toString());
 
 			GlStateManager.pushMatrix();
@@ -48,16 +39,16 @@ public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
 				GL11.glShadeModel(GL11.GL_FLAT);
 			}
 
-			GlStateManager.translate(0, 0, -1);
+			GlStateManager.translate(x, y, z);
 
 			VertexBuffer buf = Tessellator.getInstance().getBuffer();
 			buf.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 			int color = fluid.getFluid().getColor(fluid);
-			int brightness = Minecraft.getMinecraft().world.getCombinedLight(minecart.getPosition(), fluid.getFluid().getLuminosity(fluid));
+			int brightness = Minecraft.getMinecraft().world.getCombinedLight(barrel.getPos(), fluid.getFluid().getLuminosity(fluid));
 
-			double fluidPercent = (double)fluid.amount / minecart.tank.getCapacity();
+			double fluidPercent = barrel.isCreative() ? 1 : (double)fluid.amount / barrel.getTank().getCapacity();
 			double fluidY = fluidPercent * 29/32d + 1/16d;
 
 			// Center

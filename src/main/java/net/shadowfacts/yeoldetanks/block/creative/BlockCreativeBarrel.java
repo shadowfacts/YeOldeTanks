@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.block.barrel;
+package net.shadowfacts.yeoldetanks.block.creative;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -8,25 +8,25 @@ import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 /**
  * @author shadowfacts
  */
-public class BlockBarrel extends BlockBarrelBase<TileEntityBarrel> {
+public class BlockCreativeBarrel extends BlockBarrelBase<TileEntityCreativeBarrel> {
 
-	public BlockBarrel() {
-		super("barrel");
+	public BlockCreativeBarrel() {
+		super("creative_barrel");
 	}
 
 	@Override
 	public boolean isCreative() {
-		return false;
+		return true;
 	}
 
 	@Override
-	public Class<TileEntityBarrel> getTileEntityClass() {
-		return TileEntityBarrel.class;
+	public Class<TileEntityCreativeBarrel> getTileEntityClass() {
+		return TileEntityCreativeBarrel.class;
 	}
 
 	@Override
 	public Achievement getAchievement(ItemStack stack) {
-		return ModAchievements.craftBarrel;
+		return ModAchievements.craftCreativeBarrel;
 	}
 
 }

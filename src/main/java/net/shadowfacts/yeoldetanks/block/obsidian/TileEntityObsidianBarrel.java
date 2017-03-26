@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.block.barrel;
+package net.shadowfacts.yeoldetanks.block.obsidian;
 
 import lombok.Getter;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
@@ -9,11 +9,11 @@ import net.shadowfacts.yeoldetanks.block.base.TileEntityBarrelBase;
 /**
  * @author shadowfacts
  */
-public class TileEntityBarrel extends TileEntityBarrelBase {
+public class TileEntityObsidianBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
+	public FluidTank tank = new FluidTank(YOTConfig.obsidianBarrelCapacity);
 
 	@Override
 	public boolean isCreative() {

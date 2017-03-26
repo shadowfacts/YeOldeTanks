@@ -1,6 +1,7 @@
 package net.shadowfacts.yeoldetanks.entity;
 
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -16,9 +17,7 @@ public class ModEntities {
 	public static void preInit() {
 		YeOldeTanks.log.info("Registering entities");
 
-		int id = 0;
-
-		EntityRegistry.registerModEntity(EntityBarrelMinecart.class, "yot_barrel_minecart", id++, YeOldeTanks.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(YeOldeTanks.modId, "yot_barrel_minecart"), EntityBarrelMinecart.class, "yot_barrel_minecart", 1, YeOldeTanks.instance, 80, 3, true);
 	}
 
 }

@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.entity.barrelminecart;
+package net.shadowfacts.yeoldetanks.compat.waila;
 
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaEntityAccessor;
@@ -7,7 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
+import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 import java.util.List;
 
@@ -17,19 +17,16 @@ import java.util.List;
 public class BarrelMinecartEntityProvider implements IWailaEntityProvider {
 
 	@Override
-	@Optional.Method(modid = "Waila")
 	public Entity getWailaOverride(IWailaEntityAccessor accessor, IWailaConfigHandler config) {
 		return null;
 	}
 
 	@Override
-	@Optional.Method(modid = "Waila")
 	public List<String> getWailaHead(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor, IWailaConfigHandler config) {
 		return currenttip;
 	}
 
 	@Override
-	@Optional.Method(modid = "Waila")
 	public List<String> getWailaBody(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor, IWailaConfigHandler config) {
 		Entity e = accessor.getEntity();
 		if (e instanceof EntityBarrelMinecart) {
@@ -45,14 +42,13 @@ public class BarrelMinecartEntityProvider implements IWailaEntityProvider {
 	}
 
 	@Override
-	@Optional.Method(modid = "Waila")
 	public List<String> getWailaTail(Entity entity, List<String> currenttip, IWailaEntityAccessor accessor, IWailaConfigHandler config) {
 		return currenttip;
 	}
 
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP player, Entity ent, NBTTagCompound tag, World world) {
-		return null;
+		return tag;
 	}
 
 }

@@ -1,4 +1,4 @@
-package net.shadowfacts.yeoldetanks.block.barrel;
+package net.shadowfacts.yeoldetanks.block.obsidian;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
@@ -8,10 +8,10 @@ import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 /**
  * @author shadowfacts
  */
-public class BlockBarrel extends BlockBarrelBase<TileEntityBarrel> {
+public class BlockObsidianBarrel extends BlockBarrelBase<TileEntityObsidianBarrel> {
 
-	public BlockBarrel() {
-		super("barrel");
+	public BlockObsidianBarrel() {
+		super("obsidian_barrel");
 	}
 
 	@Override
@@ -20,13 +20,13 @@ public class BlockBarrel extends BlockBarrelBase<TileEntityBarrel> {
 	}
 
 	@Override
-	public Class<TileEntityBarrel> getTileEntityClass() {
-		return TileEntityBarrel.class;
+	public Class<TileEntityObsidianBarrel> getTileEntityClass() {
+		return TileEntityObsidianBarrel.class;
 	}
 
 	@Override
 	public Achievement getAchievement(ItemStack stack) {
-		return ModAchievements.craftBarrel;
+		return ModAchievements.craftObsidianBarrel;
 	}
 
 }
