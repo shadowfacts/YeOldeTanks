@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.block.BlockTE;
+import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
 import javax.annotation.Nullable;
@@ -59,10 +60,12 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 	private ItemStack writeBarrelToStack(World world, BlockPos pos) {
 		ItemStack stack = new ItemStack(getBarrelItem());
 
-		TileEntityBarrelBase te = getTileEntity(world, pos);
-		if (te.getTank().getFluid() != null && te.getTank().getFluidAmount() > 0) {
-			FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-			tank.setFluid(te.getTank().getFluid().copy());
+		if (YOTConfig.itemsStoreFluids) {
+			TileEntityBarrelBase te = getTileEntity(world, pos);
+			if (te.getTank().getFluid() != null && te.getTank().getFluidAmount() > 0) {
+				FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				tank.setFluid(te.getTank().getFluid().copy());
+			}
 		}
 
 		return stack;

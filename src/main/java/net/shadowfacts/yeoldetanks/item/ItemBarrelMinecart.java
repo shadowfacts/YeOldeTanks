@@ -47,8 +47,10 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 			if (!world.isRemote) {
 				EntityBarrelMinecart cart = new EntityBarrelMinecart(world, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5);
 
-				IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-				cart.tank.setFluid(tank.getFluid().copy());
+				if (YOTConfig.itemsStoreFluids) {
+					IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+					cart.tank.setFluid(tank.getFluid().copy());
+				}
 
 				if (stack.hasDisplayName()) {
 					cart.setCustomNameTag(stack.getDisplayName());
@@ -66,10 +68,12 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-		if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			tooltip.add(tank.getFluid().getLocalizedName());
-			tooltip.add(tank.getFluidAmount() + " mb / " + tank.getCapacity() + " mb");
+		if (YOTConfig.itemsStoreFluids) {
+			IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+			if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
+				tooltip.add(tank.getFluid().getLocalizedName());
+				tooltip.add(tank.getFluidAmount() + " mb / " + tank.getCapacity() + " mb");
+			}
 		}
 	}
 
@@ -81,7 +85,7 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new BarrelMinecartCapProvider();
+		return YOTConfig.itemsStoreFluids ? new BarrelMinecartCapProvider() : null;
 	}
 
 	public static class BarrelMinecartCapProvider implements ICapabilitySerializable<NBTTagCompound> {
