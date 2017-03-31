@@ -46,9 +46,11 @@ public class ItemBlockBarrelBase extends ItemBlock {
 
 			TileEntityBarrelBase te = block.getTileEntity(world, pos);
 
-			FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-			if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
-				te.getTank().setFluid(tank.getFluid().copy());
+			if (YOTConfig.itemsStoreFluids) {
+				FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
+					te.getTank().setFluid(tank.getFluid().copy());
+				}
 			}
 
 			return true;
@@ -59,19 +61,21 @@ public class ItemBlockBarrelBase extends ItemBlock {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-		if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
-			String capacity = block.isCreative() ? "∞" : Integer.toString(tank.getCapacity());
+		if (YOTConfig.itemsStoreFluids) {
+			IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+			if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
+				String capacity = block.isCreative() ? "∞" : Integer.toString(tank.getCapacity());
 
-			tooltip.add(tank.getFluid().getLocalizedName());
-			tooltip.add(tank.getFluidAmount() + " mb / " + capacity + " mb");
+				tooltip.add(tank.getFluid().getLocalizedName());
+				tooltip.add(tank.getFluidAmount() + " mb / " + capacity + " mb");
+			}
 		}
 	}
 
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new BarrelCapProvider(block.isCreative());
+		return YOTConfig.itemsStoreFluids ? new BarrelCapProvider(block.isCreative()) : null;
 	}
 
 	public static class BarrelCapProvider implements ICapabilitySerializable<NBTTagCompound> {

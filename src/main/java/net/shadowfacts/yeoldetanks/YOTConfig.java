@@ -33,6 +33,9 @@ public class YOTConfig {
 	@Config.Prop(description = "Automatically output to the bottom")
 	public static boolean autoOutputBottom = true;
 
+	@Config.Prop(description = "Should the barrel item and barrel minecart item store fluids")
+	public static boolean itemsStoreFluids = true;
+
 	@Config.Prop(description = "Mystical, magical stuff and things", category = "misc", name = "#BlameEllpeck")
 	public static boolean blameEllpeck = false;
 

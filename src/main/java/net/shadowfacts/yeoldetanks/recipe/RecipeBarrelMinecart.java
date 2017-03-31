@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
+import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
 import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
@@ -51,8 +52,11 @@ public class RecipeBarrelMinecart implements IRecipe {
 
 		if (barrel != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.items.barrelMinecart);
-			FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-			tank.setFluid(((IFluidTank)barrel.getCapability(FLUID_HANDLER_CAPABILITY, null)).getFluid());
+			if (YOTConfig.itemsStoreFluids) {
+				FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				FluidTank barrelTank = (FluidTank)barrel.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				tank.setFluid(barrelTank.getFluid());
+			}
 			return stack;
 		}
 

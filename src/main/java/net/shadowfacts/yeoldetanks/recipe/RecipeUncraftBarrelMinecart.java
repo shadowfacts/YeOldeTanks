@@ -7,6 +7,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
+import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.item.ItemBarrelMinecart;
 
@@ -45,8 +46,11 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 
 		if (cart != null) {
 			ItemStack stack = new ItemStack(YeOldeTanks.blocks.barrel);
-			FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-			tank.setFluid(((IFluidTank)cart.getCapability(FLUID_HANDLER_CAPABILITY, null)).getFluid());
+			if (YOTConfig.itemsStoreFluids) {
+				FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				FluidTank cartTank = (FluidTank)cart.getCapability(FLUID_HANDLER_CAPABILITY, null);
+				tank.setFluid(cartTank.getFluid());
+			}
 			return stack;
 		}
 
