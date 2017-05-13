@@ -9,6 +9,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -89,7 +90,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	@Override
 	@Deprecated
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+	public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
@@ -148,10 +149,13 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntityBarrelBase te = getTileEntity(world, pos);
+		TileEntity te = world.getTileEntity(pos);
 
-		if (te.getTank().getFluid() != null && te.getTank().getFluidAmount() > 0) {
-			return te.getTank().getFluid().getFluid().getLuminosity(te.getTank().getFluid());
+		if (te instanceof TileEntityBarrelBase) {
+			TileEntityBarrelBase barrel = (TileEntityBarrelBase)te;
+			if (barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
+				return barrel.getTank().getFluid().getFluid().getLuminosity(barrel.getTank().getFluid());
+			}
 		}
 
 		return 0;
