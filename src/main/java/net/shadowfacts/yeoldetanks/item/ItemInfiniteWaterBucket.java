@@ -62,9 +62,11 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		ItemStack stack = new ItemStack(this);
-		((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
-		items.add(stack);
+		if (tab == getCreativeTab()) {
+			ItemStack stack = new ItemStack(this);
+			((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
+			items.add(stack);
+		}
 	}
 
 	@Nonnull
