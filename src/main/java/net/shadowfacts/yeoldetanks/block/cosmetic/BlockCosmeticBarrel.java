@@ -3,7 +3,6 @@ package net.shadowfacts.yeoldetanks.block.cosmetic;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -60,9 +59,9 @@ public class BlockCosmeticBarrel extends BlockBarrelBase<TileEntityCosmeticBarre
 		return TileEntityCosmeticBarrel.class;
 	}
 
-	@Override
-	public Achievement getAchievement(ItemStack stack) {
-		return ModAchievements.craftCosmeticBarrel;
-	}
+//	@Override
+//	public Achievement getAchievement(ItemStack stack) {
+//		return ModAchievements.craftCosmeticBarrel;
+//	}
 
 }

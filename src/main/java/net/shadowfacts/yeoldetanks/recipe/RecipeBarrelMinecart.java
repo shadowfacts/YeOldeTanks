@@ -9,6 +9,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.IFluidTank;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
+import net.shadowfacts.shadowmc.recipe.RecipeBase;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 
@@ -17,9 +18,11 @@ import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_
 /**
  * @author shadowfacts
  */
-public class RecipeBarrelMinecart implements IRecipe {
+public class RecipeBarrelMinecart extends RecipeBase {
 
-//	TODO: fix broken recipe
+	public RecipeBarrelMinecart() {
+		setRegistryName("barrel_minecraft");
+	}
 
 	@Override
 	public boolean matches(InventoryCrafting crafting, World world) {
@@ -65,8 +68,8 @@ public class RecipeBarrelMinecart implements IRecipe {
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 2;
+	public boolean canFit(int width, int height) {
+		return width * height >= 2;
 	}
 
 	@Override
@@ -79,5 +82,9 @@ public class RecipeBarrelMinecart implements IRecipe {
 		return NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
 	}
 
+	@Override
+	public boolean isHidden() {
+		return false;
+	}
 
 }

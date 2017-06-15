@@ -1,0 +1,11 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{
+			"item": "yeoldetanks:barrel"
+		}
+	],
+	"result": {
+		"item": "yeoldetanks:cosmetic_barrel"
+	}
+}

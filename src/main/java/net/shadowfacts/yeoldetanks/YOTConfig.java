@@ -40,7 +40,7 @@ public class YOTConfig {
 	public static boolean blameEllpeck = false;
 
 	public static void init(FMLPreInitializationEvent event) {
-		config = new Configuration(new File(event.getModConfigurationDirectory(), "YeOldeTanks.cfg"));
+		config = new Configuration(new File(event.getModConfigurationDirectory(), "shadowfacts/YeOldeTanks.cfg"));
 		load();
 	}
 

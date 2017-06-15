@@ -17,10 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidTank;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.block.BlockTE;
 import net.shadowfacts.yeoldetanks.YOTConfig;
@@ -58,7 +56,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 		return Item.getItemFromBlock(this);
 	}
 
-	private ItemStack writeBarrelToStack(World world, BlockPos pos) {
+	private ItemStack writeBarrelToStack(IBlockAccess world, BlockPos pos) {
 		ItemStack stack = new ItemStack(getBarrelItem());
 
 		if (YOTConfig.itemsStoreFluids) {
@@ -107,10 +105,10 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		ItemStack dropStack = writeBarrelToStack(world, pos);
 
+		super.breakBlock(world, pos, state);
+
 		EntityItem item = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), dropStack);
 		world.spawnEntity(item);
-
-		super.breakBlock(world, pos, state);
 	}
 
 	@Override
@@ -121,23 +119,23 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 			world.setBlockState(pos, state.cycleProperty(LID));
 			return true;
 		} else {
-			IFluidHandler handler = te.getCapability(FLUID_HANDLER_CAPABILITY, side);
-			FluidActionResult res = FluidUtil.interactWithFluidHandler(heldItem, handler, player);
-			if (res.isSuccess()) {
+			boolean res = FluidUtil.interactWithFluidHandler(player, hand, world, pos, side);
+			if (res) {
 				te.save();
-				player.setHeldItem(hand, res.getResult());
 				return true;
 			}
+			return false;
 		}
-		return false;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
+	@Deprecated
 	public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		return side == EnumFacing.DOWN || (side == EnumFacing.UP && state.getValue(LID));
 	}

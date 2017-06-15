@@ -7,7 +7,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -62,10 +61,10 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 	}
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> list) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		ItemStack stack = new ItemStack(this);
 		((InfiniteFluidHandler)stack.getCapability(FLUID_HANDLER_ITEM_CAPABILITY, null)).setFluid(new FluidStack(FluidRegistry.WATER, 1000));
-		list.add(stack);
+		items.add(stack);
 	}
 
 	@Nonnull
@@ -79,10 +78,10 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 		return true;
 	}
 
-	@Override
-	public Achievement getAchievement(ItemStack stack) {
-		return ModAchievements.craftInfiniteWaterBucket;
-	}
+//	@Override
+//	public Achievement getAchievement(ItemStack stack) {
+//		return ModAchievements.craftInfiniteWaterBucket;
+//	}
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {

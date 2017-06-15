@@ -1,0 +1,15 @@
+{
+	"type": "yeoldetanks:preserve_barrel",
+	"ingredients": [
+		{
+			"item": "yeoldetanks:barrel"
+		},
+		{
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	],
+	"result": {
+		"item": "yeoldetanks:dipping_stick"
+	}
+}

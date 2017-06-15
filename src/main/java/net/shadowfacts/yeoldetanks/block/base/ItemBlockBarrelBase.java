@@ -1,6 +1,7 @@
 package net.shadowfacts.yeoldetanks.block.base;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -60,7 +61,7 @@ public class ItemBlockBarrelBase extends ItemBlock {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag advanced) {
 		if (YOTConfig.itemsStoreFluids) {
 			IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
 			if (tank.getFluid() != null && tank.getFluidAmount() > 0) {

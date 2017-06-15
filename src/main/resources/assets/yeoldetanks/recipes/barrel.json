@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"I I",
+		"I I",
+		"ICI"
+	],
+	"key": {
+		"I": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		},
+		"C": {
+			"item": "minecraft:cauldron"
+		}
+	},
+	"result": {
+		"item": "yeoldetanks:barrel"
+	}
+}

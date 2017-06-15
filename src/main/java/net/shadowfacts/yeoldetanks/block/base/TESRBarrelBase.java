@@ -3,7 +3,7 @@ package net.shadowfacts.yeoldetanks.block.base;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -21,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 public class TESRBarrelBase extends TileEntitySpecialRenderer<TileEntityBarrelBase> {
 
 	@Override
-	public void renderTileEntityAt(TileEntityBarrelBase barrel, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void renderTileEntityAt(TileEntityBarrelBase barrel, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
 		if (YOTConfig.renderFluid && barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
 			FluidStack fluid = barrel.getTank().getFluid();
 			ResourceLocation loc = fluid.getFluid().getStill(barrel.getTank().getFluid());
@@ -41,7 +41,7 @@ public class TESRBarrelBase extends TileEntitySpecialRenderer<TileEntityBarrelBa
 
 			GlStateManager.translate(x, y, z);
 
-			VertexBuffer buf = Tessellator.getInstance().getBuffer();
+			BufferBuilder buf = Tessellator.getInstance().getBuffer();
 			buf.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);

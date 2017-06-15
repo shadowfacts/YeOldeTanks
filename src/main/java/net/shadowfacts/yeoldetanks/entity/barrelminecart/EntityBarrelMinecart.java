@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.entity.barrelminecart;
 
+import kotlin.Suppress;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;

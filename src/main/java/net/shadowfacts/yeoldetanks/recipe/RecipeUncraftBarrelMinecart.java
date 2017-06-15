@@ -3,11 +3,10 @@ package net.shadowfacts.yeoldetanks.recipe;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.IFluidTank;
 import net.shadowfacts.shadowmc.fluid.FluidTank;
+import net.shadowfacts.shadowmc.recipe.RecipeBase;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
 import net.shadowfacts.yeoldetanks.item.ItemBarrelMinecart;
@@ -17,7 +16,11 @@ import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_
 /**
  * @author shadowfacts
  */
-public class RecipeUncraftBarrelMinecart implements IRecipe {
+public class RecipeUncraftBarrelMinecart extends RecipeBase {
+
+	public RecipeUncraftBarrelMinecart() {
+		setRegistryName("uncraft_barrel_minecart");
+	}
 
 	@Override
 	public boolean matches(InventoryCrafting crafting, World world) {
@@ -59,8 +62,8 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 	}
 
 	@Override
-	public int getRecipeSize() {
-		return 1;
+	public boolean canFit(int width, int height) {
+		return width * height >= 1;
 	}
 
 	@Override
@@ -81,6 +84,11 @@ public class RecipeUncraftBarrelMinecart implements IRecipe {
 		}
 
 		return list;
+	}
+
+	@Override
+	public boolean isHidden() {
+		return false;
 	}
 
 }

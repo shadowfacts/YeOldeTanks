@@ -2,10 +2,10 @@ package net.shadowfacts.yeoldetanks.item;
 
 
 import net.minecraft.block.BlockRailBase;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.Achievement;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -67,7 +67,7 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
 		if (YOTConfig.itemsStoreFluids) {
 			IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
 			if (tank.getFluid() != null && tank.getFluidAmount() > 0) {
@@ -77,10 +77,10 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 		}
 	}
 
-	@Override
-	public Achievement getAchievement(ItemStack stack) {
-		return ModAchievements.craftBarrelCart;
-	}
+//	@Override
+//	public Achievement getAchievement(ItemStack stack) {
+//		return ModAchievements.craftBarrelCart;
+//	}
 
 	@Nullable
 	@Override

@@ -1,15 +1,15 @@
 # Blocks
-tile.barrel.name=Barrel
-tile.creative_barrel.name=§dCreative Barrel
-tile.cosmetic_barrel.name=Cosmetic Barrel
-tile.obsidian_barrel.name=Obsidian Barrel
+tile.yeoldetanks:barrel.name=Barrel
+tile.yeoldetanks:creative_barrel.name=§dCreative Barrel
+tile.yeoldetanks:cosmetic_barrel.name=Cosmetic Barrel
+tile.yeoldetanks:obsidian_barrel.name=Obsidian Barrel
 
 # Items
-item.dipping_stick.name=Dipping Stick
-item.dipping_stick.fluid=Fluid: %s
-item.dipping_stick.empty=Empty
-item.infinite_water_bucket.name=Infinite Water Bucket
-item.barrel_minecart.name=Minecart with Barrel
+item.yeoldetanks:dipping_stick.name=Dipping Stick
+item.yeoldetanks:dipping_stick.fluid=Fluid: %s
+item.yeoldetanks:dipping_stick.empty=Empty
+item.yeoldetanks:infinite_water_bucket.name=Infinite Water Bucket
+item.yeoldetanks:barrel_minecart.name=Minecart with Barrel
 
 # Entities
 entity.yot_barrel_minecart.name=Minecart with Barrel
@@ -21,19 +21,3 @@ yeoldetanks.config.gui.category.misc=Miscellaneous
 
 # Creative Tabs
 itemGroup.yot=YeOldeTanks
-
-# Achievements
-achievement.yot.craftBarrel=Better Than Drums™
-achievement.yot.craftBarrel.desc=Craft a Barrel
-achievement.yot.craftDippingStick=Dippity Dip, Dip, Dip
-achievement.yot.craftDippingStick.desc=Craft a Dipping Stick
-achievement.yot.craftBarrelCart=Fluid Transport
-achievement.yot.craftBarrelCart.desc=Craft a Barrel Minecart
-achievement.yot.craftInfiniteWaterBucket=Ocean in a Bucket
-achievement.yot.craftInfiniteWaterBucket.desc=Craft an Infinite Water Bucket
-achievement.yot.craftCreativeBarrel=Cheater!
-achievement.yot.craftCreativeBarrel.desc=Craft a Creative Barrel
-achievement.yot.craftCosmeticBarrel=Pretty!
-achievement.yot.craftCosmeticBarrel.desc=Craft a Cosmetic Barrel
-achievement.yot.craftObsidianBarrel=Volcanic
-achievement.yot.craftObsidianBarrel.desc=Craft an Obsidian Barrel

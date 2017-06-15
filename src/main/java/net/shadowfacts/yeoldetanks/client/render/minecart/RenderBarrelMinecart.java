@@ -4,7 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderMinecart;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -50,7 +50,7 @@ public class RenderBarrelMinecart extends RenderMinecart<EntityBarrelMinecart> {
 
 			GlStateManager.translate(0, 0, -1);
 
-			VertexBuffer buf = Tessellator.getInstance().getBuffer();
+			BufferBuilder buf = Tessellator.getInstance().getBuffer();
 			buf.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
 
 			Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);

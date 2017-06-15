@@ -62,6 +62,8 @@ public class YeOldeTanks {
 		blocks.init();
 		items.init();
 
+		ModRecipes.init();
+
 		ModEntities.preInit();
 
 		ModAchievements.registerAchievements();
@@ -77,7 +79,6 @@ public class YeOldeTanks {
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
 		compat.init(event);
-		ModRecipes.init();
 	}
 
 	@Mod.EventHandler

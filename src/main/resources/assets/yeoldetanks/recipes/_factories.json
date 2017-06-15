@@ -1,0 +1,5 @@
+{
+	"recipes": {
+		"preserve_barrel": "net.shadowfacts.yeoldetanks.recipe.RecipePreserveBarrel$Factory"
+	}
+}
