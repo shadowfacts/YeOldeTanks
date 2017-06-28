@@ -12,7 +12,12 @@ public class TileEntityCreativeBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	public CreativeFluidTank tank = new CreativeFluidTank(100000);
+	public CreativeFluidTank tank = new CreativeFluidTank(100000) {
+		@Override
+		protected void onContentsChanged() {
+			save();
+		}
+	};
 
 	@Override
 	public boolean isCreative() {

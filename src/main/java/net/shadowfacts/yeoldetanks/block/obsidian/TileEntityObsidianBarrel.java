@@ -13,7 +13,12 @@ public class TileEntityObsidianBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	public FluidTank tank = new FluidTank(YOTConfig.obsidianBarrelCapacity);
+	public FluidTank tank = new FluidTank(YOTConfig.obsidianBarrelCapacity) {
+		@Override
+		protected void onContentsChanged() {
+			save();
+		}
+	};
 
 	@Override
 	public boolean isCreative() {

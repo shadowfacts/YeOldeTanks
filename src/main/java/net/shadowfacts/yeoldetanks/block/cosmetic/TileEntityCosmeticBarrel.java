@@ -27,7 +27,12 @@ public class TileEntityCosmeticBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	public CosmeticFluidTank tank = new CosmeticFluidTank();
+	public CosmeticFluidTank tank = new CosmeticFluidTank() {
+		@Override
+		protected void onContentsChanged() {
+			save();
+		}
+	};
 
 	@Override
 	public boolean isCreative() {

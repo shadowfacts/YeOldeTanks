@@ -13,7 +13,12 @@ public class TileEntityBarrel extends TileEntityBarrelBase {
 
 	@Getter
 	@AutoSerializeNBT
-	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity);
+	public FluidTank tank = new FluidTank(YOTConfig.barrelCapacity) {
+		@Override
+		protected void onContentsChanged() {
+			save();
+		}
+	};
 
 	@Override
 	public boolean isCreative() {
