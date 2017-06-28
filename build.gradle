@@ -46,6 +46,9 @@ repositories {
 	maven {
 		url "http://maven.k-4u.nl/"
 	}
+	maven {
+		url "http://maven.covers1624.net/"
+	}
 	// maven {
 	// 	name "OpenComputers"
 	// 	url "http://maven.cil.li/"
@@ -56,8 +59,7 @@ dependencies {
 	deobfCompile group: "net.shadowfacts", name: "ShadowMC", version: mc_version + "-" + shadowmc_version
 
 	deobfCompile group: "mcp.mobius.waila", name: "Hwyla", version: hwyla_version
-	// deobfCompile group: "mcjty.theoneprobe", name: "TheOneProbe", version: top_version
-	// deobfCompile group: "com.github.mcjty", name: "compatlayer", version: mc_version + "-" + cl_version
+	deobfCompile group: "mcjty.theoneprobe", name: "TheOneProbe-" + mc_version, version: mc_version + "-" + top_version
 	// deobfCompile group: "li.cil.oc", name: "OpenComputers", version: "MC" + mc_version + "-" + oc_version
 }
 

@@ -21,7 +21,7 @@ import org.lwjgl.opengl.GL11;
 public class TESRBarrelBase extends TileEntitySpecialRenderer<TileEntityBarrelBase> {
 
 	@Override
-	public void renderTileEntityAt(TileEntityBarrelBase barrel, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
+	public void render(TileEntityBarrelBase barrel, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_) {
 		if (YOTConfig.renderFluid && barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
 			FluidStack fluid = barrel.getTank().getFluid();
 			ResourceLocation loc = fluid.getFluid().getStill(barrel.getTank().getFluid());

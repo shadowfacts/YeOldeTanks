@@ -1,6 +1,5 @@
 package net.shadowfacts.yeoldetanks.entity.barrelminecart;
 
-import kotlin.Suppress;
 import lombok.Getter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
@@ -20,6 +19,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import net.shadowfacts.shadowmc.fluid.EntityFluidTank;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
@@ -71,12 +73,26 @@ public class EntityBarrelMinecart extends EntityMinecart implements YOTBarrel {
 				ItemDippingStick.handleBarrel(player, this);
 				return EnumActionResult.SUCCESS;
 			}
-			FluidActionResult res = FluidUtil.interactWithFluidHandler(stack, tank, player);
+			FluidActionResult res = interactWithFluidHandler(stack, tank, player);
 			if (res.isSuccess()) {
 				player.setHeldItem(hand, res.getResult());
 			}
 		}
 		return EnumActionResult.SUCCESS;
+	}
+
+	// Since the old Forge FluidUtil.interactWithFluidHandler(ItemStack, IFluidHandler, EntityPlayer) was removed
+	private FluidActionResult interactWithFluidHandler(ItemStack stack, IFluidHandler handler, EntityPlayer player) {
+		if (stack.isEmpty() || handler == null || player == null) return FluidActionResult.FAILURE;
+
+		IItemHandler playerInventory = new InvWrapper(player.inventory);
+
+		FluidActionResult fillResult = FluidUtil.tryFillContainerAndStow(stack, handler, playerInventory, Integer.MAX_VALUE, player);
+		if (fillResult.isSuccess()) {
+			return fillResult;
+		} else {
+			return FluidUtil.tryEmptyContainerAndStow(stack, handler, playerInventory, Integer.MAX_VALUE, player);
+		}
 	}
 
 	@Override

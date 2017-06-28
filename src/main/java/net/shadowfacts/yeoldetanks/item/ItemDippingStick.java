@@ -1,7 +1,6 @@
 package net.shadowfacts.yeoldetanks.item;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -15,7 +14,6 @@ import net.shadowfacts.shadowmc.ShadowMC;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.util.YOTBarrel;
 
 import java.text.NumberFormat;
@@ -47,11 +45,6 @@ public class ItemDippingStick extends ItemBase implements AchievementProvider {
 
 		return EnumActionResult.PASS;
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftDippingStick;
-//	}
 
 	public static void handleBarrel(EntityPlayer player, YOTBarrel barrel) {
 		if (barrel.getTank().getFluid() != null) {

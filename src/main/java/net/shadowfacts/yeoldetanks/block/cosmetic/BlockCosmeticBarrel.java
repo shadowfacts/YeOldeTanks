@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 
 import static net.minecraftforge.fluids.capability.CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
@@ -58,10 +57,5 @@ public class BlockCosmeticBarrel extends BlockBarrelBase<TileEntityCosmeticBarre
 	public Class<TileEntityCosmeticBarrel> getTileEntityClass() {
 		return TileEntityCosmeticBarrel.class;
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftCosmeticBarrel;
-//	}
 
 }

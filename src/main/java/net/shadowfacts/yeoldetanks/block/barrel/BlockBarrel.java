@@ -1,7 +1,5 @@
 package net.shadowfacts.yeoldetanks.block.barrel;
 
-import net.minecraft.item.ItemStack;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 
 /**
@@ -22,10 +20,5 @@ public class BlockBarrel extends BlockBarrelBase<TileEntityBarrel> {
 	public Class<TileEntityBarrel> getTileEntityClass() {
 		return TileEntityBarrel.class;
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftBarrel;
-//	}
 
 }

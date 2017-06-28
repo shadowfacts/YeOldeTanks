@@ -21,7 +21,6 @@ import net.minecraftforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 
 import javax.annotation.Nonnull;
 
@@ -79,11 +78,6 @@ public class ItemInfiniteWaterBucket extends ItemBase implements AchievementProv
 	public boolean hasContainerItem(ItemStack stack) {
 		return true;
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftInfiniteWaterBucket;
-//	}
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {

@@ -1,7 +1,5 @@
 package net.shadowfacts.yeoldetanks.block.obsidian;
 
-import net.minecraft.item.ItemStack;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.block.base.BlockBarrelBase;
 
 /**
@@ -22,10 +20,5 @@ public class BlockObsidianBarrel extends BlockBarrelBase<TileEntityObsidianBarre
 	public Class<TileEntityObsidianBarrel> getTileEntityClass() {
 		return TileEntityObsidianBarrel.class;
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftObsidianBarrel;
-//	}
 
 }

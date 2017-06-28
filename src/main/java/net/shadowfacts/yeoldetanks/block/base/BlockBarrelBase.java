@@ -1,5 +1,6 @@
 package net.shadowfacts.yeoldetanks.block.base;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -52,6 +53,11 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	public abstract boolean isCreative();
 
+	@Override
+	public Item createItemBlock() {
+		return new ItemBlockBarrelBase(this);
+	}
+
 	protected Item getBarrelItem() {
 		return Item.getItemFromBlock(this);
 	}
@@ -60,7 +66,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 		ItemStack stack = new ItemStack(getBarrelItem());
 
 		if (YOTConfig.itemsStoreFluids) {
-			TileEntityBarrelBase te = getTileEntity(world, pos);
+			TE te = getTileEntity(world, pos);
 			if (te.getTank().getFluid() != null && te.getTank().getFluidAmount() > 0) {
 				FluidTank tank = (FluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
 				tank.setFluid(te.getTank().getFluid().copy());
@@ -97,6 +103,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 	}
 
 	@Override
+	@Deprecated
 	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
 		return new ArrayList<>();
 	}
@@ -114,7 +121,7 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		ItemStack heldItem = player.getHeldItem(hand);
-		TileEntityBarrelBase te = getTileEntity(world, pos);
+		TE te = getTileEntity(world, pos);
 		if (heldItem.isEmpty() && player.isSneaking()) {
 			world.setBlockState(pos, state.cycleProperty(LID));
 			return true;
@@ -136,6 +143,12 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	@Override
 	@Deprecated
+	public boolean isFullCube(IBlockState state) {
+		return false;
+	}
+
+	@Override
+	@Deprecated
 	public boolean isSideSolid(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
 		return side == EnumFacing.DOWN || (side == EnumFacing.UP && state.getValue(LID));
 	}
@@ -146,14 +159,25 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 	}
 
 	@Override
-	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TileEntity te = world.getTileEntity(pos);
-
-		if (te instanceof TileEntityBarrelBase) {
-			TileEntityBarrelBase barrel = (TileEntityBarrelBase)te;
-			if (barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
-				return barrel.getTank().getFluid().getFluid().getLuminosity(barrel.getTank().getFluid());
+	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+		if (entity.posX > pos.getX() && entity.posX < pos.getX() + 1 &&
+				entity.posY > pos.getY() && entity.posY < pos.getY() + 1 &&
+				entity.posZ > pos.getZ() && entity.posZ < pos.getZ() + 1) {
+			TE barrel = getTileEntity(world, pos);
+			if (barrel.getTank().getFluidAmount() > 0) {
+				Block fluidBlock = barrel.getTank().getFluid().getFluid().getBlock();
+				if (fluidBlock != null) {
+					fluidBlock.onEntityCollidedWithBlock(world, pos, fluidBlock.getDefaultState(), entity);
+				}
 			}
+		}
+	}
+
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
+		TE barrel = getTileEntity(world, pos);
+		if (barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
+			return barrel.getTank().getFluid().getFluid().getLuminosity(barrel.getTank().getFluid());
 		}
 
 		return 0;

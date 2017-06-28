@@ -20,7 +20,6 @@ import net.shadowfacts.shadowmc.fluid.FluidTank;
 import net.shadowfacts.shadowmc.item.ItemBase;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
-import net.shadowfacts.yeoldetanks.achievement.ModAchievements;
 import net.shadowfacts.yeoldetanks.entity.barrelminecart.EntityBarrelMinecart;
 
 import javax.annotation.Nonnull;
@@ -49,7 +48,7 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 
 				if (YOTConfig.itemsStoreFluids) {
 					IFluidTank tank = (IFluidTank)stack.getCapability(FLUID_HANDLER_CAPABILITY, null);
-					cart.tank.setFluid(tank.getFluid().copy());
+					if (tank.getFluidAmount() > 0) cart.tank.setFluid(tank.getFluid().copy());
 				}
 
 				if (stack.hasDisplayName()) {
@@ -76,11 +75,6 @@ public class ItemBarrelMinecart extends ItemBase implements AchievementProvider 
 			}
 		}
 	}
-
-//	@Override
-//	public Achievement getAchievement(ItemStack stack) {
-//		return ModAchievements.craftBarrelCart;
-//	}
 
 	@Nullable
 	@Override
