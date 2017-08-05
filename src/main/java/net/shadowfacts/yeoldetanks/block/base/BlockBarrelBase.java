@@ -24,6 +24,7 @@ import net.shadowfacts.shadowmc.achievement.AchievementProvider;
 import net.shadowfacts.shadowmc.block.BlockTE;
 import net.shadowfacts.yeoldetanks.YOTConfig;
 import net.shadowfacts.yeoldetanks.YeOldeTanks;
+import net.shadowfacts.yeoldetanks.block.barrel.TileEntityBarrel;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -175,9 +176,12 @@ public abstract class BlockBarrelBase<TE extends TileEntityBarrelBase> extends B
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		TE barrel = getTileEntity(world, pos);
-		if (barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
-			return barrel.getTank().getFluid().getFluid().getLuminosity(barrel.getTank().getFluid());
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof TileEntityBarrelBase) {
+			TileEntityBarrelBase barrel = (TileEntityBarrel)te;
+			if (barrel.getTank().getFluid() != null && barrel.getTank().getFluidAmount() > 0) {
+				return barrel.getTank().getFluid().getFluid().getLuminosity(barrel.getTank().getFluid());
+			}
 		}
 
 		return 0;
